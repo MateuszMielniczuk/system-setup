@@ -11,14 +11,13 @@ vim.o.mouse = 'v'
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
--- Keep signcolumn on by default 
--- This is for displaying additional left col for errors git etc.
-vim.wo.signcolumn = 'yes'
-
+-- Better editor UI
 -- Make line numbers default
 vim.wo.number = true
 -- current selected line always 0, helps with navigation
 vim.wo.relativenumber = true
+-- This is for displaying additional left col for errors git etc.
+vim.wo.signcolumn = 'yes'
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -33,31 +32,27 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Decrease update time
+-- Decrease update time between two key presses
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
--- Set completeopt to have a better completion experience
+-- Set to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
+-- Enable 24-bit colors in terminal
 vim.o.termguicolors = true
 
 -- spell checker
 vim.o.spell = true
 
--- show additional hidden lines of texe when scrolling
+-- show additional hidden lines of text when scroll
 vim.o.scrolloff = 8
 
 -- fold functions and classes with: `za` keybord shortcut
 vim.o.foldmethod = 'indent'
 vim.o.foldlevel = 99
 
+-- draw line to see max code line
 vim.o.colorcolumn = "79"
 
--- set colorscheme
-vim.o.background = "dark" -- or "light" for light mode
-  require("gruvbox").setup({
-    transparent_mode = true,
-  })
-vim.cmd("colorscheme gruvbox")

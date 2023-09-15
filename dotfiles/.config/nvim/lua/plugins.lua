@@ -11,8 +11,11 @@ return {
   -- "gc" to comment visual regions/lines
   { 'numtostr/comment.nvim', opts = {} },
 
+  -- useful plugin to show you pending keybinds.
+  { 'folke/which-key.nvim', opts = {} },
+
   -- colorscheme theme install
-  { "ellisonleao/gruvbox.nvim", priority = 1000 },
+  -- { "ellisonleao/gruvbox.nvim", priority = 1000 },
 
   -- note: this is where your plugins related to lsp can be installed.
   -- the configuration is done below. search for lspconfig to find it below.
@@ -29,7 +32,7 @@ return {
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
+      'folke/neodev.nvim', -- add nvim namespace to lsp
     },
   },
 
@@ -49,8 +52,6 @@ return {
     },
   },
 
-  -- useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
   {
     -- adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -75,9 +76,6 @@ return {
     -- theme inspired by atom
     'navarasu/onedark.nvim',
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
   },
 
   {
@@ -109,6 +107,9 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
+    -- config = function ()
+    --   require('plug_setup.telescope')
+    -- end,
     dependencies = {
       'nvim-lua/plenary.nvim',
       -- fuzzy finder algorithm which requires local dependencies to be built.
@@ -127,12 +128,12 @@ return {
   },
 
   {
-    -- highlight, edit, and navigate code
+    -- better color highlighting for many languages
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
-    build = ':tsupdate',
+    build = ':TSUpdate',
   },
 
   -- note: next step on your neovim journey: add/configure additional "plugins" for kickstart

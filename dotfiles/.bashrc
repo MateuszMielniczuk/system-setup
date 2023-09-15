@@ -133,7 +133,9 @@ alias ga='git add'
 # Add all files to Git.
 alias gaa='git add --all'
 # Commit changes to the code.
-alias gc='git commit'
+gc () {
+    git commit -m'&@'
+}
 # View the Git log.
 alias gl='git log --oneline'
 # Create a new Git branch and move to the new branch at the same time. 

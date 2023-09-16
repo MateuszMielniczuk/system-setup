@@ -134,7 +134,8 @@ alias ga='git add'
 alias gaa='git add --all'
 # Commit changes to the code.
 gc () {
-    git commit -m'&@'
+   local IFS=' '
+   git add . && git commit -m "$*"
 }
 # View the Git log.
 alias gl='git log --oneline'

@@ -13,6 +13,7 @@ require("plug_config.colorizer-setup")
 require("plug_config.colorscheme")
 -- require("plug_config.file-explorer")
 require("plug_config.fuzzy-finder")
+require("plug_config.git-config")
 require("plug_config.indent-guide")
 require("plug_config.lsp")
 require("plug_config.statusline")
@@ -31,3 +32,6 @@ vim.cmd(
 
 -- run this command after installing pylsp by mason
 -- PylspInstall pyls-flake8 pyls-isort pyls-mypy python-lsp-black python-lsp-ruff
+
+-- also need configurotion in pyproject.toml file
+-- https://jdhao.github.io/2023/07/22/neovim-pylsp-setup/

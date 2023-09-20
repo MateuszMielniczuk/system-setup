@@ -8,8 +8,9 @@ require("options")
 require("plugin-manager")
 
 -- load plugins configurations
-require("plug_config.colorscheme")
 require("plug_config.cmp")
+require("plug_config.colorizer-setup")
+require("plug_config.colorscheme")
 -- require("plug_config.file-explorer")
 require("plug_config.fuzzy-finder")
 require("plug_config.indent-guide")

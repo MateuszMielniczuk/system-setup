@@ -173,6 +173,9 @@ PATH="$HOME/.local/bin:$PATH"
 # enable vi mode in bash
 set -o vi
 
+# display current directory as terminal tab name (eg for kitty)
+PROMPT_COMMAND='echo -ne "\033]0;$(basename ${PWD})\007"'
+
 # ================ custom functions ==========================================
 # ============================================================================
 function find_largest_files() {

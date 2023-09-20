@@ -15,8 +15,6 @@ require('telescope').setup {
         prompt_prefix = " ",
         selection_caret = " ",
         path_display = { "smart" },
-
-
         mappings = {
             i = {
                 ["<C-n>"] = actions.cycle_history_next,
@@ -138,9 +136,14 @@ vim.keymap.set(
 )
 vim.keymap.set(
     'n', '<leader>sf',
-    require('telescope.builtin').find_files,
+    '<cmd>Telescope find_files hidden=true<cr>',
     { desc = '[s]earch [f]iles' }
 )
+-- vim.keymap.set(
+--     'n', '<leader>sf',
+--     require('telescope.builtin').find_files,
+--     { desc = '[s]earch [f]iles' }
+-- )
 vim.keymap.set(
     'n', '<leader>sg',
     require('telescope.builtin').live_grep,

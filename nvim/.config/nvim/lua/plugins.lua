@@ -16,6 +16,10 @@ return {
         "lukas-reineke/indent-blankline.nvim",
         lazy = true,
     },
+    {
+        'norcalli/nvim-colorizer.lua',
+        opts = {},
+    },
     -- comment line with gcc
     {
         'numToStr/Comment.nvim',
@@ -73,7 +77,7 @@ return {
         -- dependencies = {
         --     'nvim-treesitter/nvim-treesitter-textobjects',
         -- },
-        -- build = ':TSUpdate',
+        build = ':TSUpdate',
     },
     -- which key -------------------------------------------------------------
     -- displays a popup with possible key bindings

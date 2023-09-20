@@ -2,7 +2,6 @@
 -- See `:help vim.o`
 local opt = vim.opt
 
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -70,3 +69,4 @@ vim.o.undofile = true
 
  -- Save swap file and trigger CursorHold
 vim.o.updatetime = 250
+

@@ -17,3 +17,16 @@ require("plug_config.lsp")
 require("plug_config.statusline")
 require("plug_config.treesitter-config")
 require("plug_config.whichkey")
+
+
+-- set spell error style to less annoying
+vim.cmd(
+    [[
+    hi clear SpellBad
+    hi SpellBad cterm=underline
+    hi SpellBad gui=undercurl
+    ]]
+)
+
+-- run this command after installing pylsp by mason
+-- PylspInstall pyls-flake8 pyls-isort pyls-mypy python-lsp-black python-lsp-ruff

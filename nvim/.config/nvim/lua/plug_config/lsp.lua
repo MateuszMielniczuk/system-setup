@@ -1,69 +1,5 @@
--- local lsp_zero = require('lsp-zero')
--- -- lsp_zero.extend_cmp()
-
--- lsp_zero.on_attach(function(client, bufnr)
---     -- see :help lsp-zero-keybindings
---     -- to learn the available actions
---     lsp_zero.default_keymaps({ buffer = bufnr, preserve_mappings = true })
--- end)
-
--- require('mason').setup({})
--- require('mason-lspconfig').setup({
---     ensure_installed = {
---         'jedi_language_server', --python
---         'pylsp',                -- mypy lsp
---         'tsserver',             --typescript
---         'ruff_lsp',             -- check errors in python code
---         'rust_analyzer',        --rust
---     },
---     handlers = {
---         lsp_zero.default_setup,
---         lua_ls = function()
---             -- (Optional) Configure lua language server for neovim
---             local lua_opts = lsp_zero.nvim_lua_ls()
---             require('lspconfig').lua_ls.setup(lua_opts)
---             local mypy_opts = lsp_zero.nvim_pylsp()
---             require('lspconfig').pylsp.setup(mypy_opts)
---             local ruff_opts = lsp_zero.nvim_ruff()
---             require('lspconfig').ruff_lsp.setup(ruff_opts)
---         end,
---     }
--- })
-
-
--- NEW CONF ------------------------------------------------------------------
-------------------------------------------------------------------------------
-
--- lspconfig = require("lspconfig")
--- lspconfig.pylsp.setup {
---     -- on_attach = custom_attach,
---     settings = {
---         ruff_lsp = { enabled = true },
---         pylsp = {
---             plugins = {
---                 -- formatter options
---                 black = { enabled = true },
---                 autopep8 = { enabled = false },
---                 yapf = { enabled = false },
---                 -- linter options
---                 pylint = { enabled = true, executable = "pylint" },
---                 pyflakes = { enabled = false },
---                 pycodestyle = { enabled = false },
---                 -- type checker
---                 pylsp_mypy = { enabled = true },
---                 -- auto-completion options
---                 jedi_completion = { fuzzy = true },
---                 -- import sorting
---                 pyls_isort = { enabled = true },
---             },
---         },
---     },
---     flags = {
---         debounce_text_changes = 200,
---     },
---     capabilities = capabilities,
--- }
-
+-- LSP configuration ---------------------------------------------------------
+--
 -- KEYBINDINGS ---------------------------------------------------------------
 ------------------------------------------------------------------------------
 
@@ -218,7 +154,7 @@ mason_lspconfig.setup({
         'bashls',               -- bash
         'lua_ls',
         'jedi_language_server', --python
-        'pylsp',                -- mypy lsp
+        'pylsp',                -- python language servers
         -- run this command if pylsp installed:
         -- :PylspInstall pyls-flake8 pylsp-mypy pyls-isort
         'tsserver',             --typescript
@@ -262,11 +198,11 @@ lspconfig.pylsp.setup {
     capabilities = capabilities,
 }
 
-lspconfig.ruff_lsp.setup {
-    on_attach = custom_on_attach,
-    capabilities = capabilities,
-    filetypes = { 'python' },
-}
+-- lspconfig.ruff_lsp.setup {
+--     on_attach = custom_on_attach,
+--     capabilities = capabilities,
+--     filetypes = { 'python' },
+-- }
 
 lspconfig.jedi_language_server.setup {
     on_attach = custom_on_attach,

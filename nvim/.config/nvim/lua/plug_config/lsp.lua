@@ -18,14 +18,6 @@ local custom_on_attach = function(_, bufnr)
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
-    local nmap = function(keys, func, desc)
-        if desc then
-            desc = 'LSP: ' .. desc
-        end
-
-        vim.keymap.set('n', keys, func, { desc = desc })
-    end
-
     nmap(
         '<leader>rn',
         vim.lsp.buf.rename,
@@ -151,15 +143,11 @@ local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup({
     ensure_installed = {
-        'bashls',               -- bash
+        'bashls',               -- bash lsp
+        'jedi_language_server', --python lsp
         'lua_ls',
-        'jedi_language_server', --python
-        'pylsp',                -- python language servers
-        -- run this command if pylsp installed:
-        -- :PylspInstall pyls-flake8 pylsp-mypy pyls-isort
-        'tsserver',             --typescript
-        'ruff_lsp',             -- check errors in python code
-        'rust_analyzer',        --rust
+        'rust_analyzer',        --rust lsp
+        'tsserver',             --typescript lsp
     },
 })
 
@@ -167,42 +155,6 @@ lspconfig.bashls.setup {
     on_attach = custom_on_attach,
     capabilities = capabilities,
 }
-
-lspconfig.pylsp.setup {
-    on_attach = custom_on_attach,
-    settings = {
-        -- ruff_lsp = { enabled = true },
-        pylsp = {
-            plugins = {
-                -- formatter options
-                black = { enabled = true },
-                autopep8 = { enabled = false },
-                yapf = { enabled = false },
-                -- linter options
-                pylint = { enabled = true, executable = "pylint" },
-                pyflakes = { enabled = false },
-                pycodestyle = { enabled = false },
-                -- type checker
-                pylsp_mypy = { enabled = true },
-                -- auto-completion options
-                jedi_completion = { fuzzy = true },
-                -- import sorting
-                pyls_isort = { enabled = true },
-                ruff_lsp = { enabled = true },
-            },
-        },
-    },
-    flags = {
-        debounce_text_changes = 200,
-    },
-    capabilities = capabilities,
-}
-
--- lspconfig.ruff_lsp.setup {
---     on_attach = custom_on_attach,
---     capabilities = capabilities,
---     filetypes = { 'python' },
--- }
 
 lspconfig.jedi_language_server.setup {
     on_attach = custom_on_attach,
@@ -224,10 +176,10 @@ lspconfig.lua_ls.setup {
                 -- (most likely LuaJIT in the case of Neovim)
                 version = "LuaJIT",
             },
-            diagnostics = {
+            -- diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = { "vim" },
-            },
+                -- globals = { "vim" },
+            -- },
             workspace = {
                 checkThirdParty = false,
                 --   -- Make the server aware of Neovim runtime files,

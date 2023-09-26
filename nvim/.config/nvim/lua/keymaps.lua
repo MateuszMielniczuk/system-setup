@@ -33,7 +33,6 @@ keymap("n", "<C-l>", "<C-w>l", opts) -- right window
 -- navigate buffers
 keymap("n", "<tab>", ":bnext<cr>", opts) -- Next Tab
 keymap("n", "<s-tab>", ":bprevious<cr>", opts) -- Previous tab
--- keymap("n", "<leader>h", ":nohlsearch<cr>", opts) -- No highlight search
 
 -- move text up and down
 keymap("n", "<A-j>", ":m .+1<CR>==", opts) -- Alt-j

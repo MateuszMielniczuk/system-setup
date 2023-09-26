@@ -1,21 +1,21 @@
-require("nvim-treesitter.configs").setup {
+require("nvim-treesitter.configs").setup({
     -- Add a language of your choice
     ensure_installed = {
-        'bash',
-        'c',
-        'css',
-        'cpp',
-        'dockerfile',
-        'go',
-        'html',
-        'lua',
-        'python',
-        'rust',
-        'tsx',
-        'javascript',
-        'typescript',
-        'vimdoc',
-        'vim'
+        "bash",
+        "c",
+        "css",
+        "cpp",
+        "dockerfile",
+        "go",
+        "html",
+        "lua",
+        "python",
+        "rust",
+        "tsx",
+        "javascript",
+        "typescript",
+        "vimdoc",
+        "vim",
     },
     -- Automatically install missing parsers when entering buffer
     -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
@@ -24,7 +24,7 @@ require("nvim-treesitter.configs").setup {
     sync_install = false,
     ignore_install = { "all" }, -- List of parsers to ignore installing
     highlight = {
-        enable = true,       -- false will disable the whole extension
+        enable = true, -- false will disable the whole extension
         -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
         disable = function(lang, buf)
             local max_filesize = 100 * 1024 -- 100 KB
@@ -34,7 +34,6 @@ require("nvim-treesitter.configs").setup {
             end
         end,
         additional_vim_regex_highlighting = false,
-
     },
     indent = { enable = false, disable = { "yaml" } },
-}
+})

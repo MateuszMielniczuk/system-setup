@@ -5,9 +5,8 @@ if not status_ok then
     return
 end
 
-
 local actions = require("telescope.actions")
-require('telescope').setup {
+require("telescope").setup({
     defaults = {
         -- Default configuration for telescope goes here:
         -- config_key = value,
@@ -78,7 +77,7 @@ require('telescope').setup {
 
                 ["?"] = actions.which_key,
             },
-        }
+        },
     },
     pickers = {
         -- Default configuration for builtin pickers goes here:
@@ -95,82 +94,37 @@ require('telescope').setup {
         --   extension_config_key = value,
         -- }
         -- please take a look at the readme of the extension you want to configure
-    }
-}
+    },
+})
 
 -- See `:help telescope.builtin`
-vim.keymap.set(
-    'n', '<leader>?', require('telescope.builtin').oldfiles, {
-        desc = '[?] Find recently opened files'
-    }
-)
-vim.keymap.set(
-    'n', '<leader><space>', require('telescope.builtin').buffers, {
-        desc = '[ ] Find existing buffers'
-    }
-)
-vim.keymap.set('n', '<leader>/', function()
+vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, {
+    desc = "[?] Find recently opened files",
+})
+vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, {
+    desc = "[ ] Find existing buffers",
+})
+vim.keymap.set("n", "<leader>/", function()
     -- You can pass additional configuration to telescope to change theme, layout, etc.
-    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
         winblend = 10,
         previewer = false,
-    })
-end, { desc = '[/] Fuzzily search in current buffer' })
+    }))
+end, { desc = "[/] Fuzzily search in current buffer" })
 
+vim.keymap.set("n", "<leader>gf", require("telescope.builtin").git_files, { desc = "Search [g]it [f]iles" })
 
-vim.keymap.set(
-    'n', '<leader>gf',
-    require('telescope.builtin').git_files,
-    { desc = 'Search [g]it [f]iles' }
-)
-
-vim.keymap.set(
-    'n', '<leader>sc',
-    require('telescope.builtin').colorscheme,
-    { desc = '[s]earch [c]olorscheme' }
-)
-vim.keymap.set(
-    'n', '<leader>sd',
-    require('telescope.builtin').diagnostics,
-    { desc = '[s]earch [d]iagnostics' }
-)
-vim.keymap.set(
-    'n', '<leader>sf',
-    '<cmd>Telescope find_files hidden=true<cr>',
-    { desc = '[s]earch [f]iles' }
-)
+vim.keymap.set("n", "<leader>sc", require("telescope.builtin").colorscheme, { desc = "[s]earch [c]olorscheme" })
+vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[s]earch [d]iagnostics" })
+vim.keymap.set("n", "<leader>sf", "<cmd>Telescope find_files hidden=true<cr>", { desc = "[s]earch [f]iles" })
 -- vim.keymap.set(
 --     'n', '<leader>sf',
 --     require('telescope.builtin').find_files,
 --     { desc = '[s]earch [f]iles' }
 -- )
-vim.keymap.set(
-    'n', '<leader>sg',
-    require('telescope.builtin').live_grep,
-    { desc = '[s]earch by [g]rep' }
-)
-vim.keymap.set(
-    'n', '<leader>sh',
-    require('telescope.builtin').help_tags,
-    { desc = '[s]earch [h]elp' }
-)
-vim.keymap.set(
-    'n', '<leader>sk',
-    require('telescope.builtin').keymaps,
-    { desc = '[s]earch [k]eymaps' }
-)
-vim.keymap.set(
-    'n', '<leader>sm',
-    require('telescope.builtin').man_pages,
-    { desc = '[s]earch [m]an pages' }
-)
-vim.keymap.set(
-    'n', '<leader>sr',
-    require('telescope.builtin').resume,
-    { desc = '[s]earch [r]resume' }
-)
-vim.keymap.set(
-    'n', '<leader>sw',
-    require('telescope.builtin').grep_string,
-    { desc = '[s]earch current [w]ord' }
-)
+vim.keymap.set("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[s]earch by [g]rep" })
+vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[s]earch [h]elp" })
+vim.keymap.set("n", "<leader>sk", require("telescope.builtin").keymaps, { desc = "[s]earch [k]eymaps" })
+vim.keymap.set("n", "<leader>sm", require("telescope.builtin").man_pages, { desc = "[s]earch [m]an pages" })
+vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume, { desc = "[s]earch [r]resume" })
+vim.keymap.set("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[s]earch current [w]ord" })

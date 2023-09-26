@@ -2,8 +2,6 @@
 
 local opts = { noremap = true, silent = true }
 
-local term_opts = { silent = true }
-
 -- Shorten function name
 -- See `:help vim.keymap.set()`
 local keymap = vim.keymap.set
@@ -12,8 +10,8 @@ local keymap = vim.keymap.set
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Modes
 --   normal_mode = "n",
@@ -33,23 +31,22 @@ keymap("n", "<C-j>", "<C-w>j", opts) -- down window
 keymap("n", "<C-l>", "<C-w>l", opts) -- right window
 
 -- navigate buffers
-keymap("n", "<tab>", ":bnext<cr>", opts) -- Next Tab 
+keymap("n", "<tab>", ":bnext<cr>", opts) -- Next Tab
 keymap("n", "<s-tab>", ":bprevious<cr>", opts) -- Previous tab
 -- keymap("n", "<leader>h", ":nohlsearch<cr>", opts) -- No highlight search
 
 -- move text up and down
-keymap("n", "<A-j>", ":m .+1<CR>==", opts) -- Alt-j 
+keymap("n", "<A-j>", ":m .+1<CR>==", opts) -- Alt-j
 keymap("n", "<A-k>", ":m .-2<CR>==", opts) -- Alt-k
 
--- insert --------------------------------------------------------------------
+-- Insert --------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
--- press jk fast to exit insert mode 
+-- press jk fast to exit insert mode
 keymap("i", "jk", "<esc>", opts) -- Insert mode -> jk -> Normal mode
 keymap("i", "kj", "<esc>", opts) -- Insert mode -> kj -> Normal mode
 
-
--- visual --------------------------------------------------------------------
+-- Visual --------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 -- stay in indent mode, so not escaping from selection

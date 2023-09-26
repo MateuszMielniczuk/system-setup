@@ -1,16 +1,12 @@
 return {
     -- detect tabstop and shiftwidth automatically ---------------------------
-    'tpope/vim-sleuth',
+    "tpope/vim-sleuth",
 
     -- color schemes install -------------------------------------------------
     {
-        'navarasu/onedark.nvim',
+        "navarasu/onedark.nvim",
         priority = 1000,
     },
-    -- {
-    --     "ellisonleao/gruvbox.nvim",
-    --     priority = 1000
-    -- },
     -- indentation guidelines ------------------------------------------------
     {
         "lukas-reineke/indent-blankline.nvim",
@@ -19,7 +15,7 @@ return {
 
     -- make color definitions colorized in the background --------------------
     {
-        'norcalli/nvim-colorizer.lua',
+        "norcalli/nvim-colorizer.lua",
         opts = {},
     },
 
@@ -31,7 +27,7 @@ return {
 
     -- comment line with gcc -------------------------------------------------
     {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         opts = {
             -- add any options here
         },
@@ -40,36 +36,36 @@ return {
 
     -- Lualine ---------------------------------------------------------------
     {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' }
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 
     -- pair brackets automatically -------------------------------------------
     {
-        'windwp/nvim-autopairs',
-	event = "InsertEnter",
-	opts = {} -- this is equalent to setup({}) function
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        opts = {}, -- this is equalent to setup({}) function
     },
 
     -- LSP Support -----------------------------------------------------------
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         dependencies = {
             -- lsp's manager auto install and manage lsp's
-            { 'williamboman/mason.nvim', config = true },
-            'williamboman/mason-lspconfig.nvim',
+            { "williamboman/mason.nvim", config = true },
+            "williamboman/mason-lspconfig.nvim",
 
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Autocompletion
-            'folke/neodev.nvim',     -- add nvim namespace to lsp
+            { "hrsh7th/cmp-nvim-lsp" }, -- Autocompletion
+            "folke/neodev.nvim", -- add nvim namespace to lsp
         },
     },
 
     -- Autocompletion --------------------------------------------------------
     {
-        'hrsh7th/nvim-cmp',
+        "hrsh7th/nvim-cmp",
         -- event = 'InsertEnter',
         dependencies = {
-            { 'L3MON4D3/LuaSnip' },
+            { "L3MON4D3/LuaSnip" },
         },
     },
 
@@ -88,25 +84,25 @@ return {
     -- Telescope (Fuzzy Finder) ----------------------------------------------
     -- Added these plugins to install Telescope ------------------------------
     {
-        'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
+        "nvim-telescope/telescope.nvim",
+        branch = "0.1.x",
         lazy = true,
         dependencies = {
-            { 'nvim-lua/plenary.nvim' },
-        }
+            { "nvim-lua/plenary.nvim" },
+        },
     },
 
     -- better color highlighting for many languages --------------------------
     {
-        'nvim-treesitter/nvim-treesitter',
+        "nvim-treesitter/nvim-treesitter",
         -- dependencies = {
         --     'nvim-treesitter/nvim-treesitter-textobjects',
         -- },
-        build = ':TSUpdate',
+        build = ":TSUpdate",
     },
 
     -- which key -------------------------------------------------------------
-    -- displays a popup with possible key bindings
+    -- displays a popup with possible key bindings ---------------------------
     {
         "folke/which-key.nvim",
         event = "VeryLazy",

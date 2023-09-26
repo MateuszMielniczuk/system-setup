@@ -1,12 +1,11 @@
 -- git-config.lua
 
-
 local status_ok, gitsigns = pcall(require, "gitsigns")
 if not status_ok then
     return
 end
 
-gitsigns.setup {
+gitsigns.setup({
     signs = {
         add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
         change = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
@@ -50,18 +49,22 @@ gitsigns.setup {
     },
     on_attach = function(bufnr)
         vim.keymap.set(
-          'n', '<leader>gp',
-          require('gitsigns').prev_hunk,
-          { buffer = bufnr, desc = '[g]o to [p]revious hunk' }
+            "n",
+            "<leader>gp",
+            require("gitsigns").prev_hunk,
+            { buffer = bufnr, desc = "[g]o to [p]revious hunk" }
         )
         vim.keymap.set(
-          'n', '<leader>gn',
-          require('gitsigns').next_hunk,
-          { buffer = bufnr, desc = '[g]o to [n]ext hunk' }
+            "n",
+            "<leader>gn",
+            require("gitsigns").next_hunk,
+            { buffer = bufnr, desc = "[g]o to [n]ext hunk" }
         )
-        vim.keymap.set('n', '<leader>ph',
-        require('gitsigns').preview_hunk,
-        { buffer = bufnr, desc = '[p]review [h]unk' }
-    )
-      end,
-}
+        vim.keymap.set(
+            "n",
+            "<leader>ph",
+            require("gitsigns").preview_hunk,
+            { buffer = bufnr, desc = "[p]review [h]unk" }
+        )
+    end,
+})

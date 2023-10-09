@@ -1,0 +1,228 @@
+format = """\
+[](bg)\
+$os\
+[  ](fg:gray bg:bg)\
+$username\
+$hostname\
+[  ](fg:gray bg:bg)\
+$directory\
+$kubernetes\
+$docker_context\
+$package\
+$golang\
+$guix_shell\
+$helm\
+$lua\
+$nodejs\
+$php\
+$python\
+$rust\
+$solidity\
+$conda\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$env_var\
+[󰍟](bg)\
+$sudo\
+$fill\
+$cmd_duration\
+$fill\
+[󰍞](bg)\
+$jobs\
+$git_branch\
+$git_status
+$shlvl\
+$time\
+$status\
+$container\
+$shell\
+\u0020\
+$character
+"""
+
+# add_newline = false
+
+palette = "gruvbox-dark"
+
+[fill]
+symbol = "-"
+style = "gray"
+
+[username]
+format = "[$user]($style)"
+disabled = false
+show_always = true
+style_user = "fg:blue bg:bg"
+style_root = "fg:blue bg:bg"
+
+[hostname]
+ssh_only = true
+format = '[@$ssh_symbol]($style)[$hostname]($style)'
+ssh_symbol = "󰞉 "
+trim_at = "."
+disabled = false
+style = "fg:blue bg:bg"
+
+[directory]
+read_only = ""
+format = '[$read_only󰋞 $path]($style)'
+truncation_length = 4
+truncate_to_repo = true # truncates directory to root folder if in github repo
+truncation_symbol = "…/"
+style = "fg:yellow bg:bg"
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch) ]($style)'
+symbol = ""
+style = "fg:purple bg:bg"
+truncation_length = 15
+truncation_symbol = "…"
+
+[git_metrics]
+format = "([+$added]($added_style))([-$deleted]($deleted_style))"
+added_style = "gray"
+deleted_style = "red"
+disabled = false
+
+[git_status]
+# format = '[$all_status]($style)'
+style = "fg:purple bg:bg"
+
+[cmd_duration]
+min_time = 1_500
+show_milliseconds = false
+format = "[󱦟 $duration]($style)"
+style = "blue"
+show_notifications = false
+min_time_to_notify = 50_000
+
+[character]
+success_symbol = '[󰅂](bold green)'
+error_symbol = '[󰅂](bold red)'
+
+[time]
+disabled = false
+# time_format = "%T" # Hour:Minute:Second Format
+time_format = "%R" # Hour:Minute Format
+format = '[[$time](blue)]($style)'
+
+[aws]
+symbol = ""
+style = "fg:aqua bg:bg"
+
+[conda]
+symbol = ""
+style = "fg:aqua bg:bg"
+
+[docker_context]
+symbol = ""
+format = "[$symbol$context]($style)"
+style = "gray"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml", "Dockerfile"]
+detect_folders = []
+disabled = false
+
+[lua]
+format = '[  ](fg:gray bg:bg)[${symbol}(${version})]($style)'
+version_format = '${raw}'
+symbol = ''
+style = "fg:aqua bg:bg"
+
+[golang]
+symbol = ""
+style = "fg:aqua bg:bg"
+
+[package]
+symbol = "📦"
+
+[php]
+symbol = ""
+style = "fg:aqua bg:bg"
+
+[python]
+symbol = ""
+#pyenv_version_name = true
+format = '[  ](fg:gray bg:bg)[${symbol}(${version})(\($virtualenv\))]($style)'
+style = "fg:aqua bg:bg"
+pyenv_prefix = "venv"
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+detect_extensions = ["py"]
+version_format = "${raw}"
+
+[nodejs]
+format = "[  ](fg:gray bg:bg)[󰎙$version]($style)"
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+style = "fg:aqua bg:bg"
+version_format = '${raw}'
+
+[rust]
+symbol = ""
+style = "fg:aqua bg:bg"
+
+[shlvl]
+format = "[$symbol$shlvl ]($style)"
+threshold = 2
+symbol = ""
+disabled = false
+style = "blue"
+
+[jobs]
+symbol_threshold = 1
+number_threshold = 2
+format = "[$symbol$number]($style)"
+symbol = " "
+style = "purple"
+disabled = false
+
+[os]
+format = "[${symbol}]($style)"
+# format = "[ ${symbol}($version )]($style)"
+style = "fg:fg bg:bg"
+disabled = false
+
+[os.symbols]
+Alpine = ""
+Arch = "󰣇"
+Debian = ""
+FreeBSD = ""
+Linux = "󰌽"
+Manjaro = ""
+Mint = "󰣭"
+openSUSE = ""
+Raspbian = ""
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+SUSE = ""
+Ubuntu = ""
+Unknown = "?"
+Windows = ""
+
+
+# Color palettes config
+[palettes.gruvbox-dark]
+bg = "#282828"
+gray = "#928374"
+red = "#fb4934"
+green = "#b8bb26"
+yellow = "#fabd2f"
+blue = "#83a598"
+purple = "#d3869b"
+aqua = "#8ec07c"
+fg = "#ebdbb2"
+orange = "#fe8019"
+
+[palettes.gruvbox-light]
+bg = "#fbf1c7"
+gray = "#928374"
+red = "#9d0006"
+green = "#79740e"
+yellow = "#b57614"
+blue = "#076678"
+purple = "#8f3f71"
+aqua = "#427b58"
+fg = "#3c3836"
+orange = "#af3a03"

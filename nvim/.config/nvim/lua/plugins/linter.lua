@@ -22,7 +22,7 @@ return {
         pylint.args = {
             "-f",
             "json",
-            "--disable=E0401,C0114",
+            "--disable=E0401,C0114,R0913",
         }
 
         lint.linters_by_ft = {
@@ -30,7 +30,7 @@ return {
             typescript = { "eslint_d" },
             javascriptreact = { "eslint_d" },
             typescriptreact = { "eslint_d" },
-            python = { "pylint", "flake8", "mypy" },
+            python = { "bandit", "pylint", "flake8", "mypy" },
         }
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

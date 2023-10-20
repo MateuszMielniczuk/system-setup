@@ -136,6 +136,8 @@ symbol = ""
 style = "fg:aqua bg:bg"
 
 [package]
+format = '[  ](fg:gray bg:bg)[${symbol}(${version})]($style)'
+style = "fg:orange bg:bg"
 symbol = "📦"
 
 [php]

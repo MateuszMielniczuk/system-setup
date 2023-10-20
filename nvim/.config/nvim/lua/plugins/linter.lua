@@ -22,7 +22,7 @@ return {
         pylint.args = {
             "-f",
             "json",
-            "--disable=E0401,C0114,R0913",
+            "--disable=E0401,C0114,R0913,E1101",
         }
 
         lint.linters_by_ft = {

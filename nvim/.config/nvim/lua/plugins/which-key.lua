@@ -121,7 +121,9 @@ return {
             h = { name = "Hoover" },
             l = { name = "Lsp" },
             s = { name = "Search" },
-            ["k"] = { "<cmd>bdelete<CR>", "Kill Buffer" }, -- Close current file
+            -- bp - move to previous buffer,
+            -- bd # - kill buffer from which just moved away
+            ["k"] = { "<cmd>bp|bd #<CR>", "Kill Buffer" },
             ["p"] = { "<cmd>Lazy<CR>", "Plugin Manager" }, -- Invoking plugin manager
             ["q"] = { "<cmd>q<CR>", "Quit nvim" }, -- Quit Neovim after saving the file
             ["w"] = { "<cmd>w!<CR>", "Write - Save file" }, -- Save current file

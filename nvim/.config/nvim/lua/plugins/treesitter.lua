@@ -4,6 +4,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
+        "windwp/nvim-ts-autotag", -- autoclosing tags
     },
     build = ":TSUpdate",
     config = function()
@@ -17,9 +18,14 @@ return {
                 "css",
                 "cpp",
                 "dockerfile",
+                "gitignore",
                 "go",
+                "graphql",
                 "html",
+                "json",
                 "lua",
+                "markdown",
+                "markdown_inline",
                 "python",
                 "rust",
                 "tsx",
@@ -27,6 +33,8 @@ return {
                 "typescript",
                 "vimdoc",
                 "vim",
+                "vimdoc",
+                "yaml",
             },
             incremental_selection = {
                 enable = true,

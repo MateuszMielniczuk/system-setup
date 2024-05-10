@@ -5,9 +5,15 @@ return {
     event = "InsertEnter",
     dependencies = {
         {
-            "L3MON4D3/LuaSnip", -- add snippet engine
             "hrsh7th/cmp-path", -- source for file system paths
             "hrsh7th/cmp-buffer", --source for text in buffer
+            {
+                "L3MON4D3/LuaSnip",
+                -- follow latest release.
+                version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+                -- install jsregexp (optional!).
+                build = "make install_jsregexp",
+            },
         },
     },
     config = function()
@@ -21,7 +27,7 @@ return {
         -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
         -- require("luasnip.loaders.from_vscode").lazy_load()
 
-        luasnip.config.setup({})
+        -- luasnip.config.setup({})
 
         cmp.setup({
             -- REQUIRED - you must specify a snippet engine

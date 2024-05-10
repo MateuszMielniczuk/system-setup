@@ -117,10 +117,11 @@ return {
             a = { name = "AI" },
             c = { name = "Code action" },
             d = { name = "Diagnostics" },
-            g = { name = "Goto" },
+            g = { name = "Go to" },
             h = { name = "Hoover" },
-            l = { name = "Lsp" },
+            l = { name = "LSP" },
             s = { name = "Search" },
+            t = { name = "Tab nav" },
             -- bp - move to previous buffer,
             -- bd # - kill buffer from which just moved away
             ["k"] = { "<cmd>bp|bd #<CR>", "Kill Buffer" },

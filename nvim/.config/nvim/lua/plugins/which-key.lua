@@ -127,7 +127,7 @@ return {
             ["p"] = { "<cmd>Lazy<CR>", "Plugin Manager" }, -- Invoking plugin manager
             ["q"] = { "<cmd>q<CR>", "Quit nvim" }, -- Quit Neovim after saving the file
             ["w"] = { "<cmd>w!<CR>", "Write - Save file" }, -- Save current file
-            ["t"] = { "<cmd>Ex<CR>", "Tree - File Explorer" },
+            ["e"] = { "<cmd>Ex<CR>", "Tree - File Explorer" },
             ["m"] = { "<cmd>Mason<cr>", "Mason open" }, -- LSP Manager
         }
 

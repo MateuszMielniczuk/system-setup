@@ -29,6 +29,9 @@ Run command `:checkhealth` to see all errors within nvim installation
 `alt`+`j` - move cursor line down\
 `alt`+`k` - move cursor line up
 
+`ctrl` + `j` or `ctrl` + `x` - decrement number
+`ctrl` + `k` or `ctrl` + `a`- increment number
+
 `j` `k` or `k` `j` - exit insert mode (faster than pressing `esc`)
 
 `g` `c` - code comment (with comment library)
@@ -47,7 +50,7 @@ Leader key - `space`
 `m` - open mason lsp, linter, formatter manager\
 `p` - open package manager\
 `r` - rename variable (lsp)
-`t` - open file explorer\
+`e` - open file explorer\
 `q` - quit neovim\
 `w` - write changes to the current buffer
 
@@ -105,6 +108,14 @@ Leader key - `space`
 `s` `u` - search keymaps resume\
 `s` `s` - show all class, functions, variables definitions with telescope (lsp)\
 `s` `w` - search string(word) by grep in current directory
+
+### tab navigation
+
+`t` `o` - open new tab
+`t` `x` - close current tab
+`t` `n` - go to next tab
+`t` `p` - go to previous tab
+`t` `f` - open current buffer in new tab
 
 ## Autocompletion with lsp (internal)
 
@@ -273,8 +284,8 @@ Find and replace:\
 - to replace only current line:\
   `:s/to_replace/replace`
 
-- to replace all occurrences in line:\
+- to replace all occurrences in one line:\
   `:s/to_replace/replace/g`
 
-- to replace all is file use `%` sign as range:\
+- to replace all occurrences in a file use `%` sign as range:\
   `:%s/to_replace/replace/g`

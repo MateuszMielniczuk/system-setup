@@ -5,10 +5,13 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
+        -- import mason
         local mason = require("mason")
+
         -- import mason-lspconfig
         local mason_lspconfig = require("mason-lspconfig")
 
+        -- import mason_tool_installer
         local mason_tool_installer = require("mason-tool-installer")
 
         mason.setup({
@@ -26,7 +29,8 @@ return {
                 -- list of lsp servers to be installed automatically by mason
                 "bashls", -- bash lsp
                 "cssls",
-                "emmet_ls", -- shortcuts for html, css
+                "emmet_ls", -- shortcuts for html, css generation
+                "graphql",
                 "html",
                 "jedi_language_server", --python lsp
                 "lua_ls",

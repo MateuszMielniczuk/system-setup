@@ -50,7 +50,7 @@ return {
                 ["<C-u>"] = cmp.mapping.scroll_docs(-4), -- scroll documentation
                 ["<C-d>"] = cmp.mapping.scroll_docs(4), -- scroll documentation
                 ["C-c"] = cmp.mapping.abort(), -- close completion window
-                ["<CR>"] = cmp.mapping.confirm({
+                ["<cr>"] = cmp.mapping.confirm({
                     behavior = cmp.ConfirmBehavior.Replace,
                     select = false,
                 }),

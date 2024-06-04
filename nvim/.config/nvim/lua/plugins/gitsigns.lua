@@ -5,6 +5,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         -- git-config.lua
+        local icons = require("core.icons")
 
         local status_ok, gitsigns = pcall(require, "gitsigns")
         if not status_ok then
@@ -15,31 +16,31 @@ return {
             signs = {
                 add = {
                     hl = "GitSignsAdd",
-                    text = "+",
+                    text = icons.git.LineAdded,
                     numhl = "GitSignsAddNr",
                     linehl = "GitSignsAddLn",
                 },
                 change = {
                     hl = "GitSignsChange",
-                    text = "~",
+                    text = icons.git.LineModified,
                     numhl = "GitSignsChangeNr",
                     linehl = "GitSignsChangeLn",
                 },
                 delete = {
                     hl = "GitSignsDelete",
-                    text = "_",
+                    text = icons.git.LineRemoved,
                     numhl = "GitSignsDeleteNr",
                     linehl = "GitSignsDeleteLn",
                 },
                 topdelete = {
                     hl = "GitSignsDelete",
-                    text = "‾",
+                    text = icons.git.FileDeleted,
                     numhl = "GitSignsDeleteNr",
                     linehl = "GitSignsDeleteLn",
                 },
                 changedelete = {
                     hl = "GitSignsChange",
-                    text = "~",
+                    text = icons.git.LineModified,
                     numhl = "GitSignsChangeNr",
                     linehl = "GitSignsChangeLn",
                 },

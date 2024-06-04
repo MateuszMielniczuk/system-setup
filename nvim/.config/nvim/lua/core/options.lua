@@ -1,5 +1,11 @@
--- nvim Explorer showing tree view
-vim.cmd("let g:netrw_liststyle = 3")
+-- INFO: This file contains all the options that are set in Neovim
+
+-- Editing VIM Netrw Explorer
+vim.cmd("let g:netrw_liststyle = 3") -- show tree view
+-- vim.cmd("let g:netrw_browse_split = 4") -- open in previous window after split
+vim.cmd("let g:netrw_keepdir = 0") -- avoid move files error
+vim.cmd("let g:netrw_localcopydircmd = 'cp -r'") -- copy directory recursively
+vim.cmd("let g:netrw_winsize = 25") -- set netrw window size after split
 
 -- [[ Setting options ]]
 -- See `:help opt`
@@ -8,10 +14,10 @@ local opt = vim.opt
 -- Enable break indent
 opt.breakindent = true
 
--- colorschemes that can use darktheme will use it
+-- Colorschemes that can use darktheme will use it
 opt.background = "dark"
 
--- allow backspace on indent, end of line or start position
+-- Allow backspace on indent, end of line or start position
 opt.backspace = "indent,eol,start"
 
 -- Sync clipboard between OS and Neovim.
@@ -19,40 +25,47 @@ opt.backspace = "indent,eol,start"
 --  See `:help 'clipboard'`
 opt.clipboard:append("unnamedplus")
 
--- draw line to see max code line
-opt.colorcolumn = "80"
+-- Draw line to see max code line
+-- opt.colorcolumn = "80"
 
 -- Set to have a better completion experience
 opt.completeopt = "menuone,noselect"
 
--- opt.conceallevel = 3 -- Hide * markup for bold and italic
+opt.conceallevel = 0 -- Hide * markup for bold and italic
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
 
 -- opt.expandtab = true -- Use spaces instead of tabs
 
--- fold functions and classes with: `za` keybord shortcut
+-- Fold functions and classes with: `za` keybord shortcut
 opt.foldmethod = "indent"
 opt.foldlevel = 99
 
 -- Set highlight on search
-opt.hlsearch = false
+opt.hlsearch = true
 
 -- Case-insensitive searching UNLESS \C or capital in search
 opt.ignorecase = true
+
+opt.incsearch = true -- search like in modern browser
 
 -- Enable mouse mode for normal and visual mode
 opt.mouse = "v"
 
 vim.wo.number = true -- Print line numbers
 
--- current selected line always 0, helps with navigation
+opt.pumheight = 10 -- Popup menu height
+
+-- Current selected line always 0, helps with navigation
 vim.wo.relativenumber = true
+
+opt.ruler = false -- Don't show the ruler
 
 opt.showmode = false -- Dont show mode since we have a statusline
 
--- show additional hidden lines of text when scroll
+-- Show additional hidden lines of text when scroll
 opt.scrolloff = 8
+opt.sidescrolloff = 8
 
 -- This is for displaying additional left col for errors git etc.
 vim.wo.signcolumn = "yes"
@@ -70,11 +83,16 @@ opt.splitright = true -- Put new windows right of current
 -- Enable 24-bit colors in terminal
 opt.termguicolors = true
 
--- speed must be under 500ms inorder for keys to work, increase if you are not able to.
+-- Speed must be under 500ms inorder for keys to work, increase if you are not
+-- able to.
 opt.timeoutlen = 300
 
 -- Save undo history
 opt.undofile = true
 
--- Save swap file and trigger CursorHold
+-- Faster completion time
 opt.updatetime = 250
+
+-- if a file is being edited by another program (or was written to file while
+-- editing with another program), it is not allowed to be edited
+vim.opt.writebackup = false

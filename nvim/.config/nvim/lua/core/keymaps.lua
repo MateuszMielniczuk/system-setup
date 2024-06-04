@@ -56,6 +56,9 @@ key_map("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })
 key_map("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 key_map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 
+-- clean highlight from search
+key_map("n", "<CR>", ":noh<CR><CR>", { desc = "Clean search highlight" })
+
 -- Insert --------------------------------------------------------------------
 ------------------------------------------------------------------------------
 

@@ -20,16 +20,19 @@ return {
 
         -- Set menu
         dashboard.section.buttons.val = {
-            dashboard.button("SPC e", "  > Toggle file explorer", "<cmd>Ex<CR>"),
-            dashboard.button(":ene", "  > New File", "<cmd>ene<CR>"),
-            dashboard.button("SPC sf", "󰱼  > Search File", "<cmd>Telescope find_files<CR>"),
-            dashboard.button("SPC sw", "  > Find Word", "<cmd>Telescope live_grep<CR>"),
+            -- dashboard.button("e", " " .. " Toggle file explorer", ":Ex<CR>"),
+            -- dashboard.button("n", " " .. " New File", ":ene <BAR> startinsert <CR>"),
+            dashboard.button("f", "󰱼 " .. " Search File", ":Telescope find_files<CR>"),
+            dashboard.button("g", " " .. " Find Word", ":Telescope live_grep<CR>"),
+            dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
             dashboard.button(
-                "none",
-                "󰁯  > Restore Session For Current Directory",
-                "<cmd>SessionRestore<CR>"
+                "s",
+                "󰁯 " .. " Restore Session For Current Directory",
+                ":SessionRestore<CR>"
             ),
-            dashboard.button("q", "  > Quit NVIM", "<cmd>qa<CR>"),
+            dashboard.button("l", " " .. " Open package manager", ":Lazy<CR>"),
+            dashboard.button("c", " " .. " Config", ":e ~/.config/nvim/ <CR>"),
+            dashboard.button("q", " " .. " Quit NVIM", ":qa<CR>"),
         }
 
         -- Send config to alpha

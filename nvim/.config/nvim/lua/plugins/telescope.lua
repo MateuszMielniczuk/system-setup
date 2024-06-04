@@ -105,8 +105,9 @@ return {
 
         telescope.load_extension("fzf")
 
-        -- set keymaps
+        -- KEYMAPS --------------------------------------------------------
         -- See `:help telescope.builtin`
+        -- ----------------------------------------------------------------
         vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, {
             desc = "[?] Find recently opened files",
         })

@@ -61,7 +61,7 @@ return {
                 scroll_up = "<c-k>", -- binding to scroll up inside the popup
             },
             window = {
-                border = "single", -- none, single, double, shadow
+                border = "none", -- none, single, double, shadow
                 position = "bottom", -- bottom, top
                 margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
                 padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
@@ -95,6 +95,11 @@ return {
                 -- spelling
                 "z=",
             },
+            -- Disabled by default for Telescope
+            disable = {
+                buftypes = {},
+                filetypes = { "TelescopePrompt" },
+            },
             triggers_blacklist = {
                 -- list of mode / prefixes that should never be hooked by WhichKey
                 -- this is mostly relevant for key maps that start with a native binding
@@ -116,10 +121,10 @@ return {
         local mappings = {
             a = { name = "AI" },
             c = { name = "Code action" },
-            d = { name = "Diagnostics" },
-            g = { name = "Go to" },
-            h = { name = "Hoover" },
-            l = { name = "LSP" },
+            d = "Diagnostics",
+            g = "Go to",
+            h = "Hoover",
+            l = "LSP",
             s = { name = "Search" },
             t = { name = "Tab nav" },
             -- bp - move to previous buffer,
@@ -128,7 +133,8 @@ return {
             ["p"] = { "<cmd>Lazy<CR>", "Plugin Manager" }, -- Invoking plugin manager
             ["q"] = { "<cmd>q<CR>", "Quit nvim" }, -- Quit Neovim after saving the file
             ["w"] = { "<cmd>w!<CR>", "Write - Save file" }, -- Save current file
-            ["e"] = { "<cmd>Ex<CR>", "Tree - File Explorer" },
+            ["e"] = { "<cmd>Ex<CR>", "File Explorer - Open Full screen" },
+            -- ["E"] = { "<cmd>Lexplore<CR>", "File Explorer - toggle left" },
             ["m"] = { "<cmd>Mason<cr>", "Mason open" }, -- LSP Manager
         }
 

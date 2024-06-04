@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     pattern = "*",
 })
 
--- always leave space at the bottom of the file when scrolling to bottom
+-- Always leave space at the bottom of the file when scrolling to bottom
 vim.cmd([[
 augroup ScrollOffAtEnd
   autocmd!
@@ -32,3 +32,6 @@ function ScrollOffAtEnd(insert_mode) abort
   endwhile
 endfunction
 ]])
+
+-- resize neovim split when terminal is resized
+-- vim.api.nvim_command("autocmd VimResized * wincmd =")

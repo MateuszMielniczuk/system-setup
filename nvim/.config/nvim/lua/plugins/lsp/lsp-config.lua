@@ -48,9 +48,9 @@ return {
 
             nmap("<leader>dl", vim.diagnostic.setloclist, "[d]iagnostics [l]ist")
 
-            nmap("<leader>hd", vim.diagnostic.open_float, "[h]oover [d]diagnostic floating window")
-            nmap("<leader>hk", vim.lsp.buf.hover, "[h]over [i]nfo documentation")
-            nmap("<leader>hs", vim.lsp.buf.signature_help, "[h]oover [s]ignature Documentation")
+            nmap("<leader>he", vim.diagnostic.open_float, "[h]oover [e]diagnostic floating")
+            nmap("<leader>hd", vim.lsp.buf.hover, "[h]over [d]ocumentation")
+            nmap("<leader>hs", vim.lsp.buf.signature_help, "[h]over [s]ignature documentation")
 
             nmap("<leader>gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
             nmap("<leader>gD", vim.lsp.buf.declaration, "[g]oto [D]eclaration")
@@ -68,6 +68,11 @@ return {
                 "<leader>ss",
                 require("telescope.builtin").lsp_document_symbols,
                 "[s]earch [s]ymbols"
+            )
+            nmap(
+                "<leader>sp",
+                require("telescope.builtin").lsp_workspace_symbols,
+                "[s]earch [p]roject symbols"
             )
             -- nmap(
             --     "<leader>ss",

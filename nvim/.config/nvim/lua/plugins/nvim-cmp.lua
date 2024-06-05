@@ -1,4 +1,6 @@
--- Autocompletion --------------------------------------------------------
+-- INFO: Autocompletion plugin for neovim
+--
+
 return {
     "hrsh7th/nvim-cmp",
     -- this event loads cmp only when being used

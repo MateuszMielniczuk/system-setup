@@ -1,4 +1,6 @@
--- make color definitions colorized in the background --------------------
+-- INFO: Make color definitions colorized in the background
+--
+
 return {
     "norcalli/nvim-colorizer.lua",
     event = { "BufReadPre", "BufNewFile" },

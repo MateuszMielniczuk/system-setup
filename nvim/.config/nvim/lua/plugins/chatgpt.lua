@@ -1,4 +1,6 @@
--- chatgpt
+-- INFO: Library for OpenAI ChatGPT API
+-- Allowing to modify code, explain code, fix bugs, optimize code, add tests, add docstrings, autocomplete code and more.
+
 return {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",

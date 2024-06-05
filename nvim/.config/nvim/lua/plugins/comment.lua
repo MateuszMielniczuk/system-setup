@@ -1,4 +1,6 @@
--- comment line with gcc -------------------------------------------------
+-- INFO Comment line with gcc
+-- Helps with commenting out lines of code
+
 return {
     "numToStr/Comment.nvim",
     opts = {

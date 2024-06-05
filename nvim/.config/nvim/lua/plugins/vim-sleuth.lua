@@ -1,4 +1,6 @@
--- detect tabstop and shiftwidth automatically ---------------------------
+-- INFO: Detect tabs top and shift width automatically
+--
+
 return {
     "tpope/vim-sleuth",
 }

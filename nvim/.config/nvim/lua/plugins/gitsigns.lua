@@ -1,5 +1,6 @@
--- Git Integration -------------------------------------------------------
--- Added this plugin -----------------------------------------------------
+-- INFO: Git Integration inside Neovim
+--
+
 return {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },

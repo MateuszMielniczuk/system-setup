@@ -1,4 +1,9 @@
--- better color highlighting for many languages --------------------------
+-- INFO: Better color highlighting for many languages
+-- Enables better syntax highlighting for many languages and
+-- unlocks many text objects and motions for those languages.
+-- This plugin is extendible with other plugins that add more
+-- text objects and motions.
+
 return {
     {
         "nvim-treesitter/nvim-treesitter",

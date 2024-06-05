@@ -1,5 +1,8 @@
--- Telescope (Fuzzy Finder) ----------------------------------------------
--- Added these plugins to install Telescope ------------------------------
+-- INFO: Telescope (Fuzzy Finder)
+-- Telescope is a highly customizable fuzzy finder over lists.
+-- It's built on the latest awesome features of neovim like floating windows, treesitter, and more.
+-- It's a great tool to explore your code, find files, and manage your workflow.
+
 return {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
@@ -108,9 +111,9 @@ return {
         -- KEYMAPS --------------------------------------------------------
         -- See `:help telescope.builtin`
         -- ----------------------------------------------------------------
-        vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, {
-            desc = "[?] Find recently opened files",
-        })
+        -- vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, {
+        --     desc = "[?] Find recently opened files",
+        -- })
         vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, {
             desc = "[ ] Find existing buffers",
         })
@@ -175,7 +178,7 @@ return {
         )
         vim.keymap.set(
             "n",
-            "<leader>sr",
+            "<leader>su",
             require("telescope.builtin").resume,
             { desc = "[s]earch keymaps res[u]me" }
         )

@@ -1,3 +1,6 @@
+-- INFO: Alpha is a dashboard for neovim replacing vim-startify
+-- here are also quick keymaps to open from the dashboard
+
 return {
     "goolord/alpha-nvim",
     event = "VimEnter",

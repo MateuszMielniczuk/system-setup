@@ -1,3 +1,7 @@
+-- INFO Colorscheme configuration
+-- There is also definition for highlighting INFO, WARN, ERROR, TODO, and BUG and more messages
+-- in the colorscheme configuration. This is useful for debugging and logging messages.
+
 return {
     {
         "catppuccin/nvim",

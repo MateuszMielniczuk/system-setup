@@ -1,5 +1,6 @@
--- which key -------------------------------------------------------------
--- displays a popup with possible key bindings ---------------------------
+-- INFO: Plugin that displays a popup with possible key bindings
+--
+
 return {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -121,7 +122,7 @@ return {
         local mappings = {
             a = { name = "AI" },
             c = { name = "Code action" },
-            d = "Diagnostics",
+            -- d = "Diagnostics",
             g = "Go to",
             h = "Hoover",
             l = "LSP",

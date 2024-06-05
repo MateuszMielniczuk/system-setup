@@ -1,4 +1,6 @@
--- Lualine - status line on bottom
+-- INFO: Lualine - status line at the bottom
+--
+
 return {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },

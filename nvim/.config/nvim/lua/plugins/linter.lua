@@ -1,4 +1,6 @@
--- Linting ---------------------------------------------------------------
+-- INFO: Linter configuration
+--
+
 return {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },

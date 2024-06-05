@@ -1,3 +1,6 @@
+-- INFO: This file stores all nvim autocommands
+-- All commands here are run when neovim starts
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 

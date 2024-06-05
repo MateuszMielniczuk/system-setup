@@ -1,4 +1,6 @@
---copilot
+-- INFO Copilot library for written in Lua
+--
+
 return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",

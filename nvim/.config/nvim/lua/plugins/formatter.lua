@@ -1,3 +1,6 @@
+-- Description: Formatter plugin configuration
+-- This plugin is used to format code in different languages.
+
 return {
     "stevearc/conform.nvim",
     lazy = true,

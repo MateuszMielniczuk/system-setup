@@ -1,3 +1,6 @@
+-- INFO: LSP configuration for neovim
+--
+
 return {
     "neovim/nvim-lspconfig",
     -- load only when opening or creating new buffer
@@ -79,7 +82,8 @@ return {
             --     require("telescope.builtin").lsp_dynamic_workspace_symbols,
             --     "[s]search [s]ymbols in workspace"
             -- )
-            nmap("<leader>sr", require("telescope.builtin").lsp_references, "[s]earch [r]eferences")
+            -- nmap("<leader>sr", require("telescope.builtin").lsp_references, "[s]earch [r]eferences")
+            nmap("<leader>sr", "<cmd>Telescope oldfiles <cr>", "[s]earch [r]ecent files")
 
             -- See `:help K` for why this keymap
         end

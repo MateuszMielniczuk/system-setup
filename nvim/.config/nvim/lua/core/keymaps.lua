@@ -46,10 +46,6 @@ key_map("n", "<A-j>", ":m .+1<CR>==", { desc = "Move selected text down" })
 -- Alt-k
 key_map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move selected text up" })
 
--- Increment/decrement numbers
-key_map("n", "<C-k>", "<C-a>", { desc = "Increment number" })
-key_map("n", "<C-j>", "<C-x>", { desc = "Decrement number" })
-
 key_map("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 key_map("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
 key_map("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })

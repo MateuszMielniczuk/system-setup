@@ -1,3 +1,7 @@
+-- INFO: Mason is a package manager for neovim.
+-- It is a plugin that allows you to install and manage language servers,
+-- formatters, linters, debuggers and other tools for neovim.
+
 return {
     "williamboman/mason.nvim",
     dependencies = {

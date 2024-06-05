@@ -1,4 +1,6 @@
--- pair brackets automatically -------------------------------------------
+-- INFO: Pair brackets automatically
+--
+
 return {
     "windwp/nvim-autopairs",
     event = "InsertEnter",

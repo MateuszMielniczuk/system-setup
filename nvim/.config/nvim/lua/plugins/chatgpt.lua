@@ -11,7 +11,7 @@ return {
     },
     config = function()
         local WELCOME_MESSAGE = "Hello Mateusz.."
-        local LOADING_MESSAGE = "I am thinking, give me some time please.."
+        local LOADING_MESSAGE = "I am processing, give me some time please.."
 
         require("chatgpt").setup({
             api_key_cmd = "pass show api/chatgpt",

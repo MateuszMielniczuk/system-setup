@@ -1,4 +1,3 @@
-
         ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
         ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
     My  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║  config :)
@@ -167,6 +166,7 @@ And few special characters `{char}`:
 - `t` - HTML tag `<tag>text</tag>`\
 
 Examples:
+
 - change surround from `"` to `'` - `cs"'`
 - delete surround `"` - `ds"`
 - add surround to inner word with single quote - `ysiw'`
@@ -214,14 +214,18 @@ Keys for ChatGPT navigation:
 `ctrl` + `j` - scroll window down\
 `ctrl` + `n` - open new chat session\
 `ctrl` + `f` - cycle over modes (center, stick to right)\
-`space` - select session\
-`r` - rename session\
-`d` - delete session\
 `ctrl` + `d` - draft message (create message without submitting it to server)\
 `ctrl` + `o` - toggle settings window\
 `ctrl` + `r` - switch role (switch between user and assistant role to define a workflow)\
 `ctrl` + `s` - toggle system message window\
 `ctrl` + `x` - stop generating message from gpt
+
+Session management:
+
+`ctrl` `p` - open session manager window\
+`space` - select session\
+`r` - rename session\
+`d` - delete inactive session\
 
 Edit with instructions:
 

@@ -3,9 +3,6 @@
 
 return {
     "stevearc/dressing.nvim",
+    event = "VeryLazy",
     dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
-    config = function()
-        require("dressing").setup()
-    end,
 }

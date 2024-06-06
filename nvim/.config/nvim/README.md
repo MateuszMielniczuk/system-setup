@@ -1,3 +1,4 @@
+
         ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
         ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
     My  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║  config :)
@@ -5,14 +6,16 @@
         ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
         ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
 
+<div align="center">
+<h5>
 This is my personal NeoVIM configuration. It is based on Lua, additional plugins, libraries
 and custom keybindings to provide better development experience. In this document is described
 all keybindings, actions, and additional functionalities that are provided by this configuration.
 Standard vim keybindings are still available and can be used, but are not documented here.
+</h5>
+</div>
 
-Run command `:checkhealth` to see all errors within nvim installation
-
-Table of contents:
+Table of contents
 
 - [Requirements](#requirements)
 - [Code navigation, selection and deletion](#code-navigation-selection-and-deletion)
@@ -38,16 +41,18 @@ Table of contents:
   - [Searching](#searching)
   - [Other useful vim actions](#other-useful-vim-actions)
 
-# Requirements
+## Requirements
 
 - Python and PIP
 - latest NODEjs and NPM available (installed by apt not snap!)
 - ripgrep
 - fd-find (optional)
 
-# Code navigation, selection and deletion
+- Run command `:checkhealth` to see all errors within nvim installation
 
-## Modified keybinding for navigation
+## Code navigation, selection and deletion
+
+### Modified keybinding for navigation
 
 `ctrl`+`h` - move cursor to left window\
 `ctrl`+`l` - move cursor to right window\
@@ -64,7 +69,7 @@ Table of contents:
 
 `g` `c` - code comment (with comment library)
 
-## Vim text objects actions keybindings
+### Vim text objects actions keybindings
 
 `<command><inner/around><textobject>`
 
@@ -89,7 +94,7 @@ Text objects:
 
 This can be extended with Treesitter, and addon for text objects.
 
-## Extended navigation with Treesitter
+### Extended navigation with Treesitter
 
 `ctrl` + `␣` - select code incrementally how it is nested in normal mode
 `backspace` - unselect incrementally above action
@@ -119,6 +124,7 @@ Examples:
 - delete all if statement and insert mode: `c` `i` `i`
 
 There are also jump actions to additional text objects with `[` previous `]` next.
+
 Examples:
 
 - go to next class: `]` `c`
@@ -127,11 +133,11 @@ Examples:
 Additionally to enhance all above functionalities it is possible to repeat
 actions forward with `;` and backward with `,`.
 
-# Code actions
+## Code actions
 
 Leader key - `space`
 
-## Quick actions with leader key
+### Quick actions with leader key
 
 `␣` `␣` - find recently opened buffers\
 `␣` `/` - current buffer fuzzy find\
@@ -144,7 +150,7 @@ Leader key - `space`
 `␣` `q` - quit neovim\
 `␣` `w` - write changes to the current buffer
 
-## Code surround with nvim-surround
+### Code surround with nvim-surround
 
 Similarly to text objects it is possible to surround text with different signs with `s` key.
 Documentation for nvim-surround is available [here](https://github.com/kylechui/nvim-surround/blob/main/doc/nvim-surround.txt)
@@ -161,11 +167,11 @@ And few special characters `{char}`:
 - `t` - HTML tag `<tag>text</tag>`\
 
 Examples:
-change surround from `"` to `'` - `cs"'`\
-delete surround `"` - `ds"`\
-add surround to inner word with single quote - `ysiw'`\
-add surround HTML div tag to paragraph - `ysipt<div>`\
-change function name from `foo` to `bar` - `csfbar`
+- change surround from `"` to `'` - `cs"'`
+- delete surround `"` - `ds"`
+- add surround to inner word with single quote - `ysiw'`
+- add surround HTML div tag to paragraph - `ysipt<div>`
+- change function name from `foo` to `bar` - `csfbar`
 
 ## Other code actions
 
@@ -173,9 +179,9 @@ change function name from `foo` to `bar` - `csfbar`
 `␣` `c` `l` - code run linter now (by linter)\
 `␣` `c` `f` - code format with formatter (by formatter)
 
-# AI tools
+## AI tools
 
-## Copilot
+### Copilot
 
 Copilot is running automatically in insert mode and providing suggestions for code completion.
 
@@ -186,7 +192,7 @@ Keys for suggestions navigation:
 `alt` + `[` - previous suggestion\
 `ctrl` + `]` - dismiss suggestion
 
-## ChatGPT
+### ChatGPT
 
 `␣` `a` `a` - use to autocomplete started code (like copilot)\
 `␣` `a` `c` - open ChatGPT prompt\
@@ -226,9 +232,9 @@ Edit with instructions:
 `ctrl` + `i` - use output as input\
 `tab` - toggle windows
 
-# Search with telescope
+## Search with telescope
 
-## Search actions
+### Search actions
 
 `␣` `s` `c` - search cola scheme\
 `␣` `s` `d` - search diagnostics (errors)\
@@ -243,7 +249,7 @@ Edit with instructions:
 `␣` `s` `s` - show all class, functions, variables definitions with telescope (lsp)\
 `␣` `s` `w` - search string(word) by grep in current directory
 
-## Keys for insert mode
+### Keys for insert mode
 
 `ctrl`+`u` - previous history element\
 `ctrl`+`d` - next history element\
@@ -254,7 +260,7 @@ Edit with instructions:
 
 `ctrl`+`/` - show which key info panel with available key maps
 
-## Keys for normal mode
+### Keys for normal mode
 
 `esc` - exit\
 `j` or `down` - next selection\
@@ -266,21 +272,21 @@ Edit with instructions:
 
 `?` - open which key with available keys
 
-# Diagnostics and errors
+## Diagnostics and errors
 
 `␣` `d` `j` - go to next diagnostic\
 `␣` `d` `k` - go to previous diagnostic
 
 `␣` `d` `l` - open diagnostic list
 
-## Hoover
+### Hoover
 
 `␣` `h` `d` - hover floating diagnostic window\
 `␣` `h` `h` - hover git hunk
 `␣` `h` `i` - hoover element documentation\
 `␣` `h` `s` - hover signature documentation
 
-## Go to
+### Go to
 
 `␣` `g` `d` - go to code definition (lsp)\
 `␣` `g` `D` - go to declaration (lsp)\
@@ -288,7 +294,7 @@ Edit with instructions:
 `␣` `g` `p` - go to previous hunk(git)\
 `␣` `g` `n` - go to next hunk(git)
 
-# Tabs navigation
+## Tabs navigation
 
 `␣` `t` `o` - open new tab\
 `␣` `t` `x` - close current tab\
@@ -296,7 +302,7 @@ Edit with instructions:
 `␣` `t` `p` - go to previous tab\
 `␣` `t` `f` - open current buffer in new tab
 
-# Autocompletion with LSP
+## Autocompletion with LSP
 
 `ctrl`+`space` - show more completion options\
 `ctrl`+`j` - select next item\
@@ -308,7 +314,7 @@ Edit with instructions:
 `enter` - accept no newline\
 `ctrl` + `c` - close completion window
 
-# Useful VIM default keybindings
+## Useful VIM default keybindings
 
 `ctrl` `a` - increment number\
 `ctrl` `x` - decrement number\
@@ -322,7 +328,7 @@ Edit with instructions:
 `z` `a` - fold functions or classes\
 `z` `=` - spelling suggestions
 
-## Searching
+### Searching
 
 `/` - press to start search
 
@@ -332,7 +338,7 @@ Edit with instructions:
 `*` - find next word highlighted by cursor\
 `#` - find previous word hilighted by cursor
 
-## Other useful vim actions
+### Other useful vim actions
 
 Find and replace:\
 `:[range]s/{pattern}/{string}/[flags] [count]`

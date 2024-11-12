@@ -30,7 +30,7 @@ return {
                 -- the presets plugin, adds help for a bunch of default keybindings in Neovim
                 -- No actual key bindings are created
                 presets = {
-                    operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+                    operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
                     motions = true, -- adds help for motions
                     text_objects = true, -- help for text objects triggered after entering an operator
                     windows = true, -- default bindings on <c-w>
@@ -41,32 +41,29 @@ return {
             },
             -- add operators that will trigger motion and text object completion
             -- to enable all native operators, set the preset / operators plugin above
-            operators = { gc = "Comments" },
-            key_labels = {
-                -- override the label used to display some keys. It doesn't effect WK in any other way.
-                -- For example:
-                -- ["<space>"] = "SPC",
-                -- ["<cr>"] = "RET",
-                -- ["<tab>"] = "TAB",
-            },
-            motions = {
-                count = true,
-            },
+            -- operators = { gc = "Comments" },
             icons = {
                 breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
                 separator = "➜", -- symbol used between a key and it's label
                 group = "+", -- symbol prepended to a group
             },
-            popup_mappings = {
-                scroll_down = "<c-j>", -- binding to scroll down inside the popup
-                scroll_up = "<c-k>", -- binding to scroll up inside the popup
-            },
-            window = {
+            -- popup_mappings = {
+            --     scroll_down = "<c-j>", -- binding to scroll down inside the popup
+            --     scroll_up = "<c-k>", -- binding to scroll up inside the popup
+            -- },
+            ---@type wk.Win.opts
+            win = {
+                no_overlap = true, --don't allow the popup to overlap with the cursor
                 border = "none", -- none, single, double, shadow
-                position = "bottom", -- bottom, top
-                margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-                padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-                winblend = 2,
+                -- position = "bottom", -- bottom, top
+                -- margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+                padding = { 2, 2 }, -- extra window padding [top, right, bottom, left]
+                title = true,
+                title_pos = "center",
+                bo = {},
+                wo = {
+                    winblend = 2, -- value between 0 and 100,100 is fully transparent
+                },
                 zindex = 1000, -- positive value to position WhichKey above other floating windows.
             },
             layout = {
@@ -75,39 +72,44 @@ return {
                 spacing = 3, -- spacing between columns
                 align = "left", -- align columns left, center or right
             },
-            ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+            -- ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
 
             -- hide mapping boilerplate
-            hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " },
+            -- hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " },
             show_help = true, -- show help message on the command line when the popup is visible
-            triggers = "auto", -- automatically setup triggers
             show_keys = true, -- show the currently pressed key and its label as a message in the command line
-            -- triggers = {"<leader>"} -- or specifiy a list manually
-            -- list of triggers, where WhichKey should not wait for timeoutlen and show immediately
-            triggers_nowait = {
-                -- marks
-                "`",
-                "'",
-                "g`",
-                "g'",
-                -- registers
-                '"',
-                "<c-r>",
-                -- spelling
-                "z=",
-            },
             -- Disabled by default for Telescope
             disable = {
                 buftypes = {},
                 filetypes = { "TelescopePrompt" },
             },
-            triggers_blacklist = {
-                -- list of mode / prefixes that should never be hooked by WhichKey
-                -- this is mostly relevant for key maps that start with a native binding
-                -- most people should not need to change this
-                i = { "j", "k" },
-                v = { "j", "k" },
+            -- Which-key automatically sets up triggers for your mappings.
+            -- But you can disable this and setup the triggers manually.
+            -- Check the docs for more info.
+            ---@type wk.Spec
+            triggers = {
+                { "<auto>", mode = "nxso" },
             },
+            -- triggers = "auto", -- automatically setup triggers
+            -- triggers_nowait = {
+            --     -- marks
+            --     "`",
+            --     "'",
+            --     "g`",
+            --     "g'",
+            --     -- registers
+            --     '"',
+            --     "<c-r>",
+            --     -- spelling
+            --     "z=",
+            -- },
+            -- triggers_blacklist = {
+            --     -- list of mode / prefixes that should never be hooked by WhichKey
+            --     -- this is mostly relevant for key maps that start with a native binding
+            --     -- most people should not need to change this
+            --     i = { "j", "k" },
+            --     v = { "j", "k" },
+            -- },
         }
 
         local opts = {
@@ -120,26 +122,42 @@ return {
         }
 
         local mappings = {
-            a = { name = "AI" },
-            c = { name = "Code action" },
-            -- d = "Diagnostics",
-            g = "Go to",
-            h = "Hoover",
-            l = "LSP",
-            s = { name = "Search" },
-            t = { name = "Tab nav" },
+            { "<leader>a", group = "AI" },
+            {
+                "<leader>b",
+                group = "buffers",
+                expand = function()
+                    return require("which-key.extras").expand.buf()
+                end,
+            },
+            { "<leader>c", group = "Code Action" },
+            { "<leader>d", group = "Diagnostics" },
+            { "<leader>g", group = "Go to" },
+            { "<leader>h", group = "Hoover" },
+            { "<leader>l", group = "LSP" },
+            { "<leader>s", group = "Search" },
+            { "<leader>t", group = "Tab nav" },
             -- bp - move to previous buffer,
             -- bd # - kill buffer from which just moved away
-            ["k"] = { "<cmd>bp|bd #<CR>", "Kill Buffer" },
-            ["p"] = { "<cmd>Lazy<CR>", "Plugin Manager" }, -- Invoking plugin manager
-            ["q"] = { "<cmd>q<CR>", "Quit nvim" }, -- Quit Neovim after saving the file
-            ["w"] = { "<cmd>w!<CR>", "Write - Save file" }, -- Save current file
-            ["e"] = { "<cmd>Ex<CR>", "File Explorer - Open Full screen" },
-            -- ["E"] = { "<cmd>Lexplore<CR>", "File Explorer - toggle left" },
-            ["m"] = { "<cmd>Mason<cr>", "Mason open" }, -- LSP Manager
+            {
+                mode = { "n", "v" }, -- for normal and visual mode
+                { "<leader>k", "<cmd>bp|bd #<CR>", desc = "Kill buffer", icon = "", mode = "n" },
+                { "<leader>p", "<cmd>Lazy<CR>", desc = "Plugin manager", icon = "", mode = "n" },
+                { "<leader>q", "<cmd>q<CR>", desc = "Quit Neovim", mode = "n" },
+                { "<leader>w", "<cmd>w!<CR>", desc = "Write - save file", mode = "n" },
+                {
+                    "<leader>e",
+                    "<cmd>Ex<CR>",
+                    desc = "File Explorer - Open full screen",
+                    mode = "n",
+                },
+                -- ["E"] = { "<cmd>Lexplore<CR>", "File Explorer - toggle left" },
+                { "<leader>m", "<cmd>Mason<CR>", desc = "Mason open", icon = " ", mode = "n" }, -- LSP manager
+            },
         }
 
         which_key.setup(setup)
-        which_key.register(mappings, opts)
+        -- which_key.register(mappings, opts)
+        which_key.add(mappings, opts)
     end,
 }

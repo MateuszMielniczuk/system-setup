@@ -39,7 +39,7 @@ return {
                 "jedi_language_server", --python lsp
                 "lua_ls",
                 "rust_analyzer", --rust lsp
-                "tsserver", --typescript lsp
+                "ts_ls", --typescript lsp
             },
             -- auto-install configured servers (with lspconfig)
             automatic_installation = true, -- not the same as ensure_installed

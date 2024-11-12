@@ -12,21 +12,22 @@
 # restart system
 # install git `sudo apt install git-all -y`
 # mkdir projects && cd projects
-# git clone git@github:MateuszMielniczuk/system_setup.git
-# connect github to git git config --global user.email "your_email@example.com"
-# git config --global user.name github_username
+# connect github to git 'git config --global user.email "your_email@example.com"'
+# 'git config --global user.name github_username'
 # create ssh key ssh-keygen -t ed25519 -C "your_email@example.com"
+# git clone git@github:MateuszMielniczuk/system_setup.git
 
-
+# install access to apt-add-repository
+sudo apt update
+sudo apt install software-properties-common -y
 # backup sources.list
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 echo 'sources.list backed up to sources.list.bak'
 echo 'provide Debian distro name to use in sources.list: bookworm, bullseye, buster etc'
-read -sp 'Enter distro name : 'dishro_name
+read -p 'Enter distro name : ' distro_name
 # use sed to replace all instances of Debian distro name with testing or sid
-sudo sed -i 's/$distro_name/testing/g' /etc/apt/sources.list
+sudo sed -i 's/'$distro_name'/testing/g' /etc/apt/sources.list
 
-sudo apt install software-properties-common -y
 sudo apt-add-repository contrib non-free-firmware -y
 
 # update system and install graphical desktop
@@ -34,10 +35,15 @@ sudo apt update
 sudo apt upgrade -y
 sudo apt dist-upgrade -y
 # install GNOME desktop without all unnecessary apps
-sudo apt install gnome-core -y
+sudo apt install kde-plasma-desktop -y
 
-sudo apt install flatpak gnome-software-plugin-flatpak -y
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+# install GNOME desktop without all unnecessary apps
+# sudo apt get install gnome-core -y
+# sudo apt install flatpak gnome-software-plugin-flatpak -y
+# sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+sudo apt install flatpak plasma-discover-backend-flatpak kde-config-flatpak -y
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 sudo apt install synaptic -y
 sudo apt install neofetch -y
@@ -68,24 +74,21 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
+flatpak install -y $(flatpaks.txt)
 
 
-# flatpak install flathub com.spotify.Client -y
-flatpak install flathub org.inkscape.Inkscape -y
-flatpak install flathub org.gimp.GIMP -y
-# flatpak install flathub org.strawberrymusicplayer.strawberry -y
-flatpak install flathub org.clementine_player.Clementine -y
-# vesktop is a Discord client for Wayland
-flatpak install flathub dev.vencord.Vesktop -y
-flatpak install flathub org.chromium.Chromium -y
-flatpak install flathub com.brave.Browser -y
-flatpak install flathub org.keepassxc.KeePassXC -y
-flatpak install flathub org.filezillaproject.Filezilla -y
-flatpak install flathub org.kde.kdenlive -y
-flatpak install flathub org.darktable.Darktable -y
-flatpak install flathub org.libreoffice.LibreOffice -y
-flatpak install flathub org.videolan.VLC -y
-flatpak install flathub io.dbeaver.DBeaverCommunity -y
-flatpak install flathub com.visualstudio.code -y
+# install syncthing
+# # Add the release PGP keys to allow the system to check the packages authenticity
+sudo mkdir -p /etc/apt/keyrings
+sudo curl -L -o /etc/apt/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+
+# Add the "stable" channel to your APT sources:
+echo "deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+
+# Update and install syncthing:
+sudo apt-get update
+sudo apt-get install syncthing -y
+
+sudo systemctl enable --now syncthing@$USER.service
 
 sudo reboot

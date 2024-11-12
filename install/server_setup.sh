@@ -52,3 +52,12 @@ git config --global user.name $github_username
 # create ssh key
 ssh-keygen -t ed25519 -C $github_email
 # add public key to github
+
+# Update and install syncthing:
+sudo apt-get update
+sudo apt-get install syncthing -y
+
+sudo systemctl enable --now syncthing@$USER.service
+
+# to get access locally to server's syncthing web interface use ssh tunnelling
+# ssh -L <port_local>:127.0.0.1:<port_server> <server_ip>

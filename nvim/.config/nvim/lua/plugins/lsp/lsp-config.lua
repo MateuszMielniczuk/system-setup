@@ -154,7 +154,11 @@ return {
             },
         })
 
-        lspconfig.tsserver.setup({
+        --     lspconfig.tsserver.setup({
+        --         on_attach = custom_on_attach,
+        --         capabilities = capabilities,
+        -- })
+        lspconfig.ts_ls.setup({
             on_attach = custom_on_attach,
             capabilities = capabilities,
         })

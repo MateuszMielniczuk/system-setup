@@ -14,7 +14,8 @@ return {
         local LOADING_MESSAGE = "I am processing, give me some time please.."
 
         require("chatgpt").setup({
-            api_key_cmd = "pass show api/chatgpt",
+            -- api_key_cmd = "pass show api/chatgpt",
+            api_key_cmd = "pwd", -- do noting disable ChatGPT
             yank_register = "+",
             edit_with_instructions = {
                 diff = false,

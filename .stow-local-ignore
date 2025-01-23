@@ -13,13 +13,15 @@ _darcs
 
 \.git
 \.gitignore
+\.mypy_cache
 
 .+~          # emacs backup files
 \#.*\#       # emacs autosave files
 
 ^/README.*
+^/flatpaks.txt
 ^/LICENSE.*
 ^/COPYING
 
-/install
+\install
 ^/push_config.*

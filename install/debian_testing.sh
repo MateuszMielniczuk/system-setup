@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 # download Debian stable ISO from debian.org main site
-# Run installer and pick normal install
-# select language, location, keyboard, etc
+# Run installer and pick expert install
+# INFO choose language
+# select language, location, keyboard, etc, additional locales -> none
+# INFO Access software for a blind porson using a raille display
+# SKIP
+# INFO Configure the keyboard -> your keyboard  layout
+# INFO Detect and mount installation media -> follow instructions
+# INFO Load installer components from installation media -> continue
+# INFO Configure the network detected network hardware -> continue
 # set hostname - personal computer name
+# Allow login as root -> no
 # domain name and root password(this will add sudo) - leave blank
 # set unername add password
-# partition disk
+# INFO Configure the clock -> Set the clock using NTP? -> Yes -> your timezone
+# INFO Detect disks -> yes
+# INFO Partition disk -> btfrs
 # skip scanning extra media -> no
 # Unselect graphical desktop environment(space) and leave only standard system utilities
 # install GRUB to the master boot record - yes /dev/vda or other
@@ -26,7 +36,7 @@ echo 'sources.list backed up to sources.list.bak'
 echo 'provide Debian distro name to use in sources.list: bookworm, bullseye, buster etc'
 read -p 'Enter distro name : ' distro_name
 # use sed to replace all instances of Debian distro name with testing or sid
-sudo sed -i 's/'$distro_name'/testing/g' /etc/apt/sources.list
+sudo sed -i 's/'$distro_name'/sid/g' /etc/apt/sources.list
 
 sudo apt-add-repository contrib non-free-firmware -y
 

@@ -45,7 +45,8 @@ Table of contents
 - Python and PIP
 - latest NODEjs and NPM available (installed by apt not snap!)
 - ripgrep
-- fd-find (optional)
+- [sharkdp/fd](https://github.com/sharkdp/fd) (optional)
+- compilers gcc or others or base development package on the system
 
 - Run command `:checkhealth` to see all errors within nvim installation
 

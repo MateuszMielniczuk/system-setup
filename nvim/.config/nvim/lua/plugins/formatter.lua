@@ -20,10 +20,14 @@ return {
                 yaml = { "prettier" },
                 markdown = { "prettier" },
                 lua = { "stylua" },
-                python = { "isort", "black" },
+                python = {
+                    -- "isort",
+                    "black",
+                    "ruff",
+                },
             },
             format_on_save = {
-                lsp_fallback = true,
+                lsp_fallback = false,
                 async = false,
                 timeout_ms = 2000,
             },

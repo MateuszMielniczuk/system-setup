@@ -7,32 +7,28 @@ return {
     config = function()
         local lint = require("lint")
 
-        local mypy = lint.linters.mypy
-        mypy.args = {
-            "--show-column-numbers",
-            "--hide-error-codes",
-            "--hide-error-context",
-            "--no-color-output",
-            "--no-error-summary",
-            "--no-pretty",
-            "--ignore-missing-imports",
-            "--disallow-untyped-defs",
-            "--strict",
-        }
-
         local pylint = lint.linters.pylint
         pylint.args = {
+            "-m",
+            "pylint",
             "-f",
             "json",
             "--disable=E0401,C0114,R0913,E1101",
         }
+        pylint.cmd = "python3"
 
         lint.linters_by_ft = {
             javascript = { "eslint_d" },
             typescript = { "eslint_d" },
             javascriptreact = { "eslint_d" },
             typescriptreact = { "eslint_d" },
-            python = { "bandit", "pylint", "flake8", "mypy" },
+            python = {
+                -- "bandit",
+                "pylint",
+                -- "flake8",
+                "mypy",
+                "ruff",
+            },
         }
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

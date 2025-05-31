@@ -89,7 +89,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto --group-directories-first'
+    alias ls='ls --color=auto --group-directories-first --hyperlink=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -198,3 +198,6 @@ v() {
 
 # run starship prompt styles
 eval "$(starship init bash)"
+eval "$(uv generate-shell-completion bash)"
+alias code="flatpak run com.visualstudio.code"
+EDITOR=nvim

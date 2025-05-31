@@ -19,7 +19,14 @@ return {
             defaults = {
                 -- Default configuration for telescope goes here:
                 -- config_key = value,
-
+                file_ignore_patterns = {
+                    "node_modules",
+                    ".venv",
+                    "venv",
+                    "build",
+                    ".mypy_cache",
+                    ".ruff_cache",
+                },
                 prompt_prefix = " ",
                 selection_caret = " ",
                 path_display = { "smart" },

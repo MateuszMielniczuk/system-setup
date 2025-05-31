@@ -15,8 +15,6 @@ usermod -aG sudo $user_name
 
 sudo su - $user_name
 
-read -p 'Enter distro name : ' distro_name
-
 # ======================== install docker and docker-compose
 sudo apt-get install ca-certificates curl -y
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -51,6 +49,7 @@ git config --global user.name $github_username
 
 # create ssh key
 ssh-keygen -t ed25519 -C $github_email
+# add ssh password
 # add public key to github
 
 # Update and install syncthing:
@@ -61,3 +60,13 @@ sudo systemctl enable --now syncthing@$USER.service
 
 # to get access locally to server's syncthing web interface use ssh tunnelling
 # ssh -L <port_local>:127.0.0.1:<port_server> <server_ip>
+
+# ======================= install flatpak to get more recent sandboxed software
+# ???
+sudo apt install flatpak 
+
+# ================= add ssh key from host ===============
+
+ssh-keygen -t ed25519 -C "server_name"
+# add ssh password
+ssh-copy-id server_username@server_ip

@@ -39,6 +39,7 @@ return {
                 "jedi_language_server", --python lsp
                 "lua_ls",
                 "rust_analyzer", --rust lsp
+                "ruff", --python all in one
                 "ts_ls", --typescript lsp
             },
             -- auto-install configured servers (with lspconfig)
@@ -54,9 +55,10 @@ return {
                 -- "flake8", -- linter for python - install locally
                 "isort", -- formatter sort imports for python
                 "js-debug-adapter", -- debugger for js
-                -- "mypy", -- linter for python - tyging - install locally
+                "mypy", -- linter for python - tyging - install locally
                 "prettier", -- formatter for js, ts etc
-                -- "pylint", -- code linter for python - install locally
+                "pylint", -- code linter for python - install locally
+                "ruff",
                 "stylua", -- formatter for lua
             },
         })

@@ -26,11 +26,11 @@ return {
                     "ruff",
                 },
             },
-            format_on_save = {
-                lsp_fallback = false,
-                async = false,
-                timeout_ms = 2000,
-            },
+            -- format_on_save = {
+            --     lsp_fallback = false,
+            --     async = false,
+            --     timeout_ms = 2000,
+            -- },
         })
 
         vim.keymap.set({ "n", "v" }, "<leader>cf", function()

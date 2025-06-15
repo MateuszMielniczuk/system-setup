@@ -1,7 +1,3 @@
--- INFO Colorscheme configuration
--- There is also definition for highlighting INFO, WARN, ERROR, TODO, and BUG and more messages
--- in the colorscheme configuration. This is useful for debugging and logging messages.
-
 return {
     {
         "catppuccin/nvim",
@@ -44,31 +40,31 @@ return {
                     },
                     mocha = {
                         rosewater = "#ea6962",
-                        flamingo = "#ea6962",
-                        red = "#db3234",
-                        maroon = "#bd341d",
-                        pink = "#d3869b",
-                        mauve = "#d3869b",
-                        peach = "#e78a4e",
-                        yellow = "#d8a657",
-                        green = "#a9b665",
-                        teal = "#83a592",
-                        sky = "#83a598",
-                        sapphire = "#83a598",
-                        blue = "#458588",
-                        lavender = "#7daea3",
-                        text = "#ebdbb2",
-                        subtext1 = "#d5c4a1",
-                        subtext0 = "#bdae93",
-                        overlay2 = "#a89984",
-                        overlay1 = "#928374",
-                        overlay0 = "#595959",
-                        surface2 = "#4d4d4d",
-                        surface1 = "#404040",
-                        surface0 = "#292929",
-                        base = "#1d2021",
-                        mantle = "#191b1c",
-                        crust = "#141617",
+                        flamingo  = "#fb4934",
+                        red       = "#db3234",
+                        maroon    = "#bd341d",
+                        pink      = "#d3869b",   -- Gruvbox purple
+                        mauve     = "#b16286",   -- Gruvbox purple
+                        peach     = "#fe8019",   -- Gruvbox orange
+                        yellow    = "#fabd2f",   -- Gruvbox yellow
+                        green     = "#b8bb26",   -- Gruvbox green
+                        teal      = "#8ec07c",   -- Gruvbox aqua
+                        sky       = "#83a598",   -- Gruvbox blue
+                        sapphire  = "#458588",   -- Gruvbox dark blue
+                        blue      = "#83a598",   -- Gruvbox blue
+                        lavender  = "#b8bb26",   -- Gruvbox green (for highlight)
+                        text      = "#ebdbb2",   -- Gruvbox fg
+                        subtext1  = "#d5c4a1",   -- Gruvbox light fg
+                        subtext0  = "#bdae93",   -- Gruvbox gray
+                        overlay2  = "#a89984",   -- Gruvbox gray
+                        overlay1  = "#928374",   -- Gruvbox dark gray
+                        overlay0  = "#665c54",   -- Gruvbox dark gray
+                        surface2  = "#504945",   -- Gruvbox bg2
+                        surface1  = "#3c3836",   -- Gruvbox bg1
+                        surface0  = "#282828",   -- Gruvbox bg
+                        base      = "#1d2021",   -- Gruvbox hard bg
+                        mantle    = "#191b1c",   -- slightly darker
+                        crust     = "#141617",   -- even darker
                     },
                 },
                 transparent_background = true,
@@ -374,77 +370,14 @@ return {
             vim.api.nvim_command("colorscheme catppuccin")
         end,
     },
+    -- add gruvbox
+    -- { "ellisonleao/gruvbox.nvim" },
+
+    -- Configure LazyVim to load gruvbox
     {
-        "sainnhe/gruvbox-material",
-        enabled = true,
-        priority = 1000,
-        config = function()
-            vim.g.gruvbox_material_transparent_background = 0.8
-            vim.g.gruvbox_material_foreground = "mix"
-            vim.g.gruvbox_material_background = "hard" -- soft, medium, hard
-            vim.g.gruvbox_material_ui_contrast = "high" -- The contrast of line numbers, indent lines, etc.
-            -- vim.g.gruvbox_material_float_style = "bright" -- Background of floating windows
-            vim.g.gruvbox_material_statusline_style = "material"
-            vim.g.gruvbox_material_cursor = "auto"
-
-            -- vim.g.gruvbox_material_colors_override = { bg0 = '#000000' } -- #0e1010
-            -- vim.g.gruvbox_material_colors_override = { bg0 = "#121212" }
-            -- vim.g.gruvbox_material_better_performance = 1
-
-            -- vim.cmd.colorscheme("gruvbox-material")
-        end,
-    },
-
-    {
-        "EdenEast/nightfox.nvim",
-        config = function()
-            -- Default options
-            require("nightfox").setup({
-                options = {
-                    -- Compiled file's destination location
-                    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-                    compile_file_suffix = "_compiled", -- Compiled file suffix
-                    transparent = true, -- Disable setting background
-                    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-                    dim_inactive = false, -- Non focused panes set to alternative background
-                    module_default = true, -- Default enable value for modules
-                    colorblind = {
-                        enable = false, -- Enable colorblind support
-                        simulate_only = false, -- Only show simulated colorblind colors and not diff shifted
-                        severity = {
-                            protan = 0.3, -- Severity [0,1] for protan (red)
-                            deutan = 0.6, -- Severity [0,1] for deutan (green)
-                            tritan = 0, -- Severity [0,1] for tritan (blue)
-                        },
-                    },
-                    styles = { -- Style to be applied to different syntax groups
-                        comments = "NONE", -- Value is any valid attr-list value `:help attr-list`
-                        conditionals = "NONE",
-                        constants = "NONE",
-                        functions = "NONE",
-                        keywords = "NONE",
-                        numbers = "NONE",
-                        operators = "NONE",
-                        strings = "NONE",
-                        types = "NONE",
-                        variables = "NONE",
-                    },
-                    inverse = { -- Inverse highlight for different types
-                        match_paren = false,
-                        visual = false,
-                        search = false,
-                    },
-                    modules = { -- List of various plugins and additional options
-                        -- ...
-                    },
-                },
-                palettes = {},
-                specs = {},
-                groups = {},
-            })
-
-            -- setup must be called before loading
-            -- vim.cmd("colorscheme nightfox")
-        end,
+        "LazyVim/LazyVim",
+        opts = {
+            colorscheme = "catppuccin-mocha",
+        },
     },
 }

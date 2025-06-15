@@ -1,230 +1,281 @@
-format = """\
-[](bg)\
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](color_blue)\
 $os\
-[  ](fg:gray bg:bg)\
 $username\
-$hostname\
-[  ](fg:gray bg:bg)\
+[](bg:color_yellow fg:color_blue)\
 $directory\
-$kubernetes\
-$docker_context\
 $package\
+[](fg:color_yellow bg:color_aqua)\
+$git_branch\
+$git_status\
+[](fg:color_aqua bg:color_aqua)\
+$aws\
+$c\
+$cpp\
+$rust\
 $golang\
-$guix_shell\
-$helm\
-$lua\
 $nodejs\
 $php\
+$java\
+$lua\
+$kotlin\
+$haskell\
 $python\
-$rust\
-$solidity\
+[](fg:color_aqua bg:color_bg3)\
+$docker_context\
 $conda\
-$aws\
-$gcloud\
-$openstack\
-$azure\
-$env_var\
-[](bg)\
-$sudo\
-$fill\
-$cmd_duration\
-$fill\
-[󰍞](bg)\
-$jobs\
-$git_branch\
-$git_status
-$shlvl\
+$pixi\
+[](fg:color_bg3 bg:color_bg1)\
 $time\
-$status\
-$container\
-$shell\
-\u0020\
-$character
-"""
+$shlvl\
+$cmd_duration\
+$jobs\
+[ ](fg:color_bg1)\
+$line_break$character"""
 
-# add_newline = false
+palette = 'gruvbox_dark'
 
-palette = "gruvbox-dark"
+# # Color palettes config
+[palettes.gruvbox_dark]
+color_fg0 = '#fbf1c7'
+color_bg1 = '#3c3836'
+color_bg3 = '#665c54'
+color_blue = '#458588'
+color_aqua = '#689d6a'
+color_green = '#98971a'
+color_orange = '#d65d0e'
+color_purple = '#b16286'
+color_red = '#cc241d'
+color_yellow = '#d79921'
 
-[fill]
-symbol = "-"
-style = "gray"
+[palettes.gruvbox_dark_custom]
+color_fg0 = "#ebdbb2"
+color_fg1 = "#282828"
+color_bg3 = "#928374"
+color_blue = "#83a598"
+color_aqua = "#8ec07c"
+color_green = "#b8bb26"
+color_orange = "#fe8019"
+color_purple = "#d3869b"
+color_red = "#fb4934"
+color_yellow = "#fabd2f"
+
+[palettes.gruvbox_light]
+color_fg0 = "#fbf1c7"
+color_bg1 = "#928374"
+color_bg3 = "#9d0006"
+color_blue = "#79740e"
+color_aqua = "#b57614"
+color_green = "#076678"
+color_orange = "#8f3f71"
+color_purple = "#427b58"
+color_red = "#3c3836"
+color_yellow = "#af3a03"
+
+[os]
+disabled = false
+style = "bg:color_blue fg:color_fg0"
+
+[os.symbols]
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+EndeavourOS = ""
+Fedora = "󰣛"
+FreeBSD = ""
+Gentoo = "󰣨"
+Linux = "󰌽"
+Macos = "󰀵"
+Manjaro = ""
+Mint = "󰣭"
+openSUSE = ""
+Pop = ""
+Raspbian = "󰐿"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+SUSE = ""
+Ubuntu = "󰕈"
+Unknown = "?"
+Windows = "󰍲"
 
 [username]
-format = "[$user]($style)"
-disabled = false
 show_always = true
-style_user = "fg:blue bg:bg"
-style_root = "fg:blue bg:bg"
-
-[hostname]
-ssh_only = true
-format = '[@$ssh_symbol]($style)[$hostname]($style)'
-ssh_symbol = "󰞉 "
-trim_at = "."
-disabled = false
-style = "fg:blue bg:bg"
+style_user = "bg:color_blue fg:color_fg0"
+style_root = "bg:color_blue fg:color_fg0"
+format = '[ $user ]($style)'
 
 [directory]
 read_only = ""
-format = '[$read_only󰋞 $path]($style)'
-truncation_length = 4
-truncate_to_repo = true # truncates directory to root folder if in github repo
+style = "fg:color_fg0 bg:color_yellow"
+format = '[ $read_only$path]($style)'
+truncate_to_repo = true                # truncates directory to root folder if in github repo
+truncation_length = 3
 truncation_symbol = "…/"
-style = "fg:yellow bg:bg"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+
+"Developer" = "󰲋 "
+[package]
+style = "fg:color_fg0 bg:color_yellow"
+format = '[ |${symbol}(${version})]($style)'
+symbol = "📦"
+
 
 [git_branch]
-format = '[$symbol$branch(:$remote_branch) ]($style)'
 symbol = ""
-style = "fg:purple bg:bg"
+style = "bg:color_aqua"
+format = '[[ $symbol $branch(:$remote_branch) ](fg:color_fg0 bg:color_aqua)]($style)'
 truncation_length = 15
 truncation_symbol = "…"
 
-[git_metrics]
-format = "([+$added]($added_style))([-$deleted]($deleted_style))"
-added_style = "gray"
-deleted_style = "red"
-disabled = false
-
 [git_status]
-# format = '[$all_status]($style)'
-style = "fg:purple bg:bg"
+style = "bg:color_aqua"
+format = '[[($all_status$ahead_behind )](fg:color_fg0 bg:color_aqua)]($style)'
 
-[cmd_duration]
-min_time = 1_500
-show_milliseconds = false
-format = "[󱦟 $duration]($style)"
-style = "blue"
-show_notifications = false
-min_time_to_notify = 50_000
-
-[character]
-success_symbol = '[󰅂](bold green)'
-error_symbol = '[󰅂](bold red)'
-
-[time]
-disabled = false
-# time_format = "%T" # Hour:Minute:Second Format
-time_format = "%R" # Hour:Minute Format
-format = '[[$time](blue)]($style)'
+# [git_metrics]
+# format = "([+$added]($added_style))([-$deleted]($deleted_style))"
+# added_style = "gray"
+# deleted_style = "red"
+# disabled = false
 
 [aws]
 symbol = ""
 style = "fg:aqua bg:bg"
 
-[conda]
-symbol = ""
-style = "fg:aqua bg:bg"
-
-[docker_context]
-symbol = ""
-format = "[$symbol$context]($style)"
-style = "gray"
-only_with_files = true
-detect_files = ["docker-compose.yml", "docker-compose.yaml", "compose.yml", "compose.yaml", "Dockerfile"]
-detect_folders = []
-disabled = false
-
-[lua]
-format = '[  ](fg:gray bg:bg)[${symbol}(${version})]($style)'
-version_format = '${raw}'
-symbol = ''
-style = "fg:aqua bg:bg"
-
-[golang]
-symbol = ""
-style = "fg:aqua bg:bg"
-
-[package]
-format = '[  ](fg:gray bg:bg)[${symbol}(${version})]($style)'
-style = "fg:orange bg:bg"
-symbol = "📦"
-
-[php]
-symbol = ""
-style = "fg:aqua bg:bg"
-
-[python]
-symbol = ""
-#pyenv_version_name = true
-format = '[  ](fg:gray bg:bg)[${symbol}(${version})(\($virtualenv\))]($style)'
-style = "fg:aqua bg:bg"
-pyenv_prefix = "venv"
-python_binary = ["./venv/bin/python", "python", "python3", "python2"]
-detect_extensions = ["py"]
-version_format = "${raw}"
 
 [nodejs]
-format = "[  ](fg:gray bg:bg)[󰎙$version]($style)"
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
 detect_files = ["package.json", ".node-version"]
 detect_folders = ["node_modules"]
-style = "fg:aqua bg:bg"
 version_format = '${raw}'
+
+[c]
+symbol = " "
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[lua]
+symbol = ''
+version_format = '${raw}'
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+style = "fg:aqua bg:bg"
 
 [rust]
 symbol = ""
-style = "fg:aqua bg:bg"
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[php]
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[java]
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_aqua)]($style)'
+
+[python]
+symbol = ""
+# pyenv_version_name = true
+pyenv_prefix = "venv"
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+style = "bg:color_aqua"
+detect_extensions = ["py"]
+format = '[[ $symbol( $version)(\($virtualenv\)) ](fg:color_fg0 bg:color_aqua)]($style)'
+version_format = "${raw}"
+
+[docker_context]
+symbol = ""
+style = "bg:color_bg3"
+format = '[[ $symbol( $context) ](fg:#83a598 bg:color_bg3)]($style)'
+only_with_files = true
+detect_files = [
+  "docker-compose.yml",
+  "docker-compose.yaml",
+  "compose.yml",
+  "compose.yaml",
+  "Dockerfile",
+]
+detect_folders = []
+disabled = false
+
+[conda]
+style = "bg:color_bg3"
+format = '[[ $symbol( $environment) ](fg:#83a598 bg:color_bg3)]($style)'
+
+[pixi]
+style = "bg:color_bg3"
+format = '[[ $symbol( $version)( $environment) ](fg:color_fg0 bg:color_bg3)]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:color_bg1"
+format = '[[  $time ](fg:color_fg0 bg:color_bg1)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:color_green)'
+error_symbol = '[](bold fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+
+[cmd_duration]
+min_time = 1_500
+show_milliseconds = false
+format = '[[ 󱦟$duration ](fg:color_fg0 bg:color_bg1)]($style)'
+style = "color_bblue"
+show_notifications = false
+min_time_to_notify = 50_000
 
 [shlvl]
-format = "[$symbol$shlvl ]($style)"
+format = '[[ $shlvl ](fg:color_fg0 bg:color_bg1)]($style)'
 threshold = 2
 symbol = ""
 disabled = false
-style = "blue"
+style = "bg:color_bg1"
 
 [jobs]
 symbol_threshold = 1
 number_threshold = 2
-format = "[$symbol$number]($style)"
-symbol = " "
-style = "purple"
+format = '[[  $number ](fg:color_fg0 bg:color_bg1)]($style)'
+style = "bg:color_bg1"
 disabled = false
-
-[os]
-format = "[${symbol}]($style)"
-# format = "[ ${symbol}($version )]($style)"
-style = "fg:fg bg:bg"
-disabled = false
-
-[os.symbols]
-Alpine = ""
-Arch = "󰣇"
-Debian = ""
-FreeBSD = ""
-Linux = "󰌽"
-Manjaro = ""
-Mint = "󰣭"
-openSUSE = ""
-Raspbian = ""
-Redhat = "󱄛"
-RedHatEnterprise = "󱄛"
-SUSE = ""
-Ubuntu = ""
-Unknown = "?"
-Windows = ""
-
-
-# Color palettes config
-[palettes.gruvbox-dark]
-bg = "#282828"
-gray = "#928374"
-red = "#fb4934"
-green = "#b8bb26"
-yellow = "#fabd2f"
-blue = "#83a598"
-purple = "#d3869b"
-aqua = "#8ec07c"
-fg = "#ebdbb2"
-orange = "#fe8019"
-
-[palettes.gruvbox-light]
-bg = "#fbf1c7"
-gray = "#928374"
-red = "#9d0006"
-green = "#79740e"
-yellow = "#b57614"
-blue = "#076678"
-purple = "#8f3f71"
-aqua = "#427b58"
-fg = "#3c3836"
-orange = "#af3a03"

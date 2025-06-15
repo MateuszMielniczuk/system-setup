@@ -1,9 +1,2 @@
-require("core")
-require("plugin-manager")
-
--- set spell error style to less annoying
-vim.cmd([[
-    hi clear SpellBad
-    hi SpellBad cterm=underline
-    hi SpellBad gui=undercurl
-    ]])
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")

@@ -1,27 +1,8 @@
-# Comments and blank lines are allowed.
-
-RCS
-.+,v
-
-CVS
-\.\#.+       # CVS conflict files / emacs lock files
-\.cvsignore
-
-\.svn
-_darcs
-\.hg
-
-\.git
-\.gitignore
-\.mypy_cache
-
-.+~          # emacs backup files
-\#.*\#       # emacs autosave files
-
-^/README.*
-^/flatpaks.txt
-^/LICENSE.*
-^/COPYING
-
-\install
-^/push_config.*
+# Exclude all files except ones listed below
+*
+!bash/
+!hyprland/
+!kitty/
+!nvim/
+!starship/
+!tmux/

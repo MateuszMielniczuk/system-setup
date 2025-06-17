@@ -119,12 +119,16 @@ truncation_length = 3
 truncation_symbol = "…/"
 
 [directory.substitutions]
+"Desktop" = " "
 "Documents" = "󰈙 "
 "Downloads" = " "
 "Music" = "󰝚 "
 "Pictures" = " "
-
-"Developer" = "󰲋 "
+"projects" = "󰲋 "
+"Sync" = " "
+"Videos" = "  "
+"Public" = "󰒋 "
+"Templates" = "󰈏 "
 [package]
 style = "fg:color_fg0 bg:color_yellow"
 format = '[ |${symbol}(${version})]($style)'

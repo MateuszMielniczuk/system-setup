@@ -11,12 +11,11 @@ local map = vim.keymap.set
 map("i", "jk", "<esc>", { desc = "Exit insert_mode" })
 map("i", "kj", "<esc>", { desc = "Exit insert_mode" })
 
--- vim.api.nvim_set_keymap(
---     "n",
---     "<leader>kk",
---     '<cmd>lua require("plugins.show_kyria").show_kyria()<cr>',
---     { noremap = true, silent = true }
--- )
 vim.keymap.set("n", "<leader>kk", function()
     require("modules.show_kyria").show_kyria()
 end, { desc = "Show Kyria Layout" })
+
+local wk = require("which-key")
+wk.add({
+    { "<leader>k", group = "MyStuff" }, -- group
+})

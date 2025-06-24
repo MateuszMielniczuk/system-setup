@@ -116,6 +116,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Press c to clear the terminal screen.
 alias c='clear'
+alias code="flatpak run com.visualstudio.code"
 
 alias d='docker'
 alias dc='docker compose'

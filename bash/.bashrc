@@ -120,9 +120,10 @@ alias code="flatpak run com.visualstudio.code"
 
 alias d='docker'
 alias dc='docker compose'
+alias dps='docker ps'
 de() {
   local IFS=' '
-  docker exec -it $* bash
+  docker exec -it "$@" bash 2>/dev/null || docker exec -it "$@" sh
 }
 
 # Show disk usage in human-readable format

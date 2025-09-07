@@ -9,4 +9,4 @@ mv ~/.config/kitty/kitty.conf ~/backups_stow
 mv ~/.config/nvim ~/backups_stow
 mv ~/.config/starship.toml ~/backups_stow
 
-stow -v --defer push_config.sh -t ~/ */
+stow -v --defer push_config.sh --defer install -t ~/ */

@@ -147,6 +147,7 @@ alias gd='git diff'
 alias gl='git log --oneline'
 # Restore file
 alias gr='git restore'
+alias grs='git restore --staged'
 # View Git status.
 alias gs='git status'
 

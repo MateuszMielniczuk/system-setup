@@ -59,7 +59,8 @@ sudo apt-get install syncthing -y
 sudo systemctl enable --now syncthing@$USER.service
 
 # to get access locally to server's syncthing web interface use ssh tunnelling
-# ssh -L <port_local>:127.0.0.1:<port_server> <server_ip>
+# run on your local machine:
+# ssh -L <port_local>:127.0.0.1:<port_server> user@server_ip
 
 # ======================= install flatpak to get more recent sandboxed software
 

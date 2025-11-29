@@ -2,12 +2,12 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--- Editing VIM Netrw Explorer
-vim.cmd("let g:netrw_liststyle = 3") -- show tree view
--- vim.cmd("let g:netrw_browse_split = 4") -- open in previous window after split
-vim.cmd("let g:netrw_keepdir = 0") -- avoid move files error
-vim.cmd("let g:netrw_localcopydircmd = 'cp -r'") -- copy directory recursively
-vim.cmd("let g:netrw_winsize = 25") -- set netrw window size after split
+-- -- Editing VIM Netrw Explorer
+-- vim.cmd("let g:netrw_liststyle = 3") -- show tree view
+-- -- vim.cmd("let g:netrw_browse_split = 4") -- open in previous window after split
+-- vim.cmd("let g:netrw_keepdir = 0") -- avoid move files error
+-- vim.cmd("let g:netrw_localcopydircmd = 'cp -r'") -- copy directory recursively
+-- vim.cmd("let g:netrw_winsize = 25") -- set netrw window size after split
 
 
 -- [[ Setting options ]]

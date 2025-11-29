@@ -1,12 +1,10 @@
 return {
     {
-        {
-            "mfussenegger/nvim-lint",
-            opts = {
-                linters_by_ft = {
-                    htmldjango = { "djlint" },
-                    fish = { "fish" },
-                },
+        "mfussenegger/nvim-lint",
+        opts = {
+            linters_by_ft = {
+                htmldjango = { "djlint" },
+                fish = { "fish" },
             },
         },
     },

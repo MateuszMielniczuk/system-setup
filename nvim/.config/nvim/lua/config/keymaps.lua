@@ -11,7 +11,7 @@ local map = vim.keymap.set
 map("i", "jk", "<esc>", { desc = "Exit insert_mode" })
 map("i", "kj", "<esc>", { desc = "Exit insert_mode" })
 
-vim.keymap.set("n", "<leader>kk", function()
+map("n", "<leader>kk", function()
     require("modules.show_kyria").show_kyria()
 end, { desc = "Show Kyria Layout" })
 

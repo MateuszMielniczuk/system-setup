@@ -29,7 +29,7 @@ install_suse() {
   echo "Installing Docker for openSUSE Tumbleweed..."
   sudo zypper install -y docker docker-compose
   sudo systemctl enable --now docker
-  sudo usermod -aG docker $"USER"
+  sudo usermod -aG docker $USER
   newgrp docker
 }
 
@@ -37,7 +37,7 @@ install_arch() {
   echo "Installing Docker for Arch-based systems..."
   sudo pacman -Syu --noconfirm docker docker-compose
   sudo systemctl enable --now docker.service
-  sudo usermod -aG docker $"USER"
+  sudo usermod -aG docker $USER
   newgrp docker
 }
 

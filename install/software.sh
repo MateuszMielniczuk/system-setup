@@ -12,8 +12,8 @@ install_software() {
   opensuse-tumbleweed)
     install_suse
     ;;
-  manjaro)
-    install_manjaro
+  manjaro|catchyos|arch)
+    install_arch
     ;;
   ubuntu | debian)
     install_debian
@@ -65,8 +65,8 @@ install_suse() {
   echo "Software installed successfully on openSUSE Tumbleweed."
 }
 
-install_manjaro() {
-  echo "Installing software for Manjaro..."
+install_arch() {
+  echo "Installing software for Arch-based systems..."
   
   # Graphics and Design
   sudo pacman -Syu --noconfirm gimp inkscape

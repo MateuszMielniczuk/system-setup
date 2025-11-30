@@ -12,7 +12,7 @@ fi
 if [[ "$DISTRO" =~ ^(debian|ubuntu|linuxmint)$ ]]; then
   echo "Detected Debian/Ubuntu or derivative. Not supported yet."
   exit 1
-elif [[ "$DISTRO" =~ ^(opensuse-tumbleweed|manjaro)$ ]]; then
+elif [[ "$DISTRO" =~ ^(opensuse-tumbleweed|manjaro|catchyos|arch)$ ]]; then
   echo "Detected $DISTRO."
 else
   echo "Unsupported distribution: $DISTRO"
@@ -55,12 +55,12 @@ if [[ "$is_docker" =~ ^[Yy]$ ]]; then
   fi
 fi
 
-if [[ "$is_qemu" =~ ^[Yy]$ ]]; then
-  echo "Installing Virt Manager and QEMU."
-  if [[ -f install/qemu.sh ]]; then
-    source install/qemu.sh
-    install_qemu "$DISTRO"
-  else
-    echo "install/qemu.sh not found."
-  fi
-fi
+# if [[ "$is_qemu" =~ ^[Yy]$ ]]; then
+#   echo "Installing Virt Manager and QEMU."
+#   if [[ -f install/qemu.sh ]]; then
+#     source install/qemu.sh
+#     install_qemu "$DISTRO"
+#   else
+#     echo "install/qemu.sh not found."
+#   fi
+# fi

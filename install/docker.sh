@@ -10,8 +10,8 @@ install_docker() {
   opensuse-tumbleweed)
     install_suse
     ;;
-  manjaro)
-    install_manjaro
+  manjaro|catchyos|arch)
+    install_arch
     ;;
   ubuntu | debian)
     install_debian
@@ -33,8 +33,8 @@ install_suse() {
   newgrp docker
 }
 
-install_manjaro() {
-  echo "Installing Docker for Manjaro..."
+install_arch() {
+  echo "Installing Docker for Arch-based systems..."
   sudo pacman -Syu --noconfirm docker docker-compose
   sudo systemctl enable --now docker.service
   sudo usermod -aG docker $"USER"

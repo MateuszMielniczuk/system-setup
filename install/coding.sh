@@ -16,8 +16,8 @@ install_coding() {
   opensuse-tumbleweed)
     install_packages_suse
     ;;
-  manjaro)
-    install_packages_manjaro
+  manjaro|catchyos|arch)
+    install_packages_arch
     ;;
   ubuntu | debian)
     install_packages_debian
@@ -87,11 +87,11 @@ install_packages_debian() {
   install_nvim_debian
 }
 
-install_packages_manjaro() {
-  echo "Installing coding packages for Manjaro"
-  install_stow_manjaro
-  install_node_manjaro
-  install_nvim_manjaro
+install_packages_arch() {
+  echo "Installing coding packages for Arch-based systems"
+  install_stow_arch
+  install_node_arch
+  install_nvim_arch
 }
 
 install_packages_suse() {
@@ -117,8 +117,8 @@ install_node_suse() {
   echo "Node.js installed successfully."
 }
 
-install_node_manjaro() {
-  echo "Installing Node.js for Manjaro..."
+install_node_arch() {
+  echo "Installing Node.js for Arch based systems..."
   sudo pacman -S --noconfirm nodejs npm
   echo "Node.js installed successfully."
 }
@@ -138,7 +138,7 @@ install_nvim_debian() {
   echo "✓ Neovim installed successfully."
 }
 
-install_nvim_manjaro() {
+install_nvim_arch() {
   echo "Installing NVIM requirements..."
   sudo pacman -S --noconfirm \
     curl \
@@ -176,8 +176,8 @@ install_stow_debian() {
   echo "✓ Stow installed successfully."
 }
 
-install_stow_manjaro() {
-  echo "Installing stow for Manjaro..."
+install_stow_arch() {
+  echo "Installing stow for Arch-based systems..."
   sudo pacman -S --noconfirm stow
   echo "Stow installed successfully"
 }

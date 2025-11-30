@@ -16,7 +16,7 @@ install_coding() {
   opensuse-tumbleweed)
     install_packages_suse
     ;;
-  manjaro|catchyos|arch)
+  manjaro|cachyos|arch)
     install_packages_arch
     ;;
   ubuntu | debian)

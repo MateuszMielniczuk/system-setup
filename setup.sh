@@ -12,7 +12,7 @@ fi
 if [[ "$DISTRO" =~ ^(debian|ubuntu|linuxmint)$ ]]; then
   echo "Detected Debian/Ubuntu or derivative. Not supported yet."
   exit 1
-elif [[ "$DISTRO" =~ ^(opensuse-tumbleweed|manjaro|catchyos|arch)$ ]]; then
+elif [[ "$DISTRO" =~ ^(opensuse-tumbleweed|manjaro|cachyos|arch)$ ]]; then
   echo "Detected $DISTRO."
 else
   echo "Unsupported distribution: $DISTRO"

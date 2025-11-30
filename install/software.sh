@@ -12,7 +12,7 @@ install_software() {
   opensuse-tumbleweed)
     install_suse
     ;;
-  manjaro|catchyos|arch)
+  manjaro|cachyos|arch)
     install_arch
     ;;
   ubuntu | debian)

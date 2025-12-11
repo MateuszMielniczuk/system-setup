@@ -16,7 +16,7 @@ install_coding() {
   opensuse-tumbleweed)
     install_packages_suse
     ;;
-  manjaro|cachyos|arch)
+  manjaro | cachyos | arch)
     install_packages_arch
     ;;
   ubuntu | debian)
@@ -33,7 +33,7 @@ install_coding() {
 
 install_python_packages() {
   echo "Installing Python packages..."
-  sudo curl -LlSf https://astral.sh/uv/install.sh | sh
+  sudo curl -LsSf https://astral.sh/uv/install.sh | sh
   echo "Python packages installed successfully."
 }
 
@@ -146,7 +146,8 @@ install_nvim_arch() {
     fzf \
     gcc \
     ripgrep \
-    lazygit
+    lazygit \
+    tmux
 
   echo "Installing Neovim for Manjaro..."
   sudo pacman -S --noconfirm neovim

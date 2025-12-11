@@ -24,6 +24,13 @@ read -p "Do you want to install software? (y/n): " is_software
 read -p "Do you want to install Docker? (y/n): " is_docker
 read -p "Do you want to install Virt Manager? (y/n): " is_qemu
 
+if [[ -f install/base.sh ]]; then
+  source install/base.sh
+  install_base "$DISTRO"
+else
+  echo "install/base.sh not found."
+fi
+
 if [[ "$is_coding" =~ ^[Yy]$ ]]; then
   if [[ -f install/coding.sh ]]; then
     source install/coding.sh
@@ -44,7 +51,6 @@ if [[ "$is_software" =~ ^[Yy]$ ]]; then
   fi
 fi
 
-
 if [[ "$is_docker" =~ ^[Yy]$ ]]; then
   echo "Installing Docker."
   if [[ -f install/docker.sh ]]; then
@@ -64,3 +70,4 @@ fi
 #     echo "install/qemu.sh not found."
 #   fi
 # fi
+

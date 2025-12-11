@@ -75,7 +75,7 @@ install_arch() {
   # Browsers
   sudo pacman -Syu --noconfirm firefox chromium okular
   # Communication
-  sudo pacman -Syu --noconfirm discord
+  sudo pacman -Syu --noconfirm thunderbird
   # Media Players
   sudo pacman -Syu --noconfirm vlc strawberry
   # Utilities

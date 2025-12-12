@@ -81,7 +81,7 @@ install_arch() {
   # Utilities
   sudo pacman -Syu --noconfirm gparted keepassxc discover
   # Development Tools
-  sudo pacman -Syu --noconfirm code dbeaver
+  sudo pacman -Syu --noconfirm dbeaver
   # Syncthing - File Synchronization
   sudo pacman -Syu --noconfirm syncthing
   sudo systemctl enable --now syncthing@$USER.service
@@ -90,6 +90,7 @@ install_arch() {
   if command -v yay &>/dev/null; then
     sudo yay -S --noconfirm brave-bin
     sudo yay -S --noconfirm chrome
+    sudo yay -S visual-studio-code-bin
   else
     echo "⚠️  Warning: yay not found. Install yay to get Brave browser from AUR."
   fi

@@ -14,6 +14,7 @@ return {
             ensure_installed = {
                 "bash-language-server",
                 "css-lsp",
+                "djlint",
                 "docker-compose-language-service",
                 "dockerfile-language-server",
                 "emmet-ls", -- for html and css

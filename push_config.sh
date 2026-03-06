@@ -8,5 +8,6 @@ mv ~/.bashrc ~/backups_stow
 mv ~/.config/kitty/kitty.conf ~/backups_stow
 mv ~/.config/nvim ~/backups_stow
 mv ~/.config/starship.toml ~/backups_stow
+mv ~/config/fish/config.fish ~/backups_stow
 
 stow -v --defer push_config.sh --defer install -t ~/ */

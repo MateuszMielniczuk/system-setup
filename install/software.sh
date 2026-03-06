@@ -89,8 +89,6 @@ install_arch() {
   # PACKAGES FROM AUR ---------
   if command -v yay &>/dev/null; then
     sudo yay -S --noconfirm brave-bin
-    sudo yay -S --noconfirm chrome
-    sudo yay -S visual-studio-code-bin
   else
     echo "⚠️  Warning: yay not found. Install yay to get Brave browser from AUR."
   fi
@@ -104,7 +102,9 @@ install_arch() {
   flatpak install -y flathub com.spotify.Client
   flatpak install -y flathub com.discordapp.Discord
   flatpak install -y flathub com.getpostman.Postman
+  flatpak install -y flathub com.google.Chrome
   flatpak install -y flathub com.superproductivity.SuperProductivity
+  flatpak install -y flathub com.visualstudio.code
   flatpak install -y flathub md.obsidian.Obsidian
 
   echo "Software installed successfully on Manjaro."

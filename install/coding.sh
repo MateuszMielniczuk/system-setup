@@ -9,18 +9,20 @@ install_coding() {
   install_terminal
   install_fonts
   install_starship
-  install_python_tools
 
   # System-specific installations
   case "$distro" in
   opensuse-tumbleweed)
     install_packages_suse
+    install_python_packages
     ;;
   manjaro | cachyos | arch)
     install_packages_arch
+    install_python_packages
     ;;
   ubuntu | debian)
     install_packages_debian
+    install_python_packages
     ;;
   *)
     echo "❌ Error: Coding environment installation for '${distro}' is not supported."
@@ -33,7 +35,7 @@ install_coding() {
 
 install_python_packages() {
   echo "Installing Python packages..."
-  sudo curl -LsSf https://astral.sh/uv/install.sh | sh
+  curl -LsSf https://astral.sh/uv/install.sh | sh
   echo "Python packages installed successfully."
 }
 

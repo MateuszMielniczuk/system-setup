@@ -79,9 +79,10 @@ install_arch() {
   # Media Players
   sudo pacman -Syu --noconfirm vlc strawberry
   # Utilities
-  sudo pacman -Syu --noconfirm gparted keepassxc discover
+  sudo pacman -Syu --noconfirm gparted keepassxc discover flatpak-kcm fprintd
   # Development Tools
   sudo pacman -Syu --noconfirm dbeaver
+  curl -fsSL https://claude.ai/install.sh | bash
   # Syncthing - File Synchronization
   sudo pacman -Syu --noconfirm syncthing
   sudo systemctl enable --now syncthing@$USER.service

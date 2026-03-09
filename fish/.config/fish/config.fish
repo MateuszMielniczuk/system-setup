@@ -1,5 +1,8 @@
 # ~/.config/fish/config.fish
 
+# Disable greeting
+set fish_greeting
+
 # vi key bindings
 fish_vi_key_bindings
 

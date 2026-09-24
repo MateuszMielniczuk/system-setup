@@ -1,0 +1,26 @@
+// Zed keymap
+//
+// For information on how to configure Zed's keymap, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space": null
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space u": "workspace::SaveWithoutFormat"
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore",
+      "k j": "vim::NormalBefore"
+    }
+  }
+]

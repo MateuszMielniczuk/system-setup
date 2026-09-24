@@ -1,0 +1,13 @@
+// Zed tasks
+//
+// For information on how to configure Zed tasks, see the Zed
+// documentation: https://zed.dev/docs/tasks
+[
+  {
+    "label": "lazygit",
+    "command": "lazygit",
+    "use_new_terminal": true,
+    "reveal": "always",
+    "hide": "on_success"
+  }
+]

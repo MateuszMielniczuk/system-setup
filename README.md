@@ -6,6 +6,7 @@
 - kitty terminal
 - neovim
 - starship
+- zed editor
 
 ## Dotfiles
 

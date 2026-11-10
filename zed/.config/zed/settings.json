@@ -33,6 +33,10 @@
     "light": "Gruvbox Light",
     "dark": "Gruvbox Dark",
   },
+  "experimental.theme_overrides": {
+    "background.appearance": "blurred",
+    "background": "#1d2021f0"
+  },
   "tab_size": 2,
   "relative_line_numbers": true,
   "vertical_scroll_margin": 8,

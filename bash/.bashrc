@@ -216,6 +216,17 @@ function take() {
   cd "$1"
 }
 
+# lazygit that keeps the shell in the directory (worktree) you quit in
+function lg() {
+  mkdir -p ~/.lazygit
+  export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+  lazygit "$@"
+  if [ -f "$LAZYGIT_NEW_DIR_FILE" ]; then
+    cd "$(cat "$LAZYGIT_NEW_DIR_FILE")"
+    rm -f "$LAZYGIT_NEW_DIR_FILE"
+  fi
+}
+
 # run starship prompt styles
 eval "$(starship init bash)"
 eval "$(uv generate-shell-completion bash)"

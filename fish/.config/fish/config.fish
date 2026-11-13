@@ -33,6 +33,11 @@ alias h history
 alias m make
 alias s 'source ~/.config/fish/config.fish'
 
+# ssh via kitty kitten: copies kitty terminfo to the remote host
+if test "$TERM" = xterm-kitty
+    alias ssh 'kitten ssh'
+end
+
 # ls
 alias ls 'ls --color=auto --group-directories-first --hyperlink=auto'
 alias la 'ls -A --color=auto'

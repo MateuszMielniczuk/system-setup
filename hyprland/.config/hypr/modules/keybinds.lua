@@ -164,6 +164,10 @@ key("CTRL + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock scree
 bind("SHIFT + E",     hl.dsp.exec_cmd(scripts .. "powermenu.sh"),    "Power menu")
 bind("SHIFT + B",     hl.dsp.exec_cmd("pkill waybar; waybar"),       "Restart bar")
 
+section("Media")
+key("CTRL + XF86AudioRaiseVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh +"), "Player volume up", { locked = true, repeating = true })
+key("CTRL + XF86AudioLowerVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh -"), "Player volume down", { locked = true, repeating = true })
+
 -- Media and brightness
 hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })

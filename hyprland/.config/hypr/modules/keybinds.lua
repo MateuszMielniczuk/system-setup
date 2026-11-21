@@ -55,6 +55,40 @@ bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"),           "Theme picke
 bind("W",         hl.dsp.exec_cmd(scripts .. "hub.sh wallpaper"),   "Wallpaper picker")
 bind("SHIFT + W", hl.dsp.exec_cmd(scripts .. "theme.sh wallpaper"), "Random wallpaper")
 
+-- Screen zoom around the cursor (view only; reset on reload)
+local zoom_steps = { 1, 1.25, 1.5, 2, 3 }
+
+local function set_zoom(value)
+    hl.config({ cursor = { zoom_factor = math.max(1, math.min(value, 4)) } })
+end
+
+local function zoom_step(dir)
+    return function()
+        local current = tonumber((hl.get_config("cursor.zoom_factor"))) or 1
+        local target = dir > 0 and zoom_steps[#zoom_steps] or 1
+        for i = 1, #zoom_steps do
+            local s = dir > 0 and zoom_steps[i] or zoom_steps[#zoom_steps + 1 - i]
+            if (dir > 0 and s > current + 0.01) or (dir < 0 and s < current - 0.01) then
+                target = s
+                break
+            end
+        end
+        set_zoom(target)
+    end
+end
+
+local function zoom_scale(factor)
+    return function()
+        set_zoom((tonumber((hl.get_config("cursor.zoom_factor"))) or 1) * factor)
+    end
+end
+
+bind("equal", zoom_step(1),  "Zoom in")
+bind("minus", zoom_step(-1), "Zoom out")
+bind("0",     function() set_zoom(1) end, "Reset zoom")
+bind("ALT + mouse_up",   zoom_scale(1.1),     "Zoom in (wheel)")
+bind("ALT + mouse_down", zoom_scale(1 / 1.1), "Zoom out (wheel)")
+
 -- Dropdown terminal
 bind("grave", function()
     if #hl.get_windows({ class = "dropterm" }) == 0 then

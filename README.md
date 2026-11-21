@@ -3,6 +3,7 @@
 ## Config files:
 
 - bashrc
+- hyprland (Lua config, 2x2 workspace grid)
 - kitty terminal
 - neovim
 - starship

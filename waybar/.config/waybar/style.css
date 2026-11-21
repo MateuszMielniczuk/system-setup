@@ -33,6 +33,11 @@ tooltip label {
   border-radius: 6px;
 }
 
+#workspaces button.visible {
+  color: @accent;
+  background: @surface1;
+}
+
 #workspaces button.active {
   color: @base;
   background: @accent;

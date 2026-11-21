@@ -1,4 +1,3 @@
-package.loaded["modules.theme"] = nil
 local theme = require("modules.theme")
 
 hl.env("GTK_THEME", theme.gtk)

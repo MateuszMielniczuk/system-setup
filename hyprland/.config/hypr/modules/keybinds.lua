@@ -32,6 +32,7 @@ bind("M",             hl.dsp.window.fullscreen({ mode = "maximized", action = "t
 bind("SHIFT + Space", hl.dsp.window.float({ action = "toggle" }),                          "Toggle floating")
 bind("S",             hl.dsp.layout("togglesplit"),                                        "Toggle split direction")
 bind("P",             hl.dsp.window.pseudo(),                                              "Pseudo-tile")
+bind("G",             require("modules.smartgaps").toggle,                                 "Toggle smart gaps")
 
 -- Session
 bind("SHIFT + E", hl.dsp.exec_cmd(scripts .. "powermenu.sh"),   "Power menu")

@@ -102,6 +102,10 @@ progress-color=over #${surface1}
 
 [urgency=critical]
 border-color=#${red}
+
+[app-name=osd]
+border-color=#${accent}
+progress-color=over #${accent}66
 EOF
 
 cat >"$HOME/.config/kitty/theme.conf" <<EOF

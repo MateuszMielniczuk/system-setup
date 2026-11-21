@@ -21,6 +21,7 @@ end
 bind("Return", hl.dsp.exec_cmd(terminal),    "Terminal")
 bind("Space",  hl.dsp.exec_cmd(menu),        "App launcher")
 bind("E",      hl.dsp.exec_cmd(fileManager), "File manager")
+bind("Y",      hl.dsp.exec_cmd(terminal .. " --class yazi -e yazi"), "File manager (yazi)")
 bind("A",      hl.dsp.exec_cmd(scripts .. "hub.sh"),      "Settings hub")
 bind("slash",  hl.dsp.exec_cmd(scripts .. "hub.sh keys"), "Keybindings cheat sheet")
 

@@ -31,6 +31,9 @@ install_hyprland_arch() {
     grim \
     slurp \
     satty \
-    wf-recorder
+    wf-recorder \
+    yazi \
+    zoxide \
+    7zip
   echo "Hyprland packages installed successfully."
 }

@@ -7,7 +7,7 @@
   "margin-right": 8,
   "spacing": 6,
 
-  "modules-left": ["custom/hub", "custom/desktops", "hyprland/window"],
+  "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
     "custom/recording",
@@ -54,6 +54,12 @@
   "tray": {
     "icon-size": 16,
     "spacing": 8
+  },
+
+  // Shown only while a submap is active (passthrough: Super+Alt+F1)
+  "hyprland/submap": {
+    "format": "󰌌 {}",
+    "tooltip-format": "All shortcuts off. Super+Alt+F1 to exit."
   },
 
   "custom/hub": {

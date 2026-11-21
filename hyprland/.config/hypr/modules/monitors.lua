@@ -51,8 +51,8 @@ local function reload()
 end
 
 -- Lid: reload so the rules above re-evaluate (logind suspends when undocked)
-hl.bind("switch:on:Lid Switch",  function() later(reload) end, { locked = true })
-hl.bind("switch:off:Lid Switch", function() later(reload) end, { locked = true })
+hl.bind("switch:on:Lid Switch",  function() later(reload) end, { locked = true, submap_universal = true })
+hl.bind("switch:off:Lid Switch", function() later(reload) end, { locked = true, submap_universal = true })
 
 -- Set by hypridle while screens are off (see hypridle.conf)
 local function screen_off()

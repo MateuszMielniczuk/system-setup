@@ -164,18 +164,32 @@ key("CTRL + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock scree
 bind("SHIFT + E",     hl.dsp.exec_cmd(scripts .. "powermenu.sh"),    "Power menu")
 bind("SHIFT + B",     hl.dsp.exec_cmd("pkill waybar; waybar"),       "Restart bar")
 
+-- Passthrough: all shortcuts off so keys reach a VM / remote desktop; same key exits.
+-- Media keys and the lid switch stay active (submap_universal).
+local function passthrough(on)
+    return function()
+        hl.dispatch(hl.dsp.submap(on and "passthrough" or "reset"))
+        hl.exec_cmd(on and "notify-send -t 3000 'Passthrough on' 'All shortcuts off. Super+Alt+F1 to exit.'"
+            or "notify-send -t 1500 'Passthrough off'")
+    end
+end
+bind("ALT + F1", passthrough(true), "Passthrough mode (VMs, remote desktop)")
+hl.define_submap("passthrough", function()
+    hl.bind(mod .. " + ALT + F1", passthrough(false))
+end)
+
 section("Media")
-key("CTRL + XF86AudioRaiseVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh +"), "Player volume up", { locked = true, repeating = true })
-key("CTRL + XF86AudioLowerVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh -"), "Player volume down", { locked = true, repeating = true })
+key("CTRL + XF86AudioRaiseVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh +"), "Player volume up", { locked = true, repeating = true, submap_universal = true })
+key("CTRL + XF86AudioLowerVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh -"), "Player volume down", { locked = true, repeating = true, submap_universal = true })
 
 -- Media and brightness
-hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true })
-hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true })
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true, submap_universal = true })
+hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true, submap_universal = true })
+hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, submap_universal = true })
+hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, submap_universal = true })
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true, submap_universal = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true, submap_universal = true })
+hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true, submap_universal = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, submap_universal = true })
+hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true, submap_universal = true })
+hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true, submap_universal = true })

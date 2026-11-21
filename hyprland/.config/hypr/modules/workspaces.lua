@@ -146,6 +146,14 @@ function M.sync()
     M.switch(M.current())
 end
 
+-- Waybar desktop grid (scripts/desktops.sh) listens on signal 13
+local function refresh_bar()
+    hl.exec_cmd("pkill -RTMIN+13 waybar")
+end
+for _, event in ipairs({ "workspace.active", "window.open", "window.close", "window.move_to_workspace" }) do
+    hl.on(event, refresh_bar)
+end
+
 function M.go(direction)
     return function()
         local d = neighbour(direction)

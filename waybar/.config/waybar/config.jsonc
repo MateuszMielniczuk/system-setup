@@ -7,7 +7,7 @@
   "margin-right": 8,
   "spacing": 6,
 
-  "modules-left": ["custom/hub", "hyprland/workspaces", "hyprland/window"],
+  "modules-left": ["custom/hub", "custom/desktops", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
     "custom/recording",
@@ -24,14 +24,14 @@
     "custom/power"
   ],
 
-  // Desktop d = workspace d on the external screen, 10+d on the laptop
-  "hyprland/workspaces": {
-    "format": "{icon}",
-    "format-icons": { "11": "1", "12": "2", "13": "3", "14": "4" },
-    "persistent-workspaces": {
-      "eDP-1": [11, 12, 13, 14],
-      "*": [1, 2, 3, 4]
-    }
+  // 2x2 desktop grid; refreshed by Hyprland events (workspaces.lua, signal 13)
+  "custom/desktops": {
+    "exec": "~/.config/hypr/scripts/desktops.sh",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 13,
+    "on-scroll-up": "hyprctl eval 'local w = require(\"modules.workspaces\"); w.switch((w.current() - 2) % 4 + 1)'",
+    "on-scroll-down": "hyprctl eval 'local w = require(\"modules.workspaces\"); w.switch(w.current() % 4 + 1)'"
   },
 
   "hyprland/window": {

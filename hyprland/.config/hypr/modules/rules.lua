@@ -19,6 +19,13 @@ hl.window_rule({
 
 hl.window_rule({
     name  = "float-dialogs",
-    match = { class = "^(org.pulseaudio.pavucontrol|nm-connection-editor|blueman-manager|org.kde.polkit-kde-authentication-agent-1)$" },
+    match = { class = "^(org.pulseaudio.pavucontrol|nm-connection-editor|nmtui|blueman-manager|org.kde.polkit-kde-authentication-agent-1)$" },
     float = true,
+})
+
+hl.layer_rule({
+    name  = "blur-panels",
+    match = { namespace = "^(waybar|launcher|notifications)$" },
+    blur  = true,
+    ignore_alpha = 0.2,
 })

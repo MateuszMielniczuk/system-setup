@@ -1,0 +1,94 @@
+@import "colors.css";
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: alpha(@base, 0.85);
+  color: @text;
+  border-radius: 8px;
+}
+
+tooltip {
+  background: @base;
+  border: 1px solid @surface2;
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: @text;
+}
+
+#workspaces {
+  margin-left: 4px;
+}
+
+#workspaces button {
+  color: @subtext;
+  padding: 0 8px;
+  margin: 4px 2px;
+  border-radius: 6px;
+}
+
+#workspaces button.active {
+  color: @base;
+  background: @accent;
+}
+
+#workspaces button.urgent {
+  color: @base;
+  background: @red;
+}
+
+#workspaces button:hover {
+  background: @surface1;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+#window {
+  color: @subtext;
+  padding: 0 8px;
+}
+
+#clock {
+  font-weight: bold;
+}
+
+#tray,
+#pulseaudio,
+#backlight,
+#network,
+#bluetooth,
+#power-profiles-daemon,
+#battery,
+#custom-power {
+  padding: 0 8px;
+}
+
+#pulseaudio.muted,
+#network.disconnected,
+#bluetooth.disabled {
+  color: @subtext;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: @green;
+}
+
+#battery.warning:not(.charging) {
+  color: @yellow;
+}
+
+#battery.critical:not(.charging) {
+  color: @red;
+}
+
+#custom-power {
+  color: @red;
+  margin-right: 4px;
+}

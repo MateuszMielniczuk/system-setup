@@ -18,6 +18,11 @@ install_hyprland_arch() {
   echo "Installing Hyprland packages for Arch-based systems..."
   sudo pacman -S --needed --noconfirm \
     brightnessctl \
-    fuzzel
+    fuzzel \
+    waybar \
+    mako \
+    hyprpaper \
+    network-manager-applet \
+    blueman
   echo "Hyprland packages installed successfully."
 }

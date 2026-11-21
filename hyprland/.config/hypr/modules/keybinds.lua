@@ -23,7 +23,12 @@ bind("S",             hl.dsp.layout("togglesplit"))
 bind("P",             hl.dsp.window.pseudo())
 
 -- Session
-bind("SHIFT + E", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+bind("SHIFT + E", hl.dsp.exec_cmd("~/.config/hypr/scripts/powermenu.sh"))
+bind("SHIFT + B", hl.dsp.exec_cmd("pkill waybar; waybar"))
+
+-- Notifications
+bind("N",         hl.dsp.exec_cmd("makoctl dismiss"))
+bind("SHIFT + N", hl.dsp.exec_cmd("makoctl restore"))
 
 -- Focus / move / resize: vim keys and arrows
 local dirs = {

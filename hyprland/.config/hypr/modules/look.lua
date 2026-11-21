@@ -76,3 +76,11 @@ hl.animation({ leaf = "layersOut",  enabled = true, speed = 1.5,  bezier = "line
 hl.animation({ leaf = "workspaces", enabled = true, speed = 3,    bezier = "easeOutQuint", style = "slide" })
 hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 3, bezier = "easeOutQuint", style = "slidevert" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7,    bezier = "quick" })
+
+-- Re-apply the profile chosen in the hub (scripts/profile.sh) after every reload.
+-- Monitor check: this event also fires in `Hyprland --verify-config`, which has none.
+hl.on("config.reloaded", function()
+    if #(hl.get_monitors() or {}) > 0 then
+        hl.exec_cmd("~/.config/hypr/scripts/profile.sh apply")
+    end
+end)

@@ -106,7 +106,6 @@ display() {
 dnd_on() { makoctl mode | grep -q do-not-disturb; }
 awake_on() { ! pgrep -x hypridle >/dev/null; }
 night_on() { pgrep -x hyprsunset >/dev/null; }
-game_on() { hyprctl getoption animations.enabled | grep -q false; }
 state_of() { "$1" && echo on || echo off; }
 
 toggle_dnd() {
@@ -120,16 +119,11 @@ toggle_awake() {
   signal_bar 11
 }
 
-toggle_game() {
-  if game_on; then
-    hyprctl reload >/dev/null
-  else
-    hyprctl eval 'hl.config({
-      animations = { enabled = false },
-      decoration = { rounding = 0, blur = { enabled = false }, shadow = { enabled = false } },
-      general = { gaps_in = 0, gaps_out = 0, border_size = 1 },
-    })' >/dev/null
-  fi
+visual_profile() {
+  local choice
+  choice=$(printf '%s\n' normal battery performance |
+    menu Profile 30 3 --select "$("$scripts/profile.sh" get)") || return
+  "$scripts/profile.sh" "$choice"
 }
 
 # --- main --------------------------------------------------------------------
@@ -148,7 +142,7 @@ main() {
 󰅶  Keep awake: $(state_of awake_on)
 󰖔  Night light: $(state_of night_on)
 󰾅  Power profile: $(powerprofilesctl get)
-󰊗  Game mode: $(state_of game_on)
+󰊗  Profile: $("$scripts/profile.sh" get)
 󰓃  Audio output
 󰍬  Microphone
 ${external}󰤨  Wi-Fi
@@ -166,7 +160,7 @@ ${external}󰤨  Wi-Fi
   *"Keep awake"*) toggle_awake ;;
   *"Night light"*) "$scripts/nightlight.sh" ;;
   *"Power profile"*) profile ;;
-  *"Game mode"*) toggle_game ;;
+  *"Profile: "*) visual_profile ;;
   *"Audio output") audio sinks ;;
   *Microphone) audio sources ;;
   *Displays) display ;;

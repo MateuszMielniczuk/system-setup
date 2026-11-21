@@ -16,18 +16,33 @@ signal_bar() {
 
 # --- pages -------------------------------------------------------------------
 
+# Descriptions are "[Group] text" or "[Group|key label] text" (see keybinds.lua);
+# sections keep the order in which they first appear
 keys() {
-  hyprctl binds -j | jq -r '
-    def name: {"Return":"Enter","Escape":"Esc","slash":"/","grave":"`","Space":"Space",
-               "mouse:272":"Left click","mouse:273":"Right click"}[.] // .;
-    .[] | select(.description != "") |
-    [ (if .modmask % 128 >= 64 then "Super" else empty end),
-      (if .modmask % 8   >= 4  then "Ctrl"  else empty end),
-      (if .modmask % 16  >= 8  then "Alt"   else empty end),
-      (if .modmask % 2   >= 1  then "Shift" else empty end),
-      (.key | name) ] as $k |
-    "\($k | join(" + "))\t\(.description)"' |
-    column -t -s $'\t' | menu Keys 70 20 >/dev/null
+  {
+    hyprctl binds -j | jq -r '
+      def name: {"Return":"Enter","Escape":"Esc","slash":"/","grave":"`","equal":"=","minus":"-",
+                 "mouse:272":"Left drag","mouse:273":"Right drag",
+                 "mouse_up":"Wheel up","mouse_down":"Wheel down"}[.] // .;
+      [ .[] | select(.description != "") |
+        (.description | capture("^\\[(?<group>[^]|]*)(\\|(?<label>[^]]*))?\\] (?<text>.*)$")
+          // {group: "Other", label: null, text: .}) as $d |
+        { group: $d.group, text: $d.text,
+          keys: ($d.label // ([ (if .modmask % 128 >= 64 then "Super" else empty end),
+                                (if .modmask % 8   >= 4  then "Ctrl"  else empty end),
+                                (if .modmask % 16  >= 8  then "Alt"   else empty end),
+                                (if .modmask % 2   >= 1  then "Shift" else empty end),
+                                (.key | name) ] | join(" + "))) } ] |
+      (reduce .[].group as $g ([]; if index([$g]) then . else . + [$g] end)) as $order |
+      to_entries | sort_by(.value.group as $g | [($order | index([$g])), .key]) | .[].value |
+      "\(.group)\t\(.keys)\t\(.text)"'
+    printf '%s\t%s\t%s\n' \
+      Gestures "3 fingers ← →" "Desktop right / left" \
+      Gestures "3 fingers ↑ ↓" "Desktop below / above" \
+      Gestures "4 fingers ↑" "Window to the screen above" \
+      Gestures "4 fingers ↓" "Window to the screen below" \
+      Gestures "4-finger pinch in / out" "Fullscreen / normal"
+  } | column -t -s $'\t' | menu Keys 92 22 >/dev/null
 }
 
 wallpaper() {

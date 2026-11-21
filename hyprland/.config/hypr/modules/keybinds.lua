@@ -1,4 +1,5 @@
--- Descriptions feed the cheat sheet (hub.sh keys)
+-- Descriptions feed the cheat sheet (hub.sh keys) as "[Group] text"
+-- or "[Group|key label] text" to show one line for several keys.
 local grid = require("modules.workspaces")
 
 local mod = "SUPER"
@@ -7,9 +8,16 @@ local fileManager = "dolphin"
 local menu = "fuzzel"
 local scripts = "~/.config/hypr/scripts/"
 
+local group = ""
+local function section(name)
+    group = name
+end
+
 local function key(keys, action, desc, opts)
     opts = opts or {}
-    opts.description = desc
+    if desc then
+        opts.description = desc:sub(1, 1) == "[" and desc or ("[" .. group .. "] " .. desc)
+    end
     hl.bind(keys, action, opts)
 end
 
@@ -17,15 +25,25 @@ local function bind(keys, action, desc, opts)
     key(mod .. " + " .. keys, action, desc, opts)
 end
 
--- Apps
+section("Apps")
 bind("Return", hl.dsp.exec_cmd(terminal),    "Terminal")
 bind("Space",  hl.dsp.exec_cmd(menu),        "App launcher")
 bind("E",      hl.dsp.exec_cmd(fileManager), "File manager")
 bind("Y",      hl.dsp.exec_cmd(terminal .. " --class yazi -e yazi"), "File manager (yazi)")
 bind("A",      hl.dsp.exec_cmd(scripts .. "hub.sh"),      "Settings hub")
 bind("slash",  hl.dsp.exec_cmd(scripts .. "hub.sh keys"), "Keybindings cheat sheet")
+bind("V",      hl.dsp.exec_cmd(scripts .. "clipboard.sh"), "Clipboard history")
 
--- Windows
+-- Dropdown terminal
+bind("grave", function()
+    if #hl.get_windows({ class = "dropterm" }) == 0 then
+        hl.dispatch(hl.dsp.exec_cmd("kitty --class dropterm"))
+    else
+        hl.dispatch(hl.dsp.workspace.toggle_special("term"))
+    end
+end, "Dropdown terminal")
+
+section("Windows")
 bind("Q",             hl.dsp.window.close(),                                               "Close window")
 bind("F",             hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), "Fullscreen")
 bind("M",             hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),  "Maximize")
@@ -63,27 +81,31 @@ local function toggle_pin()
 end
 bind("SHIFT + P", toggle_pin, "Pin window (all desktops)")
 
--- Session
-bind("SHIFT + E", hl.dsp.exec_cmd(scripts .. "powermenu.sh"),   "Power menu")
-bind("SHIFT + B", hl.dsp.exec_cmd("pkill waybar; waybar"),      "Restart bar")
-bind("Escape",    hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
-key("CTRL + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
-bind("CTRL + N",  hl.dsp.exec_cmd(scripts .. "nightlight.sh"),  "Night light")
+-- Focus / move / resize and desktop grid: vim keys and arrows, one cheat sheet line each
+local dirs = {
+    { "H", "left" }, { "J", "down" }, { "K", "up" }, { "L", "right" },
+    { "left", "left" }, { "down", "down" }, { "up", "up" }, { "right", "right" },
+}
+local resize = { left = { -40, 0 }, right = { 40, 0 }, up = { 0, -40 }, down = { 0, 40 } }
 
--- Clipboard, screenshots, recording
-bind("V",           hl.dsp.exec_cmd(scripts .. "clipboard.sh"),             "Clipboard history")
-key("Print",        hl.dsp.exec_cmd(scripts .. "screenshot.sh region"),     "Screenshot region")
-key("SHIFT + Print", hl.dsp.exec_cmd(scripts .. "screenshot.sh screen"),    "Screenshot screen")
-key("CTRL + Print", hl.dsp.exec_cmd(scripts .. "screenshot.sh window"),     "Screenshot window")
-bind("Print",       hl.dsp.exec_cmd(scripts .. "screenshot.sh region edit"), "Screenshot region and annotate")
-bind("R",           hl.dsp.exec_cmd(scripts .. "record.sh region"),         "Record region (again to stop)")
-bind("SHIFT + R",   hl.dsp.exec_cmd(scripts .. "record.sh screen"),         "Record screen (again to stop)")
+for _, d in ipairs(dirs) do
+    local k, dir = d[1], d[2]
+    local function desc(grp, mods, text)
+        return k == "H" and ("[" .. grp .. "|Super + " .. mods .. "H/J/K/L or arrows] " .. text) or nil
+    end
+    bind(k,                      hl.dsp.focus({ direction = dir }),       desc("Windows", "", "Focus window"))
+    bind("SHIFT + " .. k,        hl.dsp.window.move({ direction = dir }), desc("Windows", "Shift + ", "Move window"))
+    bind("ALT + " .. k,          hl.dsp.window.resize({ x = resize[dir][1], y = resize[dir][2], relative = true }),
+        desc("Windows", "Alt + ", "Resize window"), { repeating = true })
+    bind("CTRL + " .. k,         grid.go(dir),   desc("Desktops", "Ctrl + ", "Switch desktop"))
+    bind("CTRL + SHIFT + " .. k, grid.take(dir), desc("Desktops", "Ctrl + Shift + ", "Take window to desktop"))
+end
 
--- Theme
-bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"),           "Theme picker")
-bind("W",         hl.dsp.exec_cmd(scripts .. "hub.sh wallpaper"),   "Wallpaper picker")
-bind("SHIFT + W", hl.dsp.exec_cmd(scripts .. "theme.sh wallpaper"), "Random wallpaper")
+section("Mouse")
+bind("mouse:272", hl.dsp.window.drag(),   "Drag window",   { mouse = true })
+bind("mouse:273", hl.dsp.window.resize(), "Resize window", { mouse = true })
 
+section("Zoom")
 -- Screen zoom around the cursor (view only; reset on reload)
 local zoom_steps = { 1, 1.25, 1.5, 2, 3 }
 
@@ -118,41 +140,29 @@ bind("0",     function() set_zoom(1) end, "Reset zoom")
 bind("ALT + mouse_up",   zoom_scale(1.1),     "Zoom in (wheel)")
 bind("ALT + mouse_down", zoom_scale(1 / 1.1), "Zoom out (wheel)")
 
--- Dropdown terminal
-bind("grave", function()
-    if #hl.get_windows({ class = "dropterm" }) == 0 then
-        hl.dispatch(hl.dsp.exec_cmd("kitty --class dropterm"))
-    else
-        hl.dispatch(hl.dsp.workspace.toggle_special("term"))
-    end
-end, "Dropdown terminal")
+section("Capture")
+key("Print",         hl.dsp.exec_cmd(scripts .. "screenshot.sh region"),      "Screenshot region")
+key("SHIFT + Print", hl.dsp.exec_cmd(scripts .. "screenshot.sh screen"),      "Screenshot screen")
+key("CTRL + Print",  hl.dsp.exec_cmd(scripts .. "screenshot.sh window"),      "Screenshot window")
+bind("Print",        hl.dsp.exec_cmd(scripts .. "screenshot.sh region edit"), "Screenshot region and annotate")
+bind("R",            hl.dsp.exec_cmd(scripts .. "record.sh region"),          "Record region (again to stop)")
+bind("SHIFT + R",    hl.dsp.exec_cmd(scripts .. "record.sh screen"),          "Record screen (again to stop)")
 
--- Notifications
+section("Theme")
+bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"),           "Theme picker")
+bind("W",         hl.dsp.exec_cmd(scripts .. "hub.sh wallpaper"),   "Wallpaper picker")
+bind("SHIFT + W", hl.dsp.exec_cmd(scripts .. "theme.sh wallpaper"), "Random wallpaper")
+bind("CTRL + N",  hl.dsp.exec_cmd(scripts .. "nightlight.sh"),      "Night light")
+
+section("Notifications")
 bind("N",         hl.dsp.exec_cmd("makoctl dismiss"), "Dismiss notification")
 bind("SHIFT + N", hl.dsp.exec_cmd("makoctl restore"), "Restore last notification")
 
--- Focus / move / resize: vim keys and arrows (arrows mirror hjkl, described once)
-local dirs = {
-    { "H", "left" }, { "J", "down" }, { "K", "up" }, { "L", "right" },
-    { "left", "left" }, { "down", "down" }, { "up", "up" }, { "right", "right" },
-}
-local resize = { left = { -40, 0 }, right = { 40, 0 }, up = { 0, -40 }, down = { 0, 40 } }
-
-for _, d in ipairs(dirs) do
-    local k, dir = d[1], d[2]
-    local function desc(text)
-        return #k == 1 and (text .. " " .. dir) or nil
-    end
-    bind(k,                     hl.dsp.focus({ direction = dir }),       desc("Focus window"))
-    bind("SHIFT + " .. k,       hl.dsp.window.move({ direction = dir }), desc("Move window"))
-    bind("ALT + " .. k,         hl.dsp.window.resize({ x = resize[dir][1], y = resize[dir][2], relative = true }), desc("Resize window"), { repeating = true })
-    bind("CTRL + " .. k,        grid.go(dir),   desc("Switch desktop"))
-    bind("CTRL + SHIFT + " .. k, grid.take(dir), desc("Take window to desktop"))
-end
-
--- Mouse
-bind("mouse:272", hl.dsp.window.drag(),   "Drag window",   { mouse = true })
-bind("mouse:273", hl.dsp.window.resize(), "Resize window", { mouse = true })
+section("Session")
+bind("Escape",        hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
+key("CTRL + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
+bind("SHIFT + E",     hl.dsp.exec_cmd(scripts .. "powermenu.sh"),    "Power menu")
+bind("SHIFT + B",     hl.dsp.exec_cmd("pkill waybar; waybar"),       "Restart bar")
 
 -- Media and brightness
 hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })

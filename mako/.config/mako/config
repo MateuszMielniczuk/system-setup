@@ -14,3 +14,6 @@ max-history=50
 
 [urgency=critical]
 default-timeout=0
+
+[mode=do-not-disturb]
+invisible=1

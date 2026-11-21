@@ -1,7 +1,8 @@
 #!/bin/bash
 # usage: theme.sh            pick a theme with fuzzel
 #        theme.sh <name>     apply a theme
-#        theme.sh wallpaper  next wallpaper from the current theme
+#        theme.sh wallpaper  random wallpaper from the current theme
+#        theme.sh wallpaper <file>  set a specific wallpaper
 
 themes="$HOME/.config/hypr/themes"
 state="${XDG_STATE_HOME:-$HOME/.local/state}/theme"
@@ -9,11 +10,13 @@ mkdir -p "$state"
 current=$(cat "$state/current" 2>/dev/null || echo gruvbox-dark)
 
 set_wallpaper() {
-  [[ -d "$wallpapers" ]] || return 0
-  local img
-  img=$(find "$wallpapers" -maxdepth 1 -type f \
-    \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | shuf -n1)
-  [[ -n "$img" ]] || return 0
+  local img="${1:-}"
+  if [[ -z "$img" ]]; then
+    [[ -d "$wallpapers" ]] || return 0
+    img=$(find "$wallpapers" -maxdepth 1 -type f \
+      \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | shuf -n1)
+  fi
+  [[ -f "$img" ]] || return 0
   cat >"$HOME/.config/hypr/hyprpaper.conf" <<EOF
 splash = false
 
@@ -29,7 +32,7 @@ EOF
 name="${1:-}"
 if [[ "$name" == "wallpaper" ]]; then
   source "$themes/$current.sh"
-  set_wallpaper
+  set_wallpaper "${2:-}"
   exit 0
 fi
 

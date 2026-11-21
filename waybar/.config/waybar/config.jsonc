@@ -7,10 +7,12 @@
   "margin-right": 8,
   "spacing": 6,
 
-  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-left": ["custom/hub", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
     "custom/recording",
+    "custom/dnd",
+    "custom/awake",
     "tray",
     "custom/nightlight",
     "pulseaudio",
@@ -52,6 +54,29 @@
   "tray": {
     "icon-size": 16,
     "spacing": 8
+  },
+
+  "custom/hub": {
+    "format": "󰣇",
+    "tooltip-format": "Settings (Super+A)",
+    "on-click": "~/.config/hypr/scripts/hub.sh",
+    "on-click-right": "~/.config/hypr/scripts/hub.sh keys"
+  },
+
+  "custom/dnd": {
+    "exec": "makoctl mode | grep -q do-not-disturb && echo '󰂛' || echo ''",
+    "interval": "once",
+    "signal": 12,
+    "tooltip-format": "Do not disturb",
+    "on-click": "makoctl mode -t do-not-disturb >/dev/null; pkill -RTMIN+12 waybar"
+  },
+
+  "custom/awake": {
+    "exec": "pgrep -x hypridle >/dev/null && echo '' || echo '󰅶'",
+    "interval": "once",
+    "signal": 11,
+    "tooltip-format": "Keep awake: idle/lock paused",
+    "on-click": "setsid -f hypridle >/dev/null 2>&1; sleep 0.2; pkill -RTMIN+11 waybar"
   },
 
   "custom/recording": {

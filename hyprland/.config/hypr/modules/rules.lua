@@ -17,6 +17,25 @@ hl.window_rule({
     no_focus = true,
 })
 
+-- Keep the screen awake (pauses hypridle) without the manual toggle
+hl.window_rule({
+    name  = "idle-inhibit-fullscreen",
+    match = { class = ".*" },
+    idle_inhibit = "fullscreen",
+})
+
+hl.window_rule({
+    name  = "idle-inhibit-video",
+    match = { class = "^(mpv|vlc|io.github.celluloid_player.Celluloid|org.gnome.Totem)$" },
+    idle_inhibit = "focus",
+})
+
+hl.window_rule({
+    name  = "idle-inhibit-youtube",
+    match = { title = ".*YouTube.*" },
+    idle_inhibit = "focus",
+})
+
 hl.window_rule({
     name  = "float-dialogs",
     match = { class = "^(org.pulseaudio.pavucontrol|nm-connection-editor|nmtui|blueman-manager|org.kde.polkit-kde-authentication-agent-1)$" },

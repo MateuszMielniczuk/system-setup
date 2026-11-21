@@ -10,6 +10,7 @@
   "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
+    "custom/updates",
     "privacy",
     "custom/recording",
     "custom/dnd",
@@ -84,6 +85,16 @@
     "signal": 11,
     "tooltip-format": "Keep awake: idle/lock paused",
     "on-click": "setsid -f hypridle >/dev/null 2>&1; sleep 0.2; pkill -RTMIN+11 waybar"
+  },
+
+  // Pending repo + AUR updates; hidden when none. Click: upgrade (yay), right-click: re-check
+  "custom/updates": {
+    "exec": "~/.config/hypr/scripts/updates.sh",
+    "return-type": "json",
+    "interval": 1800,
+    "signal": 14,
+    "on-click": "~/.config/hypr/scripts/updates.sh upgrade",
+    "on-click-right": "pkill -RTMIN+14 waybar"
   },
 
   // Shown only while the mic is recording or the screen is shared (PipeWire)

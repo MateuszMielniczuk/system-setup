@@ -10,4 +10,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("nm-applet --indicator")
+    -- Waybar's first update check runs before the network is up; re-check after a minute
+    hl.exec_cmd("sleep 60 && pkill -RTMIN+14 waybar")
 end)

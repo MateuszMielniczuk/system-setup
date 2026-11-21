@@ -120,6 +120,15 @@ tooltip label {
   color: @red;
 }
 
+#custom-updates {
+  color: @accent;
+  padding: 0 8px;
+}
+
+#custom-updates.many {
+  color: @yellow;
+}
+
 #privacy {
   padding: 0 4px;
 }

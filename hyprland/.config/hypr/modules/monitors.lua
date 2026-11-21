@@ -54,15 +54,35 @@ end
 hl.bind("switch:on:Lid Switch",  function() later(reload) end, { locked = true })
 hl.bind("switch:off:Lid Switch", function() later(reload) end, { locked = true })
 
+-- Set by hypridle while screens are off (see hypridle.conf)
+local function screen_off()
+    local f = io.open((os.getenv("XDG_RUNTIME_DIR") or "") .. "/hypr-screen-off")
+    if f then
+        f:close()
+        return true
+    end
+    return false
+end
+
 hl.on("monitor.added", function(m)
     later(fix_workspaces)
-    if lid_closed() and m and m.name ~= laptop then
+    if screen_off() then
+        -- Monitor reconnected in standby: keep it off
+        later(function()
+            hl.dispatch(hl.dsp.dpms({ action = "off" }))
+        end, 500)
+    elseif lid_closed() and m and m.name ~= laptop then
         later(reload)
     end
 end)
 
 hl.on("monitor.removed", function(m)
-    later(fix_workspaces)
+    -- Standby disconnect while screens are off: leave windows alone, hypridle syncs on wake
+    if screen_off() then
+        return
+    end
+    -- Wait out short dropouts before moving windows to the remaining screen
+    later(fix_workspaces, 3000)
     if lid_closed() and m and m.name ~= laptop then
         later(reload)
     end

@@ -57,8 +57,36 @@ function M.switch(d)
 end
 
 -- When a screen goes away (lid closed, undocked), move its windows to the
--- same desktop on the remaining screen
-local function collect_orphans()
+-- same desktop on the remaining screen, and remember where they came from
+-- so they go back when the screen returns. Lines: "<address> <from ws> <to ws>"
+local moved_file = (os.getenv("XDG_RUNTIME_DIR") or "/tmp") .. "/hypr-moved-windows"
+
+local function read_moved()
+    local list = {}
+    local f = io.open(moved_file)
+    if f then
+        for line in f:lines() do
+            local addr, from, to = line:match("^(%S+) (%d+) (%d+)$")
+            if addr then
+                list[#list + 1] = { addr = addr, from = tonumber(from), to = tonumber(to) }
+            end
+        end
+        f:close()
+    end
+    return list
+end
+
+local function write_moved(list)
+    local f = io.open(moved_file, "w")
+    if f then
+        for _, e in ipairs(list) do
+            f:write(string.format("%s %d %d\n", e.addr, e.from, e.to))
+        end
+        f:close()
+    end
+end
+
+local function screens()
     local laptop, external = false, false
     for _, m in ipairs(hl.get_monitors() or {}) do
         if m.name == M.laptop then
@@ -67,20 +95,53 @@ local function collect_orphans()
             external = true
         end
     end
+    return laptop, external
+end
+
+local function move(addr, ws)
+    hl.dispatch(hl.dsp.window.move({ window = "address:" .. addr, workspace = ws, follow = false }))
+end
+
+local function restore_moved()
+    local laptop, external = screens()
+    local current = {}
+    for _, w in ipairs(hl.get_windows() or {}) do
+        current[w.address] = w.workspace and w.workspace.id
+    end
+    local keep = {}
+    for _, e in ipairs(read_moved()) do
+        local back = (e.from > 10 and laptop) or (e.from <= count and external)
+        if current[e.addr] ~= e.to then
+            -- closed or moved by hand since: forget it
+        elseif back then
+            move(e.addr, e.from)
+        else
+            keep[#keep + 1] = e
+        end
+    end
+    write_moved(keep)
+end
+
+local function collect_orphans()
+    local laptop, external = screens()
     if laptop == external then
         return
     end
     local from = laptop and 0 or 10
     local to = laptop and 10 or 0
+    local list = read_moved()
     for _, w in ipairs(hl.get_windows() or {}) do
         local id = w.workspace and w.workspace.id
         if id and id > from and id <= from + count then
-            hl.dispatch(hl.dsp.window.move({ window = "address:" .. w.address, workspace = id - from + to, follow = false }))
+            move(w.address, id - from + to)
+            list[#list + 1] = { addr = w.address, from = id, to = id - from + to }
         end
     end
+    write_moved(list)
 end
 
 function M.sync()
+    restore_moved()
     collect_orphans()
     M.switch(M.current())
 end

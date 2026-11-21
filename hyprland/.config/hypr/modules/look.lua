@@ -46,6 +46,8 @@ hl.config({
         focus_on_activate = true,
         key_press_enables_dpms = true,
         mouse_move_enables_dpms = true,
+        -- If hyprlock crashes, a new hyprlock can take over the locked session
+        allow_session_lock_restore = true,
     },
 
     ecosystem = {

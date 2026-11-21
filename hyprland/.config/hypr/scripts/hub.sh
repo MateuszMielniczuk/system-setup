@@ -21,7 +21,7 @@ signal_bar() {
 keys() {
   {
     hyprctl binds -j | jq -r '
-      def name: {"Return":"Enter","Escape":"Esc","slash":"/","grave":"`","equal":"=","minus":"-",
+      def name: {"Return":"Enter","Escape":"Esc","slash":"/","grave":"`","equal":"=","minus":"-","period":".",
                  "mouse:272":"Left drag","mouse:273":"Right drag",
                  "mouse_up":"Wheel up","mouse_down":"Wheel down"}[.] // .;
       [ .[] | select(.description != "") |
@@ -137,6 +137,7 @@ main() {
 󰸉  Wallpaper
 󰊄  Extract text (OCR)
 󰈋  Color picker
+󰞅  Emoji
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -155,6 +156,7 @@ ${external}󰤨  Wi-Fi
   *Wallpaper) wallpaper ;;
   *"Extract text (OCR)") sleep 0.2 && "$scripts/ocr.sh" text ;;
   *"Color picker") sleep 0.2 && "$scripts/colorpicker.sh" ;;
+  *Emoji) "$scripts/emoji.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

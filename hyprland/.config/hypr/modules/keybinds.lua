@@ -33,6 +33,7 @@ bind("Y",      hl.dsp.exec_cmd(terminal .. " --class yazi -e yazi"), "File manag
 bind("A",      hl.dsp.exec_cmd(scripts .. "hub.sh"),      "Settings hub")
 bind("slash",  hl.dsp.exec_cmd(scripts .. "hub.sh keys"), "Keybindings cheat sheet")
 bind("V",      hl.dsp.exec_cmd(scripts .. "clipboard.sh"), "Clipboard history")
+bind("period", hl.dsp.exec_cmd(scripts .. "emoji.sh"),     "Emoji picker")
 
 -- Dropdown terminal
 bind("grave", function()

@@ -33,6 +33,35 @@ bind("SHIFT + Space", hl.dsp.window.float({ action = "toggle" }),               
 bind("S",             hl.dsp.layout("togglesplit"),                                        "Toggle split direction")
 bind("P",             hl.dsp.window.pseudo(),                                              "Pseudo-tile")
 bind("G",             require("modules.smartgaps").toggle,                                 "Toggle smart gaps")
+bind("C",             hl.dsp.window.center(),                                              "Center floating window")
+
+-- Pin: float at 60% of the screen, centered, shown on every desktop of this screen;
+-- again to unpin and tile. (Floating at tiled size could cover the whole screen
+-- and spill onto the other monitor.)
+local function toggle_pin()
+    local w = hl.get_active_window()
+    if not w then
+        return
+    end
+    if w.pinned then
+        hl.dispatch(hl.dsp.window.pin({ action = "unset" }))
+        hl.dispatch(hl.dsp.window.float({ action = "unset" }))
+    else
+        local m = w.monitor or hl.get_active_monitor()
+        if not w.floating then
+            hl.dispatch(hl.dsp.window.float({ action = "set" }))
+        end
+        if m then
+            hl.dispatch(hl.dsp.window.resize({
+                x = math.floor(m.width / m.scale * 0.6),
+                y = math.floor(m.height / m.scale * 0.6),
+            }))
+        end
+        hl.dispatch(hl.dsp.window.center())
+        hl.dispatch(hl.dsp.window.pin({ action = "set" }))
+    end
+end
+bind("SHIFT + P", toggle_pin, "Pin window (all desktops)")
 
 -- Session
 bind("SHIFT + E", hl.dsp.exec_cmd(scripts .. "powermenu.sh"),   "Power menu")

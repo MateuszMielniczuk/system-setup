@@ -89,6 +89,12 @@ tooltip label {
   color: @red;
 }
 
+#custom-recording {
+  color: @red;
+  font-weight: bold;
+  padding: 0 8px;
+}
+
 #custom-power {
   color: @red;
   margin-right: 4px;

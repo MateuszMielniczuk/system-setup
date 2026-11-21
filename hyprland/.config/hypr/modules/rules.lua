@@ -23,6 +23,23 @@ hl.window_rule({
     float = true,
 })
 
+hl.window_rule({
+    name      = "dropterm",
+    match     = { class = "^dropterm$" },
+    float     = true,
+    size      = "monitor_w*0.7 monitor_h*0.6",
+    center    = true,
+    workspace = "special:term",
+})
+
+hl.window_rule({
+    name  = "satty",
+    match  = { class = "^(com.gabm.satty|satty)$" },
+    float  = true,
+    size   = "monitor_w*0.85 monitor_h*0.85",
+    center = true,
+})
+
 hl.layer_rule({
     name  = "blur-panels",
     match = { namespace = "^(waybar|launcher|notifications)$" },

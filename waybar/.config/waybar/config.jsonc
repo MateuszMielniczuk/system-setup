@@ -10,6 +10,7 @@
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
+    "custom/recording",
     "tray",
     "custom/nightlight",
     "pulseaudio",
@@ -46,6 +47,14 @@
   "tray": {
     "icon-size": 16,
     "spacing": 8
+  },
+
+  "custom/recording": {
+    "exec": "pgrep -x wf-recorder >/dev/null && echo '󰑊 REC' || echo ''",
+    "interval": "once",
+    "signal": 9,
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/record.sh"
   },
 
   "custom/nightlight": {

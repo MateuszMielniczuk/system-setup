@@ -29,6 +29,25 @@ bind("Escape",    hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
 bind("CTRL + N",  hl.dsp.exec_cmd("~/.config/hypr/scripts/nightlight.sh"))
 
+-- Clipboard, screenshots, recording
+local scripts = "~/.config/hypr/scripts/"
+bind("V", hl.dsp.exec_cmd(scripts .. "clipboard.sh"))
+hl.bind("Print",           hl.dsp.exec_cmd(scripts .. "screenshot.sh region"))
+hl.bind("SHIFT + Print",   hl.dsp.exec_cmd(scripts .. "screenshot.sh screen"))
+hl.bind("CTRL + Print",    hl.dsp.exec_cmd(scripts .. "screenshot.sh window"))
+bind("Print",              hl.dsp.exec_cmd(scripts .. "screenshot.sh region edit"))
+bind("R",                  hl.dsp.exec_cmd(scripts .. "record.sh region"))
+bind("SHIFT + R",          hl.dsp.exec_cmd(scripts .. "record.sh screen"))
+
+-- Dropdown terminal
+bind("grave", function()
+    if #hl.get_windows({ class = "dropterm" }) == 0 then
+        hl.dispatch(hl.dsp.exec_cmd("kitty --class dropterm"))
+    else
+        hl.dispatch(hl.dsp.workspace.toggle_special("term"))
+    end
+end)
+
 -- Notifications
 bind("N",         hl.dsp.exec_cmd("makoctl dismiss"))
 bind("SHIFT + N", hl.dsp.exec_cmd("makoctl restore"))

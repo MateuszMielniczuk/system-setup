@@ -26,6 +26,11 @@ install_hyprland_arch() {
     blueman \
     hyprlock \
     hypridle \
-    hyprsunset
+    hyprsunset \
+    cliphist \
+    grim \
+    slurp \
+    satty \
+    wf-recorder
   echo "Hyprland packages installed successfully."
 }

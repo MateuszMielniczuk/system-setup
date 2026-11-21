@@ -34,6 +34,10 @@ install_hyprland_arch() {
     wf-recorder \
     yazi \
     zoxide \
-    7zip
+    7zip \
+    tesseract \
+    tesseract-data-eng \
+    tesseract-data-pol \
+    zbar
   echo "Hyprland packages installed successfully."
 }

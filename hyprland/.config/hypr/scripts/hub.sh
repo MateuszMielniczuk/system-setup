@@ -141,6 +141,7 @@ main() {
   choice=$(printf '%s' \
     "󰌌  Keybindings
 󰸉  Wallpaper
+󰊄  Extract text (OCR)
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -157,6 +158,7 @@ ${external}󰤨  Wi-Fi
   case "$choice" in
   *Keybindings) keys ;;
   *Wallpaper) wallpaper ;;
+  *"Extract text (OCR)") sleep 0.2 && "$scripts/ocr.sh" text ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

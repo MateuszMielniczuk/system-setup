@@ -147,6 +147,8 @@ key("CTRL + Print",  hl.dsp.exec_cmd(scripts .. "screenshot.sh window"),      "S
 bind("Print",        hl.dsp.exec_cmd(scripts .. "screenshot.sh region edit"), "Screenshot region and annotate")
 bind("R",            hl.dsp.exec_cmd(scripts .. "record.sh region"),          "Record region (again to stop)")
 bind("SHIFT + R",    hl.dsp.exec_cmd(scripts .. "record.sh screen"),          "Record screen (again to stop)")
+bind("O",            hl.dsp.exec_cmd(scripts .. "ocr.sh text"),               "Copy text from region (OCR)")
+bind("SHIFT + O",    hl.dsp.exec_cmd(scripts .. "ocr.sh qr"),                 "Copy QR code from region")
 
 section("Theme")
 bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"),           "Theme picker")

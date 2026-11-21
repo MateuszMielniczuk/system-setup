@@ -120,6 +120,18 @@ tooltip label {
   color: @red;
 }
 
+#privacy {
+  padding: 0 4px;
+}
+
+#privacy-item {
+  color: @base;
+  background: @red;
+  border-radius: 6px;
+  margin: 5px 2px;
+  padding: 0 6px;
+}
+
 #custom-recording {
   color: @red;
   font-weight: bold;

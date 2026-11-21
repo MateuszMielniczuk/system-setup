@@ -10,6 +10,7 @@
   "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "hyprland/window"],
   "modules-center": ["clock"],
   "modules-right": [
+    "privacy",
     "custom/recording",
     "custom/dnd",
     "custom/awake",
@@ -83,6 +84,18 @@
     "signal": 11,
     "tooltip-format": "Keep awake: idle/lock paused",
     "on-click": "setsid -f hypridle >/dev/null 2>&1; sleep 0.2; pkill -RTMIN+11 waybar"
+  },
+
+  // Shown only while the mic is recording or the screen is shared (PipeWire)
+  "privacy": {
+    "icon-size": 14,
+    "icon-spacing": 6,
+    "transition-duration": 250,
+    "ignore-monitor": true,
+    "modules": [
+      { "type": "screenshare", "tooltip": true, "tooltip-icon-size": 22 },
+      { "type": "audio-in", "tooltip": true, "tooltip-icon-size": 22 }
+    ]
   },
 
   "custom/recording": {

@@ -1,6 +1,6 @@
 -- Docked layout: ultrawide on top, laptop below it, centered
 --   G34w 3440x1440 @1.0  -> 0x0
---   eDP-1 1920x1200 @1.5 -> 1280x800 logical, x = (3440-1280)/2
+--   eDP-1 1920x1200 @1.0 -> 1280x800 logical, x = (3440-1280)/2
 local laptop = "eDP-1"
 
 local function lid_closed()
@@ -32,7 +32,7 @@ hl.monitor({
 if lid_closed() and has_external() then
     hl.monitor({ output = laptop, disabled = true })
 else
-    hl.monitor({ output = laptop, mode = "preferred", position = "1080x1440", scale = 1.5 })
+    hl.monitor({ output = laptop, mode = "preferred", position = "1080x1440", scale = 1.0 })
 end
 
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })

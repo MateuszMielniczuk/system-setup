@@ -4,8 +4,8 @@ hl.env("GTK_THEME", theme.gtk)
 
 hl.config({
     general = {
-        gaps_in  = 4,
-        gaps_out = 8,
+        gaps_in  = 2,
+        gaps_out = 4,
         border_size = 2,
         col = {
             active_border   = { colors = theme.active, angle = 45 },
@@ -19,8 +19,8 @@ hl.config({
     decoration = {
         rounding       = 8,
         rounding_power = 2,
-        active_opacity   = 1.0,
-        inactive_opacity = 1.0,
+        active_opacity   = 0.95,
+        inactive_opacity = 0.75,
         shadow = {
             enabled      = true,
             range        = 4,
@@ -29,8 +29,8 @@ hl.config({
         },
         blur = {
             enabled  = true,
-            size     = 6,
-            passes   = 2,
+            size     = 4,
+            passes   = 3,
             vibrancy = 0.1696,
         },
     },

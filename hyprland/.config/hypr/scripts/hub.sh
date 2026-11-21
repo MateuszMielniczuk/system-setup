@@ -142,6 +142,7 @@ main() {
     "󰌌  Keybindings
 󰸉  Wallpaper
 󰊄  Extract text (OCR)
+󰈋  Color picker
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -159,6 +160,7 @@ ${external}󰤨  Wi-Fi
   *Keybindings) keys ;;
   *Wallpaper) wallpaper ;;
   *"Extract text (OCR)") sleep 0.2 && "$scripts/ocr.sh" text ;;
+  *"Color picker") sleep 0.2 && "$scripts/colorpicker.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

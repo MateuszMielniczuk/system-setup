@@ -149,6 +149,7 @@ bind("R",            hl.dsp.exec_cmd(scripts .. "record.sh region"),          "R
 bind("SHIFT + R",    hl.dsp.exec_cmd(scripts .. "record.sh screen"),          "Record screen (again to stop)")
 bind("O",            hl.dsp.exec_cmd(scripts .. "ocr.sh text"),               "Copy text from region (OCR)")
 bind("SHIFT + O",    hl.dsp.exec_cmd(scripts .. "ocr.sh qr"),                 "Copy QR code from region")
+bind("SHIFT + C",    hl.dsp.exec_cmd(scripts .. "colorpicker.sh"),            "Color picker (copies hex)")
 
 section("Theme")
 bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"),           "Theme picker")

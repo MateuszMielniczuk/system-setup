@@ -23,6 +23,9 @@ install_hyprland_arch() {
     mako \
     hyprpaper \
     network-manager-applet \
-    blueman
+    blueman \
+    hyprlock \
+    hypridle \
+    hyprsunset
   echo "Hyprland packages installed successfully."
 }

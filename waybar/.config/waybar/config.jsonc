@@ -11,6 +11,7 @@
   "modules-center": ["clock"],
   "modules-right": [
     "tray",
+    "custom/nightlight",
     "pulseaudio",
     "backlight",
     "network",
@@ -45,6 +46,14 @@
   "tray": {
     "icon-size": 16,
     "spacing": 8
+  },
+
+  "custom/nightlight": {
+    "exec": "pgrep -x hyprsunset >/dev/null && echo '󰖔' || echo '󰖙'",
+    "interval": "once",
+    "signal": 8,
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/nightlight.sh"
   },
 
   "pulseaudio": {

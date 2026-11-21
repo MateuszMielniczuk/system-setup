@@ -10,9 +10,9 @@ choice=$(printf '%s\n' \
   fuzzel --dmenu --prompt "Power ❯ " --lines 6 --width 20)
 
 case "$choice" in
-*Lock) loginctl lock-session ;;
+*Lock) pidof hyprlock || hyprlock ;;
 *Logout) command -v hyprshutdown >/dev/null && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()' ;;
-*Suspend) systemctl suspend ;;
+*Suspend) systemctl suspend-then-hibernate ;;
 *Hibernate) systemctl hibernate ;;
 *Reboot) systemctl reboot ;;
 *Shutdown) systemctl poweroff ;;

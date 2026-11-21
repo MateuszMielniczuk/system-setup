@@ -1,0 +1,5 @@
+variant=dark
+wallpapers="$HOME/Pictures/Wallpapers/catppuccin"
+bg=1e1e2e surface0=313244 surface1=45475a surface2=585b70
+fg=cdd6f4 subtext=a6adc8 accent=cba6f7 accent2=89b4fa
+red=f38ba8 green=a6e3a1 yellow=f9e2af blue=89b4fa magenta=f5c2e7 cyan=94e2d5

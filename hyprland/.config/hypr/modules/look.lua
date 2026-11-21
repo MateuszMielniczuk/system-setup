@@ -1,12 +1,16 @@
--- Gruvbox dark until the theme switcher lands
+package.loaded["modules.theme"] = nil
+local theme = require("modules.theme")
+
+hl.env("GTK_THEME", theme.gtk)
+
 hl.config({
     general = {
         gaps_in  = 4,
         gaps_out = 8,
         border_size = 2,
         col = {
-            active_border   = { colors = { "rgba(fe8019ee)", "rgba(fabd2fee)" }, angle = 45 },
-            inactive_border = "rgba(504945aa)",
+            active_border   = { colors = theme.active, angle = 45 },
+            inactive_border = theme.inactive,
         },
         resize_on_border = true,
         allow_tearing = false,

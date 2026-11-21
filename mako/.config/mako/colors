@@ -1,8 +1,0 @@
-# Gruvbox dark
-background-color=#1d2021ee
-text-color=#ebdbb2
-border-color=#504945
-progress-color=over #3c3836
-
-[urgency=critical]
-border-color=#fb4934

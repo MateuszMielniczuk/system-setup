@@ -4,7 +4,7 @@ return {
         priority = 150,
         name = "catppuccin",
         config = function()
-            require("catppuccin").setup({
+            local opts = {
                 background = {
                     light = "latte",
                     dark = "mocha",
@@ -354,7 +354,9 @@ return {
                         }
                     end,
                 },
-            })
+            }
+            require("config.theme").catppuccin_opts = opts
+            require("catppuccin").setup(opts)
             vim.api.nvim_set_hl(
                 0,
                 "NavicIconsOperator",
@@ -366,18 +368,20 @@ return {
                 "NavicSeparator",
                 { default = true, bg = "none", fg = "#eedaad" }
             )
-            --
-            vim.api.nvim_command("colorscheme catppuccin")
         end,
     },
-    -- add gruvbox
-    -- { "ellisonleao/gruvbox.nvim" },
+    { "folke/tokyonight.nvim", lazy = true },
+    { "rose-pine/neovim", name = "rose-pine", lazy = true },
+    { "gbprod/nord.nvim", lazy = true },
+    { "sainnhe/everforest", lazy = true },
 
-    -- Configure LazyVim to load gruvbox
+    -- Theme follows the desktop (~/.local/state/theme/current), see config/theme.lua
     {
         "LazyVim/LazyVim",
         opts = {
-            colorscheme = "catppuccin-mocha",
+            colorscheme = function()
+                require("config.theme").apply()
+            end,
         },
     },
 }

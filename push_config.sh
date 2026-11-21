@@ -30,3 +30,7 @@ for pkg in "${PACKAGES[@]}"; do
 done
 
 stow -v -t "$HOME" "${PACKAGES[@]}"
+
+# generate theme color files (gitignored)
+theme="$(cat "${XDG_STATE_HOME:-$HOME/.local/state}/theme/current" 2>/dev/null || echo gruvbox-dark)"
+"$HOME/.config/hypr/scripts/theme.sh" "$theme" || true

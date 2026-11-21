@@ -39,6 +39,10 @@ bind("Print",              hl.dsp.exec_cmd(scripts .. "screenshot.sh region edit
 bind("R",                  hl.dsp.exec_cmd(scripts .. "record.sh region"))
 bind("SHIFT + R",          hl.dsp.exec_cmd(scripts .. "record.sh screen"))
 
+-- Theme
+bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"))
+bind("SHIFT + W", hl.dsp.exec_cmd(scripts .. "theme.sh wallpaper"))
+
 -- Dropdown terminal
 bind("grave", function()
     if #hl.get_windows({ class = "dropterm" }) == 0 then

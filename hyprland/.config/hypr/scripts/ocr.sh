@@ -2,12 +2,12 @@
 # Select a screen region and copy its text (OCR) or QR code content to the clipboard
 # usage: ocr.sh [text|qr]
 
-mode="${1:-text}"
-geom=$(slurp) || exit 0
+source "$(dirname "$0")/region.sh"
 
+mode="${1:-text}"
 img=$(mktemp --suffix=.png)
 trap 'rm -f "$img"' EXIT
-grim -g "$geom" "$img" || exit 1
+capture_region "$img" || exit 0
 
 if [[ "$mode" == qr ]]; then
   title="QR code"

@@ -120,6 +120,13 @@ hl.window_rule({
     center = true,
 })
 
+-- Screen freeze overlay and region selector: no fade, so the freeze is instant
+hl.layer_rule({
+    name    = "no-anim-selection",
+    match   = { namespace = "^(hyprpicker|selection)$" },
+    no_anim = true,
+})
+
 hl.layer_rule({
     name  = "blur-panels",
     match = { namespace = "^(waybar|launcher|notifications)$" },

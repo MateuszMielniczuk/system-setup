@@ -38,6 +38,7 @@ install_hyprland_arch() {
     tesseract \
     tesseract-data-eng \
     tesseract-data-pol \
-    zbar
+    zbar \
+    hyprpicker
   echo "Hyprland packages installed successfully."
 }

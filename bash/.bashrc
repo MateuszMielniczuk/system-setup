@@ -231,3 +231,13 @@ function lg() {
 eval "$(starship init bash)"
 eval "$(uv generate-shell-completion bash)"
 EDITOR=nvim
+
+# yazi: `y` opens yazi and cds into the last directory on quit
+y() {
+  local tmp cwd
+  tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}

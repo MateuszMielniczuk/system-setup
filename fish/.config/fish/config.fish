@@ -120,3 +120,13 @@ end
 starship init fish | source
 uv generate-shell-completion fish | source
 export GPG_TTY=$(tty)
+
+# yazi: `y` opens yazi and cds into the last directory on quit
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
+end

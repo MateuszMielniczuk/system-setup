@@ -140,6 +140,7 @@ main() {
 󰞅  Emoji
 󰖟  Web apps
 󰀠  Alarms
+󰃭  Calendar
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -151,7 +152,7 @@ main() {
 ${external}󰤨  Wi-Fi
 󰂯  Bluetooth
 󰕾  Sound mixer
-󰐥  Power menu" | menu Settings 34 18) || exit 0
+󰐥  Power menu" | menu Settings 34 19) || exit 0
 
   case "$choice" in
   *Keybindings) keys ;;
@@ -161,6 +162,7 @@ ${external}󰤨  Wi-Fi
   *Emoji) "$scripts/emoji.sh" ;;
   *"Web apps") "$scripts/webapp.sh" ;;
   *Alarms) "$scripts/alarm.sh" ;;
+  *Calendar) "$scripts/calendar.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

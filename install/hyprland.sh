@@ -40,6 +40,7 @@ install_hyprland_arch() {
     tesseract-data-pol \
     zbar \
     hyprpicker \
-    wtype
+    wtype \
+    calcurse
   echo "Hyprland packages installed successfully."
 }

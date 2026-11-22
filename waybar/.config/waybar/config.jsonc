@@ -43,6 +43,8 @@
   "clock": {
     "format": "{:%a %d %b  %H:%M}",
     "tooltip-format": "<tt>{calendar}</tt>",
+    "on-click": "~/.config/hypr/scripts/calendar.sh open",
+    "on-click-right": "~/.config/hypr/scripts/calendar.sh",
     "calendar": {
       "mode": "month",
       "weeks-pos": "left",

@@ -17,24 +17,17 @@ hl.window_rule({
     no_focus = true,
 })
 
--- Keep the screen awake (pauses hypridle) without the manual toggle
+-- Keep the screen awake (pauses hypridle) without the manual toggle.
+-- Real fullscreen only: idle_inhibit = "fullscreen" also counts maximized windows (Super+M),
+-- which kept the laptop from locking/suspending.
 hl.window_rule({
     name  = "idle-inhibit-fullscreen",
-    match = { class = ".*" },
-    idle_inhibit = "fullscreen",
+    match = { fullscreen_state_internal = 2 },
+    idle_inhibit = "always",
 })
 
-hl.window_rule({
-    name  = "idle-inhibit-video",
-    match = { class = "^(mpv|vlc|io.github.celluloid_player.Celluloid|org.gnome.Totem)$" },
-    idle_inhibit = "focus",
-})
-
-hl.window_rule({
-    name  = "idle-inhibit-youtube",
-    match = { title = ".*YouTube.*" },
-    idle_inhibit = "focus",
-})
+-- Playing video needs no rule: browsers and players (Chromium, mpv, VLC...) ask hypridle
+-- to stay awake themselves, only while a video is actually playing.
 
 -- Picture-in-picture: small, pinned (all desktops), bottom-right of its monitor
 hl.window_rule({

@@ -128,8 +128,9 @@
     "format": "{icon} {volume}%",
     "format-muted": "󰝟 muted",
     "format-icons": { "default": ["󰕿", "󰖀", "󰕾"], "headphone": "󰋋" },
-    "on-click": "pavucontrol",
-    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click": "kcmshell6 kcm_pulseaudio",
+    "on-click-right": "pavucontrol",
+    "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "scroll-step": 5
   },
 
@@ -145,7 +146,8 @@
     "format-ethernet": "󰈀 wired",
     "format-disconnected": "󰤭 offline",
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}",
-    "on-click": "kitty --class nmtui -e nmtui"
+    "on-click": "nm-connection-editor",
+    "on-click-right": "kitty --class nmtui -e nmtui"
   },
 
   "bluetooth": {
@@ -154,7 +156,8 @@
     "format-connected": "󰂱 {device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "blueman-manager"
+    "on-click": "kcmshell6 kcm_bluetooth",
+    "on-click-right": "blueman-manager"
   },
 
   "power-profiles-daemon": {

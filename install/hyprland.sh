@@ -41,6 +41,7 @@ install_hyprland_arch() {
     zbar \
     hyprpicker \
     wtype \
-    calcurse
+    calcurse \
+    gthumb
   echo "Hyprland packages installed successfully."
 }

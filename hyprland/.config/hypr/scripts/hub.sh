@@ -145,6 +145,7 @@ main() {
 󰃭  Calendar
 󰖐  Clocks & weather
 󰒓  Default apps
+󰁯  Backup & restore
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -156,7 +157,7 @@ main() {
 ${external}󰤨  Wi-Fi
 󰂯  Bluetooth
 󰕾  Sound mixer
-󰐥  Power menu" | menu Settings 34 22) || exit 0
+󰐥  Power menu" | menu Settings 34 23) || exit 0
 
   case "$choice" in
   *Keybindings) keys ;;
@@ -176,6 +177,7 @@ ${external}󰤨  Wi-Fi
   *Calendar) "$scripts/calendar.sh" ;;
   *"Clocks & weather") "$scripts/weather.sh" ;;
   *"Default apps") "$scripts/defaults.sh" ;;
+  *"Backup & restore") "$scripts/backup.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

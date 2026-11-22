@@ -166,6 +166,7 @@ bind("T",         hl.dsp.exec_cmd(scripts .. "theme.sh"),           "Theme picke
 bind("W",         hl.dsp.exec_cmd(scripts .. "hub.sh wallpaper"),   "Wallpaper picker")
 bind("SHIFT + W", hl.dsp.exec_cmd(scripts .. "theme.sh wallpaper"), "Random wallpaper")
 bind("CTRL + N",  hl.dsp.exec_cmd(scripts .. "nightlight.sh"),      "Night light")
+bind("SHIFT + T", hl.dsp.exec_cmd(scripts .. "alarm.sh new"),       "New alarm / timer")
 
 section("Notifications")
 bind("U",         hl.dsp.exec_cmd("makoctl dismiss"), "Dismiss notification")

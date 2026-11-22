@@ -155,6 +155,11 @@ tooltip label {
   padding: 0 6px;
 }
 
+#custom-alarms {
+  color: @yellow;
+  padding: 0 8px;
+}
+
 #custom-recording {
   color: @red;
   font-weight: bold;

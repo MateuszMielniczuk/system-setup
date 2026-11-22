@@ -31,3 +31,7 @@ format=<b>%s</b>  %b
 # Feedback for your own key presses: keep showing during do-not-disturb
 [mode=do-not-disturb app-name=osd]
 invisible=0
+
+# Alarms (hypr/scripts/alarm.sh) ring even during do-not-disturb
+[mode=do-not-disturb app-name=alarm]
+invisible=0

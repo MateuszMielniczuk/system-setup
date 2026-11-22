@@ -138,6 +138,7 @@ main() {
 󰊄  Extract text (OCR)
 󰈋  Color picker
 󰞅  Emoji
+󰖟  Web apps
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -149,7 +150,7 @@ main() {
 ${external}󰤨  Wi-Fi
 󰂯  Bluetooth
 󰕾  Sound mixer
-󰐥  Power menu" | menu Settings 34 16) || exit 0
+󰐥  Power menu" | menu Settings 34 17) || exit 0
 
   case "$choice" in
   *Keybindings) keys ;;
@@ -157,6 +158,7 @@ ${external}󰤨  Wi-Fi
   *"Extract text (OCR)") sleep 0.2 && "$scripts/ocr.sh" text ;;
   *"Color picker") sleep 0.2 && "$scripts/colorpicker.sh" ;;
   *Emoji) "$scripts/emoji.sh" ;;
+  *"Web apps") "$scripts/webapp.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

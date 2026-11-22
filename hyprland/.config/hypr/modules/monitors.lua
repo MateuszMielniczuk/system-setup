@@ -66,6 +66,10 @@ end
 
 hl.on("monitor.added", function(m)
     later(fix_workspaces)
+    -- A wide screen may need the wallpaper's ultrawide (-uw) version
+    later(function()
+        hl.dispatch(hl.dsp.exec_cmd("~/.config/hypr/scripts/theme.sh wallpaper apply"))
+    end, 1500)
     if screen_off() then
         -- Monitor reconnected in standby: keep it off
         later(function()

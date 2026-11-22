@@ -49,9 +49,10 @@ wallpaper() {
   local cache="${XDG_CACHE_HOME:-$HOME/.cache}/wallpaper-thumbs" dirs files thumb i
   mkdir -p "$cache"
   # shellcheck disable=SC1090
-  dirs=("$(source "$HOME/.config/hypr/themes/$(cat "$state").sh" && echo "$wallpapers")" "$HOME/Pictures/Wallpapers")
-  mapfile -t files < <(find "${dirs[@]}" -maxdepth 2 -type f \
-    \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) 2>/dev/null | sort -u)
+  dirs=("$(source "$HOME/.config/hypr/themes/$(cat "$state").sh" && echo "$wallpapers")")
+  # -uw files are the ultrawide versions of another wallpaper: not listed on their own
+  mapfile -t files < <(find "${dirs[@]}" -maxdepth 1 -type f \
+    \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) ! -iname '*-uw.*' 2>/dev/null | sort -u)
   [[ ${#files[@]} -gt 0 ]] || { notify-send "Wallpaper" "No images found"; return; }
 
   for f in "${files[@]}"; do
@@ -135,6 +136,7 @@ main() {
   choice=$(printf '%s' \
     "󰌌  Keybindings
 󰸉  Wallpaper
+󰑓  Wallpaper rotation: $("$scripts/theme.sh" rotation status)
 󰊄  Extract text (OCR)
 󰈋  Color picker
 󰞅  Emoji
@@ -153,11 +155,18 @@ main() {
 ${external}󰤨  Wi-Fi
 󰂯  Bluetooth
 󰕾  Sound mixer
-󰐥  Power menu" | menu Settings 34 20) || exit 0
+󰐥  Power menu" | menu Settings 34 21) || exit 0
 
   case "$choice" in
   *Keybindings) keys ;;
   *Wallpaper) wallpaper ;;
+  *"Wallpaper rotation"*)
+    if [[ $("$scripts/theme.sh" rotation status) == on ]]; then
+      "$scripts/theme.sh" rotation off && notify-send "Wallpaper rotation" "off"
+    else
+      "$scripts/theme.sh" rotation on && notify-send "Wallpaper rotation" "on: a new wallpaper every hour"
+    fi
+    ;;
   *"Extract text (OCR)") sleep 0.2 && "$scripts/ocr.sh" text ;;
   *"Color picker") sleep 0.2 && "$scripts/colorpicker.sh" ;;
   *Emoji) "$scripts/emoji.sh" ;;

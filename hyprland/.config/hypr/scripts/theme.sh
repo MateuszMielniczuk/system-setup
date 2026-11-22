@@ -1,38 +1,96 @@
 #!/bin/bash
-# usage: theme.sh            pick a theme with fuzzel
-#        theme.sh <name>     apply a theme
-#        theme.sh wallpaper  random wallpaper from the current theme
-#        theme.sh wallpaper <file>  set a specific wallpaper
+# usage: theme.sh                     pick a theme with fuzzel
+#        theme.sh <name>              apply a theme
+#        theme.sh wallpaper           random wallpaper from the current theme (not the current one)
+#        theme.sh wallpaper <file>    set a specific wallpaper
+#        theme.sh wallpaper apply     re-apply the current wallpaper (after docking)
+#        theme.sh rotation on|off|start|status   hourly random wallpaper (Hyprland-only timer)
+# A wallpaper "name.ext" may have "name-uw.<jpg|png|webp>" next to it: used on screens wider than 2:1.
 
 themes="$HOME/.config/hypr/themes"
 state="${XDG_STATE_HOME:-$HOME/.local/state}/theme"
 mkdir -p "$state"
 current=$(cat "$state/current" 2>/dev/null || echo gruvbox-dark)
 
+# Ultrawide variant of an image, if it exists (any image format: name.png -> name-uw.jpg)
+uw_of() {
+  local ext
+  for ext in "${1##*.}" jpg jpeg png webp; do
+    [[ -f "${1%.*}-uw.$ext" ]] && echo "${1%.*}-uw.$ext" && return
+  done
+}
+
 set_wallpaper() {
-  local img="${1:-}"
+  local img="${1:-}" last uw mon conf
+  last=$(cat "$state/wallpaper" 2>/dev/null)
   if [[ -z "$img" ]]; then
     [[ -d "$wallpapers" ]] || return 0
     img=$(find "$wallpapers" -maxdepth 1 -type f \
-      \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | shuf -n1)
+      \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
+      ! -iname '*-uw.*' ! -path "$last" | shuf -n1)
+    [[ -z "$img" ]] && img=$last
   fi
   [[ -f "$img" ]] || return 0
-  cat >"$HOME/.config/hypr/hyprpaper.conf" <<EOF
-splash = false
+  echo "$img" >"$state/wallpaper"
+  uw=$(uw_of "$img")
 
+  conf="splash = false
+"
+  conf+="
 wallpaper {
     monitor =
     path = $img
     fit_mode = cover
 }
-EOF
-  hyprctl hyprpaper wallpaper ",$img" >/dev/null 2>&1
+"
+  # Set every monitor explicitly: a monitor given its own image keeps it otherwise
+  while read -r mon wide; do
+    if [[ -n "$uw" && "$wide" == true ]]; then
+      conf+="
+wallpaper {
+    monitor = $mon
+    path = $uw
+    fit_mode = cover
+}
+"
+      hyprctl hyprpaper wallpaper "$mon,$uw" >/dev/null 2>&1
+    else
+      hyprctl hyprpaper wallpaper "$mon,$img" >/dev/null 2>&1
+    fi
+  done < <(hyprctl monitors -j | jq -r '.[] | "\(.name) \(.width > 2 * .height)"')
+  printf '%s' "$conf" >"$HOME/.config/hypr/hyprpaper.conf"
+}
+
+rotation() { # on|off|start|status
+  local flag="$state/rotation-off" unit=wallpaper-rotate
+  case "$1" in
+  on) rm -f "$flag" && rotation start ;;
+  off)
+    touch "$flag"
+    systemctl --user stop "$unit.timer" 2>/dev/null
+    ;;
+  start)
+    [[ -f "$flag" ]] && return 0
+    systemctl --user is-active -q "$unit.timer" && return 0
+    systemd-run --user --quiet --unit="$unit" --on-calendar=hourly \
+      "$HOME/.config/hypr/scripts/theme.sh" wallpaper
+    ;;
+  status) [[ -f "$flag" ]] && echo off || echo on ;;
+  esac
 }
 
 name="${1:-}"
 if [[ "$name" == "wallpaper" ]]; then
   source "$themes/$current.sh"
-  set_wallpaper "${2:-}"
+  if [[ "${2:-}" == apply ]]; then
+    set_wallpaper "$(cat "$state/wallpaper" 2>/dev/null)"
+  else
+    set_wallpaper "${2:-}"
+  fi
+  exit 0
+fi
+if [[ "$name" == "rotation" ]]; then
+  rotation "${2:-status}"
   exit 0
 fi
 

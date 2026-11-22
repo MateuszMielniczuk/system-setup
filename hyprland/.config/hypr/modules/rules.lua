@@ -112,6 +112,16 @@ hl.window_rule({
     workspace = "special:term",
 })
 
+-- Notes panel: a side panel on the right of the screen
+hl.window_rule({
+    name      = "notes",
+    match     = { class = "^notes$" },
+    float     = true,
+    size      = "monitor_w*0.35 monitor_h*0.8",
+    move      = "monitor_w*0.63 monitor_h*0.1",
+    workspace = "special:notes",
+})
+
 hl.window_rule({
     name  = "satty",
     match  = { class = "^(com.gabm.satty|satty)$" },

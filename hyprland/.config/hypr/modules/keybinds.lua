@@ -44,6 +44,15 @@ bind("grave", function()
     end
 end, "Dropdown terminal")
 
+-- Notes panel
+bind("N", function()
+    if #hl.get_windows({ class = "notes" }) == 0 then
+        hl.dispatch(hl.dsp.exec_cmd(scripts .. "notes.sh"))
+    else
+        hl.dispatch(hl.dsp.workspace.toggle_special("notes"))
+    end
+end, "Notes")
+
 section("Windows")
 bind("Q",             hl.dsp.window.close(),                                               "Close window")
 bind("F",             hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), "Fullscreen")
@@ -159,8 +168,8 @@ bind("SHIFT + W", hl.dsp.exec_cmd(scripts .. "theme.sh wallpaper"), "Random wall
 bind("CTRL + N",  hl.dsp.exec_cmd(scripts .. "nightlight.sh"),      "Night light")
 
 section("Notifications")
-bind("N",         hl.dsp.exec_cmd("makoctl dismiss"), "Dismiss notification")
-bind("SHIFT + N", hl.dsp.exec_cmd("makoctl restore"), "Restore last notification")
+bind("U",         hl.dsp.exec_cmd("makoctl dismiss"), "Dismiss notification")
+bind("SHIFT + U", hl.dsp.exec_cmd("makoctl restore"), "Restore last notification")
 
 section("Session")
 bind("Escape",        hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")

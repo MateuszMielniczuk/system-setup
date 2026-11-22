@@ -166,7 +166,7 @@ ${external}󰤨  Wi-Fi
   *"Audio output") audio sinks ;;
   *Microphone) audio sources ;;
   *Displays) display ;;
-  *Wi-Fi) kitty --class nmtui -e nmtui ;;
+  *Wi-Fi) "$scripts/wifi.sh" ;;
   *Bluetooth) blueman-manager ;;
   *"Sound mixer") pavucontrol ;;
   *"Power menu") "$scripts/powermenu.sh" ;;

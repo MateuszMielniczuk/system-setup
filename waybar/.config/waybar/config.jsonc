@@ -146,8 +146,8 @@
     "format-ethernet": "󰈀 wired",
     "format-disconnected": "󰤭 offline",
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}",
-    "on-click": "nm-connection-editor",
-    "on-click-right": "kitty --class nmtui -e nmtui"
+    "on-click": "~/.config/hypr/scripts/wifi.sh",
+    "on-click-right": "nm-connection-editor"
   },
 
   "bluetooth": {

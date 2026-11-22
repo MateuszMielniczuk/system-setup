@@ -141,6 +141,7 @@ main() {
 󰖟  Web apps
 󰀠  Alarms
 󰃭  Calendar
+󰖐  Clocks & weather
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
 󰅶  Keep awake: $(state_of awake_on)
@@ -152,7 +153,7 @@ main() {
 ${external}󰤨  Wi-Fi
 󰂯  Bluetooth
 󰕾  Sound mixer
-󰐥  Power menu" | menu Settings 34 19) || exit 0
+󰐥  Power menu" | menu Settings 34 20) || exit 0
 
   case "$choice" in
   *Keybindings) keys ;;
@@ -163,6 +164,7 @@ ${external}󰤨  Wi-Fi
   *"Web apps") "$scripts/webapp.sh" ;;
   *Alarms) "$scripts/alarm.sh" ;;
   *Calendar) "$scripts/calendar.sh" ;;
+  *"Clocks & weather") "$scripts/weather.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
   *"Keep awake"*) toggle_awake ;;

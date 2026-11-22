@@ -155,6 +155,10 @@ tooltip label {
   padding: 0 6px;
 }
 
+#custom-weather {
+  padding: 0 8px;
+}
+
 #custom-alarms {
   color: @yellow;
   padding: 0 8px;

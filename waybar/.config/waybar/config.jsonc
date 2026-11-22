@@ -7,7 +7,7 @@
   "spacing": 6,
 
   "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "hyprland/window"],
-  "modules-center": ["custom/alarms", "clock"],
+  "modules-center": ["custom/alarms", "clock", "custom/weather"],
   "modules-right": [
     "custom/updates",
     "privacy",
@@ -108,6 +108,16 @@
       { "type": "screenshare", "tooltip": true, "tooltip-icon-size": 22 },
       { "type": "audio-in", "tooltip": true, "tooltip-icon-size": 22 }
     ]
+  },
+
+  // Home weather; tooltip: every city's time + weather (Open-Meteo, cached 30 min)
+  "custom/weather": {
+    "exec": "~/.config/hypr/scripts/weather.sh status",
+    "return-type": "json",
+    "interval": 60,
+    "signal": 16,
+    "on-click": "~/.config/hypr/scripts/weather.sh",
+    "on-click-right": "~/.config/hypr/scripts/weather.sh refresh"
   },
 
   // Next pending alarm (hidden when none); click: alarms page

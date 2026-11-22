@@ -2,6 +2,8 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE")
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
+    -- Unlocks KWallet with the login password SDDM's PAM module captured (saved Wi-Fi passwords)
+    hl.exec_cmd("/usr/lib/pam_kwallet_init")
     hl.exec_cmd("kbuildsycoca6 --noincremental >/dev/null 2>&1")
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")

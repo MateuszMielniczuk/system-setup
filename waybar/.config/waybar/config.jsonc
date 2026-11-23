@@ -212,7 +212,8 @@
     "format-charging": "󰂄 {capacity}%",
     "format-plugged": "󰚥 {capacity}%",
     "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
-    "tooltip-format": "{timeTo}, {power:.1f}W"
+    "tooltip-format": "{timeTo}, {power:.1f}W\nClick: battery panel",
+    "on-click": "~/.config/hypr/scripts/battery.sh"
   },
 
   "custom/power": {

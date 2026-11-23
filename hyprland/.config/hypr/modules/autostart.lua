@@ -1,7 +1,8 @@
 -- Started from here (not ~/.config/autostart or systemd) so nothing leaks into Plasma.
 hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE")
-    hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
+    -- Password dialogs (pkexec, KDE settings); Plasma's unit restarts it if it crashes
+    hl.exec_cmd("systemctl --user start plasma-polkit-agent")
     -- Unlock KWallet with the login password: hands the session to the PAM-started wallet
     -- service (SDDM login; Plasma runs the same step). Needs wallet password = login password.
     hl.exec_cmd("/usr/lib/pam_kwallet_init")

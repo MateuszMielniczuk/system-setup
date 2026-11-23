@@ -2,7 +2,7 @@
 # Shared menu for all scripts: rofi -dmenu as a plain list. Reads entries on stdin,
 # prints the choice (or its index with --index).
 # options: --prompt TEXT  --width CHARS  --lines N  --index  --password  --placeholder TEXT
-#          --select TEXT  --icon-size PX
+#          --select TEXT  --icon-size PX  --message TEXT
 
 args=(-dmenu -i)
 theme="mode-switcher { enabled: false; } listview { columns: 1; fixed-height: false; }"
@@ -18,6 +18,7 @@ while (($#)); do
   --placeholder) theme+=" entry { placeholder: \"${2//\"/\\\"}\"; }" && shift ;;
   --select) args+=(-select "$2") && shift ;;
   --icon-size) theme+=" element-icon { size: ${2}px; }" && shift ;;
+  --message) args+=(-mesg "$2") && shift ;;
   esac
   shift
 done

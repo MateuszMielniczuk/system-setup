@@ -3,6 +3,7 @@
 # prints the choice (or its index with --index).
 # options: --prompt TEXT  --width CHARS  --lines N  --index  --password  --placeholder TEXT
 #          --select TEXT  --icon-size PX  --message TEXT
+#          --key N KEYS (custom key; rofi exits with code 9+N, e.g. --key 1 Alt+p -> 10)
 
 args=(-dmenu -i)
 theme="mode-switcher { enabled: false; } listview { columns: 1; fixed-height: false; }"
@@ -19,6 +20,7 @@ while (($#)); do
   --select) args+=(-select "$2") && shift ;;
   --icon-size) theme+=" element-icon { size: ${2}px; }" && shift ;;
   --message) args+=(-mesg "$2") && shift ;;
+  --key) args+=("-kb-custom-$2" "$3") && shift 2 ;;
   esac
   shift
 done

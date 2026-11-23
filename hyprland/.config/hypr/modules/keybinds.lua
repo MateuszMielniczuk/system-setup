@@ -172,6 +172,7 @@ bind("SHIFT + T", hl.dsp.exec_cmd(scripts .. "alarm.sh new"),       "New alarm /
 section("Notifications")
 bind("U",         hl.dsp.exec_cmd("makoctl dismiss"), "Dismiss notification")
 bind("SHIFT + U", hl.dsp.exec_cmd(scripts .. "notifications.sh"), "Notification history")
+bind("SHIFT + D",  hl.dsp.exec_cmd(scripts .. "present.sh"), "Presentation mode (also automatic while sharing the screen)")
 
 section("Session")
 bind("Escape",        hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")

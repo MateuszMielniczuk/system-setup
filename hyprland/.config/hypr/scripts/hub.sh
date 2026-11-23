@@ -134,6 +134,7 @@ main() {
 󰁯  Backup & restore
 󰏘  Theme
 󰂛  Do not disturb: $(state_of dnd_on)
+󰐯  Presentation mode: $([[ -f "${XDG_RUNTIME_DIR:-/tmp}/present-state" ]] && echo on || echo off)
 󰅶  Keep awake: $(state_of awake_on)
 󰖔  Night light: $(state_of night_on)
 󰾅  Power profile: $(powerprofilesctl get)
@@ -143,7 +144,7 @@ main() {
 ${external}󰤨  Wi-Fi
 󰂯  Bluetooth
 󰕾  Sound mixer
-󰐥  Power menu" | menu Settings 34 23) || exit 0
+󰐥  Power menu" | menu Settings 34 24) || exit 0
 
   case "$choice" in
   *Keybindings) keys ;;
@@ -166,6 +167,7 @@ ${external}󰤨  Wi-Fi
   *"Backup & restore") "$scripts/backup.sh" ;;
   *Theme) "$scripts/theme.sh" ;;
   *"Do not disturb"*) toggle_dnd ;;
+  *"Presentation mode"*) "$scripts/present.sh" ;;
   *"Keep awake"*) toggle_awake ;;
   *"Night light"*) "$scripts/nightlight.sh" ;;
   *"Power profile"*) profile ;;

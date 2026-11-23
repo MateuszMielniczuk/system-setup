@@ -6,7 +6,7 @@
   "height": 38,
   "spacing": 6,
 
-  "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "hyprland/window"],
+  "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "custom/present", "hyprland/window"],
   "modules-center": ["custom/alarms", "clock", "custom/weather"],
   "modules-right": [
     "custom/media",
@@ -133,6 +133,15 @@
     "return-type": "json",
     "interval": 30,
     "on-click": "~/.config/hypr/scripts/syncthing.sh open"
+  },
+
+  // Presentation mode (present.sh): shown only while active; click ends it
+  "custom/present": {
+    "exec": "~/.config/hypr/scripts/present.sh status",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 19,
+    "on-click": "~/.config/hypr/scripts/present.sh"
   },
 
   // Home weather; tooltip: every city's time + weather (Open-Meteo, cached 30 min)

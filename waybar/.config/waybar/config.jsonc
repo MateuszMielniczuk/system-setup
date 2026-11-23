@@ -14,7 +14,6 @@
     "custom/syncthing",
     "privacy",
     "custom/recording",
-    "custom/dnd",
     "custom/awake",
     "tray",
     "custom/nightlight",
@@ -22,6 +21,7 @@
     "backlight",
     "network",
     "bluetooth",
+    "custom/notifications",
     "power-profiles-daemon",
     "battery",
     "custom/power"
@@ -74,12 +74,14 @@
     "on-click-right": "~/.config/hypr/scripts/hub.sh keys"
   },
 
-  "custom/dnd": {
-    "exec": "makoctl mode | grep -q do-not-disturb && echo '󰂛' || echo ''",
-    "interval": "once",
+  // Notifications: new count since last opened, 󰂛 in do-not-disturb; click: history panel
+  "custom/notifications": {
+    "exec": "~/.config/hypr/scripts/notifications.sh status",
+    "return-type": "json",
+    "interval": 5,
     "signal": 12,
-    "tooltip-format": "Do not disturb",
-    "on-click": "makoctl mode -t do-not-disturb >/dev/null; pkill -RTMIN+12 waybar"
+    "on-click": "~/.config/hypr/scripts/notifications.sh",
+    "on-click-right": "~/.config/hypr/scripts/notifications.sh dnd"
   },
 
   "custom/awake": {
@@ -187,10 +189,16 @@
   },
 
   "network": {
-    "format-wifi": "󰤨 {essid}",
-    "format-ethernet": "󰈀 wired",
-    "format-disconnected": "󰤭 offline",
+    // Icon only (signal strength); the network name is in the tooltip
+    "format-wifi": "{icon}",
+    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+    "format-ethernet": "󰈀",
+    "format-linked": "󰤫",
+    "format-disconnected": "󰤭",
+    "format-disabled": "󰤮",
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}",
+    "tooltip-format-ethernet": "Wired\n{ipaddr}",
+    "tooltip-format-disconnected": "Not connected (click for Wi-Fi)",
     "on-click": "~/.config/hypr/scripts/wifi.sh",
     "on-click-right": "nm-connection-editor"
   },

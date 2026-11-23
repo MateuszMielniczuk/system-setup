@@ -96,7 +96,7 @@ fi
 
 if [[ -z "$name" ]]; then
   name=$(find "$themes" -name '*.sh' -printf '%f\n' | sed 's/\.sh$//' | sort |
-    "$(dirname "$0")/menu.sh" --prompt "Theme" --select "$current" --lines 11 --width 30) || exit 0
+    "$(dirname "$0")/menu.sh" --prompt "Theme" --select "$current" --lines 17 --width 30) || exit 0
 fi
 
 if [[ ! -f "$themes/$name.sh" ]]; then

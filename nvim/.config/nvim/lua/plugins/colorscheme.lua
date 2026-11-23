@@ -374,6 +374,10 @@ return {
     { "rose-pine/neovim", name = "rose-pine", lazy = true },
     { "gbprod/nord.nvim", lazy = true },
     { "sainnhe/everforest", lazy = true },
+    -- Warm, low-blue themes
+    { "rebelot/kanagawa.nvim", lazy = true },
+    { "savq/melange-nvim", lazy = true },
+    { "sainnhe/gruvbox-material", lazy = true },
 
     -- Theme follows the desktop (~/.local/state/theme/current), see config/theme.lua
     {

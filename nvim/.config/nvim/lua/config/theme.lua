@@ -16,6 +16,12 @@ local schemes = {
     ["rosepine-dawn"] = { "rose-pine-dawn", "light" },
     ["everforest-dark"] = { "everforest", "dark" },
     ["everforest-light"] = { "everforest", "light" },
+    ["kanagawa-dragon"] = { "kanagawa-dragon", "dark" },
+    ["kanagawa-lotus"] = { "kanagawa-lotus", "light" },
+    ["melange-dark"] = { "melange", "dark" },
+    ["melange-light"] = { "melange", "light" },
+    ["gruvbox-material-dark"] = { "gruvbox-material", "dark" },
+    ["gruvbox-material-light"] = { "gruvbox-material", "light" },
 }
 
 function M.current()

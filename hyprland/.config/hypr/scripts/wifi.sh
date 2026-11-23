@@ -1,9 +1,9 @@
 #!/bin/bash
-# Wi-Fi menu (fuzzel + nmcli): connect, disconnect/forget, toggle radio, rescan
+# Wi-Fi menu (rofi + nmcli): connect, disconnect/forget, toggle radio, rescan
 # usage: wifi.sh [rescan]
 
-menu() { # prompt lines [fuzzel args...]
-  fuzzel --dmenu --prompt "$1 ❯ " --width 44 --lines "$2" "${@:3}"
+menu() { # prompt lines [menu.sh args...]
+  "$(dirname "$0")/menu.sh" --prompt "$1" --width 44 --lines "$2" "${@:3}"
 }
 
 note() { notify-send -a wifi -i network-wireless "$@"; }

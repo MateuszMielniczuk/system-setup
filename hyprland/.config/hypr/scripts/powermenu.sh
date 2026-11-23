@@ -7,7 +7,7 @@ choice=$(printf '%s\n' \
   "󰋊  Hibernate" \
   "󰜉  Reboot" \
   "󰐥  Shutdown" |
-  fuzzel --dmenu --prompt "Power ❯ " --lines 6 --width 20)
+  "$(dirname "$0")/menu.sh" --prompt "Power" --lines 6 --width 30)
 
 case "$choice" in
 *Lock) pidof hyprlock || hyprlock ;;

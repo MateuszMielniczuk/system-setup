@@ -140,7 +140,7 @@ hl.layer_rule({
 
 hl.layer_rule({
     name  = "blur-panels",
-    match = { namespace = "^(waybar|launcher|notifications)$" },
+    match = { namespace = "^(waybar|rofi|notifications)$" },
     blur  = true,
     ignore_alpha = 0.2,
 })

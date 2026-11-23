@@ -5,7 +5,7 @@ local grid = require("modules.workspaces")
 local mod = "SUPER"
 local terminal = "kitty"
 local fileManager = "dolphin"
-local menu = "fuzzel"
+local menu = "rofi -show drun"
 local scripts = "~/.config/hypr/scripts/"
 
 local group = ""
@@ -28,6 +28,7 @@ end
 section("Apps")
 bind("Return", hl.dsp.exec_cmd(terminal),    "Terminal")
 bind("Space",  hl.dsp.exec_cmd(menu),        "App launcher")
+bind("Tab",    hl.dsp.exec_cmd("rofi -show window"), "Window switcher")
 bind("E",      hl.dsp.exec_cmd(fileManager), "File manager")
 bind("Y",      hl.dsp.exec_cmd(terminal .. " --class yazi -e yazi"), "File manager (yazi)")
 bind("A",      hl.dsp.exec_cmd(scripts .. "hub.sh"),      "Settings hub")

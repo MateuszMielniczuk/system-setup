@@ -9,7 +9,7 @@
 source "$(dirname "$0")/system-data.sh"
 dest="$SYSTEM_DATA/backups"
 keep=10
-fz=(fuzzel --dmenu --width 56)
+fz=("$(dirname "$0")/menu.sh" --width 56)
 umask 077
 
 # Paths relative to $HOME
@@ -72,14 +72,14 @@ menu() {
     rows+=("󰁯  Restore $(date -d "@$(stat -c %Y "$f")" '+%a %d %b %Y %H:%M')  ($(du -h "$f" | cut -f1))")
   done
   idx=$(printf '%s\n' "󰆓  Back up now" "${rows[@]}" |
-    "${fz[@]}" --prompt "Backup ❯ " --lines $((${#rows[@]} + 1)) --index) || return
+    "${fz[@]}" --prompt "Backup" --lines $((${#rows[@]} + 1)) --index) || return
   [[ -n "$idx" ]] || return
   if ((idx == 0)); then
     now >/dev/null
   else
     f=${archives[idx - 1]}
     [[ $(printf '󰁯  Yes, restore %s\n' "$(basename "$f")" |
-      "${fz[@]}" --prompt "Overwrite current settings? ❯ " --lines 1) ]] || return
+      "${fz[@]}" --prompt "Overwrite current settings?" --lines 1) ]] || return
     restore "$f"
   fi
 }

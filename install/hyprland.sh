@@ -18,7 +18,7 @@ install_hyprland_arch() {
   echo "Installing Hyprland packages for Arch-based systems..."
   sudo pacman -S --needed --noconfirm \
     brightnessctl \
-    fuzzel \
+    rofi \
     waybar \
     mako \
     hyprpaper \

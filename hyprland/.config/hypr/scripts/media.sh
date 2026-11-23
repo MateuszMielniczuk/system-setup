@@ -1,18 +1,15 @@
 #!/bin/bash
 # Media player control (playerctl/MPRIS) for Waybar, the lock screen and shortcuts
 # usage: media.sh status        Waybar JSON: play/pause icon, details in the tooltip (hidden without a player)
-#        media.sh button prev|next   Waybar JSON for the side buttons (hidden without a player)
-#        media.sh menu          fuzzel extras (volume, show window, switch player), opened under the cursor
+#        media.sh menu          controls popup (cover, title, buttons) under the pointer
 #        media.sh toggle|next|prev
 #        media.sh lock-text     now-playing line for hyprlock (empty when nothing plays)
 #        media.sh lock-art      album art path for hyprlock (transparent image when none)
 
 # Chromium/Brave's own MPRIS players duplicate plasma-browser-integration (which has volume + art)
 skip='^(chromium|brave|chrome)'
-run="${XDG_RUNTIME_DIR:-/tmp}"
-chosen="$run/media-player"
+chosen="${XDG_RUNTIME_DIR:-/tmp}/media-player"
 art="${XDG_CACHE_HOME:-$HOME/.cache}/media-art"
-fz=(fuzzel --dmenu --width 44)
 
 players() { playerctl -l 2>/dev/null | grep -Ev "$skip"; }
 
@@ -42,49 +39,38 @@ clock() { # seconds -> m:ss or h:mm:ss
     printf '%d:%02d' $((s / 60)) $((s % 60))
 }
 
-esc() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'; }
+esc() { # Pango markup escape
+  local t=${1//&/&amp;}
+  t=${t//</&lt;}
+  printf '%s' "${t//>/&gt;}"
+}
+
+play_icon() { [[ "$1" == Playing ]] && echo 󰏤 || echo 󰐊; }
+
+# Current track in one playerctl call: sets st title artist album and line
+# ("Browser · Playing  2:17 / 1:26:12")
+now_playing() {
+  local pos len
+  IFS=$'\x1f' read -r st title artist album len pos < <(pc metadata -f \
+    $'{{status}}\x1f{{xesam:title}}\x1f{{xesam:artist}}\x1f{{xesam:album}}\x1f{{mpris:length}}\x1f{{position}}')
+  line="$(label "$P") · $st"
+  [[ "$pos" =~ ^[0-9]+$ ]] && line+="  $(clock $((pos / 1000000)))"
+  [[ "$len" =~ ^[0-9]+$ ]] && ((len > 0)) && line+=" / $(clock $((len / 1000000)))"
+}
 
 status() {
-  local st title artist album pos len line icon tip
+  local st title artist album line tip
   if [[ -z "$P" ]]; then
     echo '{"text": ""}'
     return
   fi
-  st=$(pc status)
-  IFS=$'\x1f' read -r title artist album len < <(pc metadata -f $'{{xesam:title}}\x1f{{xesam:artist}}\x1f{{xesam:album}}\x1f{{mpris:length}}')
-  pos=$(pc position)
-  [[ "$st" == Playing ]] && icon=󰏤 || icon=󰐊
+  now_playing
   tip="${title:-Unknown}"
   [[ -n "$artist" ]] && tip+=$'\n'"$artist"
   [[ -n "$album" ]] && tip+=$'\n'"Album: $album"
-  line="$(label "$P") · $st"
-  [[ -n "$pos" ]] && line+="  $(clock "$pos")"
-  [[ "$len" =~ ^[0-9]+$ ]] && ((len > 0)) && line+=" / $(clock $((len / 1000000)))"
   tip+=$'\n'"$line"
-  jq -cn --arg text "$icon" --arg tip "$(esc <<<"$tip")" --arg class "${st,,}" \
+  jq -cn --arg text "$(play_icon "$st")" --arg tip "$(esc "$tip")" --arg class "${st,,}" \
     '{text: $text, tooltip: $tip, class: $class}'
-}
-
-button() { # prev|next
-  if [[ -z "$P" ]]; then
-    echo '{"text": ""}'
-  elif [[ "$1" == prev ]]; then
-    echo '{"text": "󰒮", "tooltip": "Previous track"}'
-  else
-    echo '{"text": "󰒭", "tooltip": "Next track"}'
-  fi
-}
-
-# fuzzel placed just under the bar, centered on the mouse pointer
-near_cursor() { # width-in-chars
-  local cx cy mx my mname
-  read -r cx cy < <(hyprctl cursorpos -j | jq -r '"\(.x|floor) \(.y|floor)"')
-  read -r mname mx my < <(hyprctl monitors -j | jq -r --argjson x "$cx" --argjson y "$cy" \
-    '.[] | select($x >= .x and $x < .x + .width and $y >= .y and $y < .y + .height) | "\(.name) \(.x) \(.y)"')
-  local w=$(($1 * 9 + 40))
-  local left=$((cx - mx - w / 2))
-  ((left < 4)) && left=4
-  echo "--output=$mname --anchor=top-left --x-margin=$left --y-margin=44"
 }
 
 focus_player() {
@@ -97,74 +83,106 @@ focus_player() {
   fi
 }
 
+# Controls popup: rofi script mode, so the window stays open while buttons are clicked;
+# rofi re-runs "media.sh rofi" after each click to act and redraw. Esc / click outside closes.
 menu() {
-  local rows=() others choice
+  local st title artist album line cover style="" width=620 cx cy mon mx
   [[ -n "$P" ]] || { notify-send -a media "No media player running"; return; }
-  rows+=("󰝝  Volume +5%" "󰝞  Volume −5%" "󰖯  Show player window")
-  while read -r others; do
-    [[ -n "$others" && "$others" != "$P" ]] && rows+=("󰓃  Switch player: $others")
-  done < <(players)
-  # shellcheck disable=SC2046
-  choice=$(printf '%s\n' "${rows[@]}" | fuzzel --dmenu --width 30 $(near_cursor 30) \
-    --prompt "$(label "$P") ❯ " --lines ${#rows[@]}) || return
-  case "$choice" in
-  *"Volume +5%") "$(dirname "$0")/player-volume.sh" + ;;
-  *"Volume −5%") "$(dirname "$0")/player-volume.sh" - ;;
-  *"Show player window") focus_player ;;
-  *"Switch player: "*) echo "${choice#*Switch player: }" >"$chosen" ;;
-  esac
-  sleep 0.2
+  now_playing
+  cover=$(art_file 300)
+  if [[ -n "$cover" ]]; then
+    style="imagebox { background-image: url(\"$cover\", height); }"
+  else
+    width=470
+    style="imagebox { enabled: false; } window { width: ${width}px; }"
+  fi
+  # Just under the bar, centered on the pointer (620 px wide with a cover, as in media.rasi)
+  read -r cx cy < <(hyprctl cursorpos -j | jq -r '"\(.x|floor) \(.y|floor)"')
+  read -r mon mx < <(hyprctl monitors -j | jq -r --argjson x "$cx" --argjson y "$cy" \
+    '.[] | select($x >= .x and $x < .x + .width and $y >= .y and $y < .y + .height) | "\(.name) \(.x)"')
+  # The redraws reuse this instead of looking up the cover again
+  MEDIA_TITLE_MAX=$([[ -n "$cover" ]] && echo 38 || echo 50) \
+    rofi -show media -modi "media:$0 rofi" -theme ~/.config/rofi/media.rasi -m "$mon" -selected-row 1 \
+    -theme-str "inputbar { enabled: false; } $style window { location: north west; anchor: north west; x-offset: $((cx - mx - width / 2))px; y-offset: 44px; }"
   refresh_bar
 }
 
+# rofi script mode: ROFI_RETV=0 first draw, 1 an entry was picked (ROFI_INFO = action)
+rofi_mode() {
+  local st title artist album line max=${MEDIA_TITLE_MAX:-50} others nl=$'\u2028'
+  if [[ "${ROFI_RETV:-0}" == 1 ]]; then
+    case "$ROFI_INFO" in
+    prev) pc previous && sleep 0.25 ;; # let the player update before redrawing
+    toggle) pc play-pause && sleep 0.25 ;;
+    next) pc next && sleep 0.25 ;;
+    voldown) "$(dirname "$0")/player-volume.sh" - ;;
+    volup) "$(dirname "$0")/player-volume.sh" + ;;
+    window) focus_player && exit 0 ;; # no entries printed: rofi closes
+    player:*) echo "${ROFI_INFO#player:}" >"$chosen" && P=$(player) ;;
+    esac
+    refresh_bar
+  fi
+  now_playing
+  ((${#title} > max)) && title="${title:0:max-1}…"
+
+  # One output line per entry, so the message's line breaks are U+2028 (Pango line separator)
+  printf '\0message\x1f%s\n' "<b>$(esc "${title:-Unknown}")</b>${artist:+$nl$(esc "$artist")}$nl<span size='small' alpha='60%'>$(esc "$line")</span>"
+  printf '\0keep-selection\x1ftrue\n\0no-custom\x1ftrue\n'
+  printf '%s\0info\x1f%s\n' "󰒮" prev "$(play_icon "$st")" toggle "󰒭" next \
+    "󰝞" voldown "󰝝" volup "󰖯" window
+  while read -r others; do
+    [[ -n "$others" && "$others" != "$P" ]] && printf '%s\0info\x1f%s\n' "󰓃" "player:$others"
+  done < <(players)
+  return 0
+}
+
 lock_text() {
-  local st title artist icon text
+  local st title artist album line text
   [[ -n "$P" ]] || return
-  st=$(pc status)
+  now_playing
   [[ "$st" == Playing || "$st" == Paused ]] || return
-  IFS=$'\x1f' read -r title artist < <(pc metadata -f $'{{xesam:title}}\x1f{{xesam:artist}}')
-  [[ "$st" == Playing ]] && icon=󰏤 || icon=󰐊
   text="$title"
   [[ -n "$artist" ]] && text+="  ·  $artist"
   ((${#text} > 70)) && text="${text:0:69}…"
-  echo "$icon  $text" | esc
+  echo "$(play_icon "$st")  $(esc "$text")"
   echo "<span size='small' alpha='60%'>Super+Alt+,  󰒮     Super+Alt+Space  󰏤     Super+Alt+.  󰒭</span>"
 }
 
-# Cached 96x96 cover; re-made only when the art URL changes
-lock_art() {
-  local url src
-  mkdir -p "${art%/*}"
-  [[ -f "$art-none.png" ]] || magick -size 1x1 xc:none "$art-none.png"
-  url=$([[ -n "$P" ]] && pc metadata mpris:artUrl)
-  if [[ -z "$url" ]] || ! [[ "$(pc status)" =~ ^(Playing|Paused)$ ]]; then
-    echo "$art-none.png"
-    return
-  fi
-  if [[ "$url" != "$(cat "$art.url" 2>/dev/null)" || ! -f "$art.png" ]]; then
+# Cover of the current track at SIZE px (cached, re-made when the art URL changes);
+# prints nothing when there is no cover. Needs now_playing first ($st).
+art_file() { # size
+  local size=$1 url src out="$art-$1.png"
+  [[ "$st" == Playing || "$st" == Paused ]] || return
+  url=$(pc metadata mpris:artUrl)
+  [[ -n "$url" ]] || return
+  if [[ "$url" != "$(cat "$out.url" 2>/dev/null)" || ! -f "$out" ]]; then
     case "$url" in
     file://*) src=${url#file://} ;;
-    http*://*) src="$art.download" && curl -fsSL --max-time 5 -o "$src" "$url" || src="" ;;
+    http*://*) src="$art.download" && { curl -fsSL --max-time 5 -o "$src" "$url" || src=""; } ;;
     esac
-    if [[ -n "$src" ]] && magick "$src" -resize 96x96^ -gravity center -extent 96x96 "$art.png" 2>/dev/null; then
-      echo "$url" >"$art.url"
-    else
-      echo "$art-none.png"
-      return
-    fi
+    mkdir -p "${art%/*}"
+    [[ -n "$src" ]] && magick "$src" -resize "${size}x${size}^" -gravity center -extent "${size}x${size}" "$out" 2>/dev/null || return
+    echo "$url" >"$out.url"
   fi
-  echo "$art.png"
+  echo "$out"
+}
+
+lock_art() {
+  local st title artist album line f
+  [[ -f "$art-none.png" ]] || { mkdir -p "${art%/*}" && magick -size 1x1 xc:none "$art-none.png"; }
+  [[ -n "$P" ]] && now_playing && f=$(art_file 96)
+  echo "${f:-$art-none.png}"
 }
 
 P=$(player)
 case "${1:-status}" in
 status) status ;;
-button) button "$2" ;;
+rofi) rofi_mode ;;
 menu) menu ;;
 toggle) pc play-pause; refresh_bar ;;
 next) pc next; refresh_bar ;;
 prev) pc previous; refresh_bar ;;
 lock-text) lock_text ;;
 lock-art) lock_art ;;
-*) echo "usage: $0 [status|button prev|next|menu|toggle|next|prev|lock-text|lock-art]" >&2; exit 1 ;;
+*) echo "usage: $0 [status|menu|toggle|next|prev|lock-text|lock-art]" >&2; exit 1 ;;
 esac

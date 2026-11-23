@@ -1,6 +1,6 @@
 #!/bin/bash
 # Alarms and timers as transient systemd user timers (survive session restarts, not reboots).
-# usage: alarm.sh [menu]           fuzzel page: new alarm, pending alarms (pick to cancel)
+# usage: alarm.sh [menu]           menu page: new alarm, pending alarms (pick to cancel)
 #        alarm.sh new              prompt for a new alarm
 #        alarm.sh WHEN [LABEL]     WHEN: 25m, 1h30m, 90s, 45 (minutes), 07:30
 #        alarm.sh status           Waybar JSON (signal 15)
@@ -8,7 +8,7 @@
 
 sound=/usr/share/sounds/ocean/stereo/alarm-clock-elapsed.oga
 [[ -f "$sound" ]] || sound=/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga
-fz=(fuzzel --dmenu --width 44)
+fz=("$(dirname "$0")/menu.sh" --width 44)
 
 refresh() { pkill -RTMIN+15 waybar; }
 
@@ -60,7 +60,7 @@ set_alarm() { # when [label...]
 
 new() {
   local input
-  input=$("${fz[@]}" --prompt "Alarm ❯ " --lines 0 --placeholder "25m tea · 1h30m · 07:30 standup") || return
+  input=$("${fz[@]}" --prompt "Alarm" --lines 0 --placeholder "25m tea · 1h30m · 07:30 standup") || return
   # shellcheck disable=SC2086
   set_alarm $input || notify-send -a alarm -u critical "Alarm not set" "Try: 25m tea, 1h30m, 07:30 standup"
 }
@@ -91,7 +91,7 @@ menu() {
     units+=("$unit")
   done < <(pending)
   idx=$(printf '%s\n' "󰐕  New alarm" "${rows[@]}" |
-    "${fz[@]}" --prompt "Alarms ❯ " --lines $((${#rows[@]} + 1)) --index) || return
+    "${fz[@]}" --prompt "Alarms" --lines $((${#rows[@]} + 1)) --index) || return
   if ((idx == 0)); then
     new
   else

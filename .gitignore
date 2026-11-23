@@ -5,5 +5,5 @@ hyprland/.config/hypr/theme.lua
 hyprland/.config/hypr/hyprlock-colors.conf
 hyprland/.config/hypr/hyprpaper.conf
 waybar/.config/waybar/colors.css
-fuzzel/.config/fuzzel/colors.ini
+rofi/.config/rofi/colors.rasi
 mako/.config/mako/colors

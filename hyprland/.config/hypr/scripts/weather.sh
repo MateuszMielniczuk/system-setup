@@ -8,7 +8,7 @@
 source "$(dirname "$0")/system-data.sh"
 cities="$SYSTEM_DATA/cities"
 cache="${XDG_RUNTIME_DIR:-/tmp}/weather.json"
-fz=(fuzzel --dmenu --width 56)
+fz=("$(dirname "$0")/menu.sh" --width 56)
 
 refresh_bar() { pkill -RTMIN+16 waybar; }
 
@@ -104,7 +104,7 @@ forecast() {
 
 add_city() {
   local query results idx
-  query=$("${fz[@]}" --prompt "City ❯ " --lines 0 --placeholder "e.g. Tokyo") || return
+  query=$("${fz[@]}" --prompt "City" --lines 0 --placeholder "e.g. Tokyo") || return
   [[ -n "$query" ]] || return
   results=$(curl -fsS --max-time 10 -G "https://geocoding-api.open-meteo.com/v1/search" \
     --data-urlencode "name=$query" -d count=8 -d language=en -d format=json 2>/dev/null |
@@ -115,14 +115,14 @@ add_city() {
     return 1
   fi
   idx=$(awk -F'|' '{ print $1 ", " $2 }' <<<"$results" |
-    "${fz[@]}" --prompt "$query ❯ " --lines 8 --index) || return
+    "${fz[@]}" --prompt "$query" --lines 8 --index) || return
   sed -n "$((idx + 1))p" <<<"$results" >>"$cities"
   refresh_bar
 }
 
 city_menu() { # line-number name
   local choice tmp
-  choice=$(printf '󰋜  Make home\n󰁝  Move up\n󰆴  Remove\n' | "${fz[@]}" --prompt "$2 ❯ " --lines 3) || return
+  choice=$(printf '󰋜  Make home\n󰁝  Move up\n󰆴  Remove\n' | "${fz[@]}" --prompt "$2" --lines 3) || return
   tmp=$(mktemp)
   case "$choice" in
   *"Make home") { sed -n "${1}p" "$cities"; sed "${1}d" "$cities"; } >"$tmp" ;;
@@ -154,7 +154,7 @@ menu() {
     rows+=("$( ((n == 1)) && echo ★ || echo ' ')  $(TZ="$tz" date +%H:%M)  $name, $region")
   done <"$cities"
   idx=$(printf '%s\n' "󰐕  Add city" "${rows[@]}" "󰖐  3-day forecast (home)" |
-    "${fz[@]}" --prompt "Clocks & weather ❯ " --lines $((${#rows[@]} + 2)) --index) || return
+    "${fz[@]}" --prompt "Clocks & weather" --lines $((${#rows[@]} + 2)) --index) || return
   if ((idx == 0)); then
     add_city
   elif ((idx == ${#rows[@]} + 1)); then

@@ -7,7 +7,7 @@ state="${XDG_STATE_HOME:-$HOME/.local/state}/theme/current"
 laptop="eDP-1"
 
 menu() {
-  fuzzel --dmenu --prompt "$1 ❯ " --width "${2:-40}" --lines "${3:-16}" "${@:4}"
+  "$scripts/menu.sh" --prompt "$1" --width "${2:-40}" --lines "${3:-16}" "${@:4}"
 }
 
 signal_bar() {
@@ -63,7 +63,7 @@ wallpaper() {
 
   i=$(for f in "${files[@]}"; do
     printf '%s\0icon\x1f%s\n' "$(basename "${f%.*}")" "$cache/$(echo -n "$f" | md5sum | cut -d' ' -f1).png"
-  done | menu Wallpaper 60 5 --line-height 72 --index) || return
+  done | menu Wallpaper 60 5 --icon-size 64 --index) || return
   "$scripts/theme.sh" wallpaper "${files[$i]}"
 }
 

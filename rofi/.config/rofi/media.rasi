@@ -1,0 +1,61 @@
+/*
+ * Media controls popup (hypr/scripts/media.sh): cover on the left; title, artist, player
+ * and one row of buttons on the right. The cover image is set per call with -theme-str.
+ */
+@import "config.rasi"
+
+window {
+    width:                       620px;
+    border-radius:               20px;
+}
+mainbox {
+    orientation:                 horizontal;
+    padding:                     16px;
+    spacing:                     16px;
+    children:                    [ "imagebox", "listbox" ];
+}
+imagebox {
+    expand:                      false;
+    width:                       150px;
+    border-radius:               14px;
+    background-color:            var(background-alt);
+}
+listbox {
+    orientation:                 vertical;
+    spacing:                     12px;
+    background-color:            transparent;
+    children:                    [ "message", "listview" ];
+}
+message {
+    expand:                      true;
+    background-color:            transparent;
+}
+textbox {
+    padding:                     4px 2px;
+    background-color:            transparent;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+listview {
+    expand:                      false;
+    columns:                     6;
+    lines:                       1;
+    flow:                        horizontal;
+    spacing:                     8px;
+    scrollbar:                   false;
+    fixed-columns:               true;
+}
+element {
+    padding:                     8px 0px;
+    border-radius:               12px;
+}
+element normal.normal, element alternate.normal {
+    background-color:            var(background-alt);
+}
+element-text {
+    font:                        "JetBrainsMono Nerd Font 15";
+    horizontal-align:            0.5;
+}
+element-icon {
+    enabled:                     false;
+}

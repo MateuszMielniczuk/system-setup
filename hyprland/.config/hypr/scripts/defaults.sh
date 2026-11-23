@@ -1,9 +1,9 @@
 #!/bin/bash
-# Default apps per category (fuzzel). Writes ~/.config/mimeapps.list via xdg-mime,
+# Default apps per category (menu). Writes ~/.config/mimeapps.list via xdg-mime,
 # which Plasma reads too, so both sessions use the same defaults.
 # usage: defaults.sh [menu]
 
-fz=(fuzzel --dmenu --width 52)
+fz=("$(dirname "$0")/menu.sh" --width 52)
 dirs=("${XDG_DATA_HOME:-$HOME/.local/share}/applications" /usr/local/share/applications /usr/share/applications)
 
 # label#icon#type that shows the current app#regex for the app's own types to set#extra types
@@ -62,7 +62,7 @@ pick() { # category line
   apps=$(apps_for "$key")
   [[ -n "$apps" ]] || { notify-send -a defaults "$label" "No installed app supports $key"; return; }
   choice=$(awk -F'\t' '{ print $2 "  (" $1 ")" }' <<<"$apps" |
-    "${fz[@]}" --prompt "$label ❯ " --lines "$(grep -c . <<<"$apps")") || return
+    "${fz[@]}" --prompt "$label" --lines "$(grep -c . <<<"$apps")") || return
   choice=${choice##*(}
   choice=${choice%)}
   [[ -n "$choice" ]] || return
@@ -77,7 +77,7 @@ menu() {
     rows+=("$(printf '%s  %-14s %s' "$icon" "$label" "$(app_name "$(xdg-mime query default "$key")")")")
   done
   idx=$(printf '%s\n' "${rows[@]}" "󰒓  All file types (Plasma settings)" |
-    "${fz[@]}" --prompt "Default apps ❯ " --lines $((${#rows[@]} + 1)) --index) || return
+    "${fz[@]}" --prompt "Default apps" --lines $((${#rows[@]} + 1)) --index) || return
   if ((idx == ${#rows[@]})); then
     kcmshell6 kcm_filetypes
   else

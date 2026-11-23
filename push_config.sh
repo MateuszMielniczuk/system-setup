@@ -8,7 +8,7 @@ set -euo pipefail
 
 cd "$(dirname "$(readlink -f "$0")")"
 
-PACKAGES=(bash fish fuzzel hyprland kitty mako nvim starship waybar zed)
+PACKAGES=(bash fish hyprland kitty mako nvim rofi starship waybar zed)
 BACKUP_DIR="$HOME/backups_stow/$(date +%Y%m%d-%H%M%S)"
 
 if ! command -v stow >/dev/null; then

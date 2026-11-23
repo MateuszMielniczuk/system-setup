@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage: theme.sh                     pick a theme with fuzzel
+# usage: theme.sh                     pick a theme from a menu
 #        theme.sh <name>              apply a theme
 #        theme.sh wallpaper           random wallpaper from the current theme (not the current one)
 #        theme.sh wallpaper <file>    set a specific wallpaper
@@ -96,7 +96,7 @@ fi
 
 if [[ -z "$name" ]]; then
   name=$(find "$themes" -name '*.sh' -printf '%f\n' | sed 's/\.sh$//' | sort |
-    fuzzel --dmenu --prompt "Theme ❯ " --select "$current" --lines 11 --width 30) || exit 0
+    "$(dirname "$0")/menu.sh" --prompt "Theme" --select "$current" --lines 11 --width 30) || exit 0
 fi
 
 if [[ ! -f "$themes/$name.sh" ]]; then
@@ -138,18 +138,21 @@ cat >"$HOME/.config/waybar/colors.css" <<EOF
 @define-color blue     #${blue};
 EOF
 
-cat >"$HOME/.config/fuzzel/colors.ini" <<EOF
-[colors]
-background=${bg}ee
-text=${fg}ff
-prompt=${subtext}ff
-placeholder=${surface2}ff
-input=${fg}ff
-match=${accent}ff
-selection=${surface1}ff
-selection-text=${fg}ff
-selection-match=${accent2}ff
-border=${accent}ff
+icons=breeze-dark
+[[ "$variant" == light ]] && icons=breeze
+cat >"$HOME/.config/rofi/colors.rasi" <<EOF
+configuration {
+    icon-theme: "$icons";
+}
+* {
+    background:     #${bg}F0;
+    background-alt: #${surface0}FF;
+    foreground:     #${fg}FF;
+    foreground-dim: #${subtext}FF;
+    selected:       #${accent}FF;
+    active:         #${green}FF;
+    urgent:         #${red}FF;
+}
 EOF
 
 cat >"$HOME/.config/mako/colors" <<EOF

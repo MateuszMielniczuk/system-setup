@@ -1,5 +1,5 @@
 #!/bin/bash
-# Web apps: a site in its own window (no tabs or address bar) with a launcher in fuzzel/Plasma menu.
+# Web apps: a site in its own window (no tabs or address bar) with a launcher in the app launcher/Plasma menu.
 # Opens in the default browser when it is Chromium-based (needed for --app), else Chromium.
 # usage: webapp.sh add NAME URL | remove NAME | restore | launch URL | menu
 
@@ -112,16 +112,16 @@ restore() {
 }
 
 menu() {
-  local fz=(fuzzel --dmenu --width 44) choice name url
+  local fz=("$(dirname "$0")/menu.sh" --width 44) choice name url
   choice=$({
     echo "󰐕  Add web app"
     [[ -f "$list" ]] && cut -d'|' -f1 "$list" | sed 's/^/󰖟  /'
     echo "󰑓  Restore all"
-  } | "${fz[@]}" --prompt "Web apps ❯ " --lines 12) || return
+  } | "${fz[@]}" --prompt "Web apps" --lines 12) || return
   case "$choice" in
   *"Add web app")
-    name=$("${fz[@]}" --prompt "Name ❯ " --lines 0 --placeholder "e.g. YouTube") || return
-    url=$("${fz[@]}" --prompt "URL ❯ " --lines 0 --placeholder "e.g. youtube.com") || return
+    name=$("${fz[@]}" --prompt "Name" --lines 0 --placeholder "e.g. YouTube") || return
+    url=$("${fz[@]}" --prompt "URL" --lines 0 --placeholder "e.g. youtube.com") || return
     if add "$name" "$url"; then
       notify-send -i "webapp-$(slug "$name")" "Web app added" "$name"
     else
@@ -131,7 +131,7 @@ menu() {
   *"Restore all") restore && notify-send "Web apps restored" ;;
   *)
     name=${choice#󰖟  }
-    [[ $(printf '󰆴  Remove %s\n' "$name" | "${fz[@]}" --prompt "$name ❯ " --lines 1) ]] || return
+    [[ $(printf '󰆴  Remove %s\n' "$name" | "${fz[@]}" --prompt "$name" --lines 1) ]] || return
     remove "$name" && notify-send "Web app removed" "$name"
     ;;
   esac

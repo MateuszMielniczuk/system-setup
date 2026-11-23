@@ -1,5 +1,5 @@
 #!/bin/bash
-# Calendar: fuzzel front-end for calcurse; data (and calcurse's own config) in $SYSTEM_DATA/calendar
+# Calendar: menu front-end for calcurse; data (and calcurse's own config) in $SYSTEM_DATA/calendar
 # usage: calendar.sh [menu]    upcoming 30 days, add, delete, open calcurse
 #        calendar.sh add       prompt for a new event/appointment
 #        calendar.sh open      full calcurse in a terminal
@@ -10,7 +10,7 @@
 source "$(dirname "$0")/system-data.sh"
 dir="$SYSTEM_DATA/calendar"
 self="$HOME/.config/hypr/scripts/calendar.sh"
-fz=(fuzzel --dmenu --width 56)
+fz=("$(dirname "$0")/menu.sh" --width 56)
 mkdir -p "$dir"
 
 cal() { calcurse -D "$dir" "$@"; }
@@ -64,12 +64,12 @@ ics_escape() { sed 's/\\/\\\\/g; s/;/\\;/g; s/,/\\,/g' <<<"$1"; }
 
 add() {
   local input day time text repeat start end rrule="" ics
-  input=$("${fz[@]}" --prompt "Date ❯ " --lines 0 --placeholder "25.12 · tomorrow · fri · empty = today") || return
+  input=$("${fz[@]}" --prompt "Date" --lines 0 --placeholder "25.12 · tomorrow · fri · empty = today") || return
   day=$(parse_date "$input") || { notify-send -a calendar -u critical "Unknown date" "$input"; return 1; }
-  time=$("${fz[@]}" --prompt "Time ❯ " --lines 0 --placeholder "14:00 · 14:00-15:30 · empty = all day") || return
-  text=$("${fz[@]}" --prompt "What ❯ " --lines 0 --placeholder "e.g. Anna's birthday") || return
+  time=$("${fz[@]}" --prompt "Time" --lines 0 --placeholder "14:00 · 14:00-15:30 · empty = all day") || return
+  text=$("${fz[@]}" --prompt "What" --lines 0 --placeholder "e.g. Anna's birthday") || return
   [[ -n "$text" ]] || return
-  repeat=$(printf 'No repeat\nYearly\nMonthly\nWeekly\nDaily\n' | "${fz[@]}" --prompt "Repeat ❯ " --lines 5) || return
+  repeat=$(printf 'No repeat\nYearly\nMonthly\nWeekly\nDaily\n' | "${fz[@]}" --prompt "Repeat" --lines 5) || return
   [[ "$repeat" != "No repeat" ]] && rrule="RRULE:FREQ=${repeat^^}"
 
   if [[ -z "$time" ]]; then
@@ -114,13 +114,13 @@ menu() {
     hashes+=("$hash")
   done < <(upcoming 30)
   idx=$(printf '%s\n' "󰐕  Add" "󰸗  Open calendar (calcurse)" "${rows[@]}" |
-    "${fz[@]}" --prompt "Calendar ❯ " --lines 14 --index) || return
+    "${fz[@]}" --prompt "Calendar" --lines 14 --index) || return
   case "$idx" in
   0) add ;;
   1) open ;;
   *)
     label=${rows[idx - 2]}
-    [[ $(printf '󰆴  Delete (all repeats)\n' | "${fz[@]}" --prompt "$label ❯ " --lines 1) ]] || return
+    [[ $(printf '󰆴  Delete (all repeats)\n' | "${fz[@]}" --prompt "$label" --lines 1) ]] || return
     cal -P --filter-hash "${hashes[idx - 2]}" && notify-send -a calendar "Deleted" "$label"
     ;;
   esac

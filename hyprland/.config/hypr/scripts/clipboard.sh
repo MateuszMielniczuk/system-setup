@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cliphist list | fuzzel --dmenu --prompt "Clip ❯ " --width 60 | cliphist decode | wl-copy
+cliphist list | "$(dirname "$0")/menu.sh" --prompt "Clip" --width 60 | cliphist decode | wl-copy

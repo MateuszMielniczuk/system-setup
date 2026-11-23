@@ -164,6 +164,23 @@ tooltip label {
   color: @subtext;
 }
 
+#custom-syncthing {
+  color: @subtext;
+  padding: 0 8px;
+}
+
+#custom-syncthing.syncing {
+  color: @accent;
+}
+
+#custom-syncthing.offline {
+  color: @yellow;
+}
+
+#custom-syncthing.error {
+  color: @red;
+}
+
 #custom-weather {
   padding: 0 8px;
 }

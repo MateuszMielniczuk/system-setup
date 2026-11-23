@@ -11,6 +11,7 @@
   "modules-right": [
     "custom/media",
     "custom/updates",
+    "custom/syncthing",
     "privacy",
     "custom/recording",
     "custom/dnd",
@@ -122,6 +123,14 @@
     "on-click-right": "~/.config/hypr/scripts/media.sh toggle",
     "on-scroll-up": "~/.config/hypr/scripts/media.sh prev",
     "on-scroll-down": "~/.config/hypr/scripts/media.sh next"
+  },
+
+  // Syncthing: up to date / syncing % / offline / error; click: web UI
+  "custom/syncthing": {
+    "exec": "~/.config/hypr/scripts/syncthing.sh",
+    "return-type": "json",
+    "interval": 30,
+    "on-click": "~/.config/hypr/scripts/syncthing.sh open"
   },
 
   // Home weather; tooltip: every city's time + weather (Open-Meteo, cached 30 min)

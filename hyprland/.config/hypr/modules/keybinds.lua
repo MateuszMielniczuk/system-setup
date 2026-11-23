@@ -193,6 +193,10 @@ hl.define_submap("passthrough", function()
 end)
 
 section("Media")
+-- Also on the lock screen (locked); this laptop has no play/next keys
+bind("ALT + Space",  hl.dsp.exec_cmd(scripts .. "media.sh toggle"), "Play / pause",   { locked = true })
+bind("ALT + period", hl.dsp.exec_cmd(scripts .. "media.sh next"),   "Next track",     { locked = true })
+bind("ALT + comma",  hl.dsp.exec_cmd(scripts .. "media.sh prev"),   "Previous track", { locked = true })
 key("CTRL + XF86AudioRaiseVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh +"), "Player volume up", { locked = true, repeating = true, submap_universal = true })
 key("CTRL + XF86AudioLowerVolume", hl.dsp.exec_cmd(scripts .. "player-volume.sh -"), "Player volume down", { locked = true, repeating = true, submap_universal = true })
 

@@ -155,6 +155,15 @@ tooltip label {
   padding: 0 6px;
 }
 
+#custom-media {
+  color: @accent;
+  padding: 0 4px;
+}
+
+#custom-media.paused {
+  color: @subtext;
+}
+
 #custom-weather {
   padding: 0 8px;
 }

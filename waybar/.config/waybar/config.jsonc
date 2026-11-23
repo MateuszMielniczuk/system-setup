@@ -9,6 +9,7 @@
   "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "hyprland/window"],
   "modules-center": ["custom/alarms", "clock", "custom/weather"],
   "modules-right": [
+    "custom/media",
     "custom/updates",
     "privacy",
     "custom/recording",
@@ -108,6 +109,19 @@
       { "type": "screenshare", "tooltip": true, "tooltip-icon-size": 22 },
       { "type": "audio-in", "tooltip": true, "tooltip-icon-size": 22 }
     ]
+  },
+
+  // Media player: play/pause icon (hidden without a player), details on hover;
+  // click: play/pause, right click: controls, scroll: next/previous
+  "custom/media": {
+    "exec": "~/.config/hypr/scripts/media.sh status",
+    "return-type": "json",
+    "interval": 2,
+    "signal": 17,
+    "on-click": "~/.config/hypr/scripts/media.sh toggle",
+    "on-click-right": "~/.config/hypr/scripts/media.sh menu",
+    "on-scroll-up": "~/.config/hypr/scripts/media.sh prev",
+    "on-scroll-down": "~/.config/hypr/scripts/media.sh next"
   },
 
   // Home weather; tooltip: every city's time + weather (Open-Meteo, cached 30 min)

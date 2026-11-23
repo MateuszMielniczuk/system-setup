@@ -200,13 +200,14 @@ tooltip label {
   color: @red;
 }
 
+/* Quiet bell: light grey with new notifications, dark grey without */
 #custom-notifications {
-  color: @subtext;
+  color: @surface2;
   padding: 0 8px;
 }
 
 #custom-notifications.new {
-  color: @accent;
+  color: @subtext;
 }
 
 #custom-notifications.dnd {

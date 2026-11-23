@@ -1,7 +1,7 @@
 #!/bin/bash
 # Notification history (mako): Waybar bell and a rofi panel
 # usage: notifications.sh          panel (Super+Shift+U / bell click)
-#        notifications.sh status   Waybar JSON: count since the panel was last opened (signal 12)
+#        notifications.sh status   Waybar JSON: bell, lighter when there are new ones (signal 12)
 #        notifications.sh dnd      toggle do-not-disturb
 seen="${XDG_RUNTIME_DIR:-/tmp}/notifications-seen"
 menu() { "$(dirname "$0")/menu.sh" "$@"; }
@@ -15,9 +15,9 @@ status() {
   if dnd_on; then
     jq -cn --arg n "$new" '{text: "󰂛", tooltip: "Do not disturb (\($n) new)\nClick: history · Right click: DND off", class: "dnd"}'
   elif ((new > 0)); then
-    jq -cn --arg n "$new" '{text: "󰂚 \($n)", tooltip: "\($n) new notifications\nClick: history · Right click: do not disturb", class: "new"}'
+    jq -cn --arg n "$new" '{text: "󰂚", tooltip: "\($n) new notifications\nClick: history · Right click: do not disturb", class: "new"}'
   else
-    jq -cn '{text: "󰂜", tooltip: "No new notifications\nClick: history · Right click: do not disturb", class: "none"}'
+    jq -cn '{text: "󰂚", tooltip: "No new notifications\nClick: history · Right click: do not disturb", class: "none"}'
   fi
 }
 

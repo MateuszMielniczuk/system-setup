@@ -74,7 +74,7 @@
     "on-click-right": "~/.config/hypr/scripts/hub.sh keys"
   },
 
-  // Notifications: new count since last opened, 󰂛 in do-not-disturb; click: history panel
+  // Notifications: bell, lighter grey when there are new ones, 󰂛 in do-not-disturb; click: history
   "custom/notifications": {
     "exec": "~/.config/hypr/scripts/notifications.sh status",
     "return-type": "json",

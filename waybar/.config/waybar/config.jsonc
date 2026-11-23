@@ -198,11 +198,14 @@
   "bluetooth": {
     "format": "󰂯",
     "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "tooltip-format-off": "Bluetooth off (click to turn on)",
+    "tooltip-format-disabled": "Bluetooth blocked (airplane mode)",
     "format-connected": "󰂱 {device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "kcmshell6 kcm_bluetooth",
-    "on-click-right": "blueman-manager"
+    "on-click": "~/.config/hypr/scripts/bluetooth.sh",
+    "on-click-right": "kcmshell6 kcm_bluetooth"
   },
 
   "power-profiles-daemon": {

@@ -188,7 +188,7 @@ ${external}󰤨  Wi-Fi
   *Microphone) audio sources ;;
   *Displays) display ;;
   *Wi-Fi) "$scripts/wifi.sh" ;;
-  *Bluetooth) blueman-manager ;;
+  *Bluetooth) "$scripts/bluetooth.sh" ;;
   *"Sound mixer") pavucontrol ;;
   *"Power menu") "$scripts/powermenu.sh" ;;
   esac

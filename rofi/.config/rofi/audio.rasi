@@ -1,0 +1,25 @@
+/* Audio popup (hypr/scripts/audio.sh): outputs, inputs and app volumes, no search field */
+@import "config.rasi"
+
+window {
+    width:                       480px;
+}
+mainbox {
+    padding:                     16px;
+    spacing:                     10px;
+    children:                    [ "message", "listview" ];
+}
+listview {
+    columns:                     1;
+    lines:                       14;
+    fixed-height:                false;
+    scrollbar:                   false;
+    spacing:                     2px;
+}
+element {
+    padding:                     6px 12px;
+    border-radius:               12px;
+}
+element-icon {
+    enabled:                     false;
+}

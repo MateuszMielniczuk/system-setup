@@ -67,20 +67,6 @@ wallpaper() {
   "$scripts/theme.sh" wallpaper "${files[$i]}"
 }
 
-audio() {
-  local kind=$1 default names i
-  default=$(pactl "get-default-${kind%s}")
-  mapfile -t names < <(pactl -f json list "$kind" | jq -r '
-    .[] | select(.name | endswith(".monitor") | not)
-        | select(.active_port as $p | [.ports[]? | select(.name == $p) | .availability] | first != "not available")
-        | .name')
-  i=$(for n in "${names[@]}"; do
-    desc=$(pactl -f json list "$kind" | jq -r --arg n "$n" '.[] | select(.name == $n) | .description' | sed 's/.*(HD Audio) //')
-    [[ "$n" == "$default" ]] && echo "● $desc" || echo "   $desc"
-  done | menu "${kind^}" 50 8 --index) || return
-  pactl "set-default-${kind%s}" "${names[$i]}"
-}
-
 profile() {
   local current choice
   current=$(powerprofilesctl get)
@@ -184,8 +170,8 @@ ${external}󰤨  Wi-Fi
   *"Night light"*) "$scripts/nightlight.sh" ;;
   *"Power profile"*) profile ;;
   *"Profile: "*) visual_profile ;;
-  *"Audio output") audio sinks ;;
-  *Microphone) audio sources ;;
+  *"Audio output") "$scripts/audio.sh" ;;
+  *Microphone) "$scripts/audio.sh" ;;
   *Displays) display ;;
   *Wi-Fi) "$scripts/wifi.sh" ;;
   *Bluetooth) "$scripts/bluetooth.sh" ;;
@@ -197,8 +183,7 @@ ${external}󰤨  Wi-Fi
 case "${1:-}" in
 keys) keys ;;
 wallpaper) wallpaper ;;
-audio) audio sinks ;;
-mic) audio sources ;;
+audio | mic) "$scripts/audio.sh" ;;
 display) display ;;
 profile) profile ;;
 *) main ;;

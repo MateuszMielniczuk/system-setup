@@ -58,8 +58,8 @@ ddc_step() { # bus, +5/-5 -> prints new level
 monitor=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
 
 case "$1 $2" in
-"volume up") wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ ;;
-"volume down") wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- ;;
+"volume up") wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && "$(dirname "$0")/volume-sound.sh" ;;
+"volume down") wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && "$(dirname "$0")/volume-sound.sh" ;;
 "volume mute") wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
 "mic mute") wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle ;;
 "brightness up" | "brightness down")

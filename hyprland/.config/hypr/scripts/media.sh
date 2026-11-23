@@ -86,7 +86,7 @@ focus_player() {
 # Controls popup: rofi script mode, so the window stays open while buttons are clicked;
 # rofi re-runs "media.sh rofi" after each click to act and redraw. Esc / click outside closes.
 menu() {
-  local st title artist album line cover style="" width=620 cx cy mon mx
+  local st title artist album line cover style="" width=620 mon left
   [[ -n "$P" ]] || { notify-send -a media "No media player running"; return; }
   now_playing
   cover=$(art_file 300)
@@ -96,14 +96,11 @@ menu() {
     width=470
     style="imagebox { enabled: false; } window { width: ${width}px; }"
   fi
-  # Just under the bar, centered on the pointer (620 px wide with a cover, as in media.rasi)
-  read -r cx cy < <(hyprctl cursorpos -j | jq -r '"\(.x|floor) \(.y|floor)"')
-  read -r mon mx < <(hyprctl monitors -j | jq -r --argjson x "$cx" --argjson y "$cy" \
-    '.[] | select($x >= .x and $x < .x + .width and $y >= .y and $y < .y + .height) | "\(.name) \(.x)"')
+  read -r mon left < <("$(dirname "$0")/popup-pos.sh" "$width")
   # The redraws reuse this instead of looking up the cover again
   MEDIA_TITLE_MAX=$([[ -n "$cover" ]] && echo 38 || echo 50) \
     rofi -show media -modi "media:$0 rofi" -theme ~/.config/rofi/media.rasi -m "$mon" -selected-row 1 \
-    -theme-str "inputbar { enabled: false; } $style window { location: north west; anchor: north west; x-offset: $((cx - mx - width / 2))px; y-offset: 44px; }"
+    -theme-str "inputbar { enabled: false; } $style window { location: north west; anchor: north west; x-offset: ${left}px; y-offset: 44px; }"
   refresh_bar
 }
 

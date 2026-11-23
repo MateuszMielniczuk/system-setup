@@ -44,4 +44,8 @@ install_hyprland_arch() {
     calcurse \
     gthumb
   echo "Hyprland packages installed successfully."
+
+  # The mouse receiver must not wake the laptop from suspend
+  sudo install -m 644 "$(dirname "${BASH_SOURCE[0]}")/files/90-mouse-no-wakeup.rules" /etc/udev/rules.d/
+  sudo udevadm control --reload-rules
 }

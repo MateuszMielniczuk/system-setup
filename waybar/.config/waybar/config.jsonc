@@ -152,10 +152,11 @@
   },
 
   "custom/nightlight": {
-    "exec": "pgrep -x hyprsunset >/dev/null && echo '󰖔' || echo '󰖙'",
-    "interval": "once",
+    // Night light: on 20:00-7:00 automatically (hypr/hyprsunset.conf); polled for the switch
+    "exec": "[ \"$(~/.config/hypr/scripts/nightlight.sh status)\" = on ] && echo '󰖔' || echo '󰖙'",
+    "interval": 60,
     "signal": 8,
-    "tooltip": false,
+    "tooltip-format": "Night light (automatic 20:00–7:00), click to toggle",
     "on-click": "~/.config/hypr/scripts/nightlight.sh"
   },
 

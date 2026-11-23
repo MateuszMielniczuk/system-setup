@@ -106,7 +106,7 @@ display() {
 
 dnd_on() { makoctl mode | grep -q do-not-disturb; }
 awake_on() { ! pgrep -x hypridle >/dev/null; }
-night_on() { pgrep -x hyprsunset >/dev/null; }
+night_on() { [[ $("$scripts/nightlight.sh" status) == on ]]; }
 state_of() { "$1" && echo on || echo off; }
 
 toggle_dnd() {

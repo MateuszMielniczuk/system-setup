@@ -53,7 +53,7 @@ sudo mkdir -p /etc/systemd/sleep.conf.d /etc/systemd/logind.conf.d
 
 ```ini
 [Sleep]
-HibernateDelaySec=30min
+HibernateDelaySec=24h
 HibernateOnACPower=no
 ```
 

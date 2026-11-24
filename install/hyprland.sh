@@ -42,6 +42,7 @@ install_hyprland_arch() {
     hyprpicker \
     wtype \
     calcurse \
+    qrencode \
     gthumb
   echo "Hyprland packages installed successfully."
 

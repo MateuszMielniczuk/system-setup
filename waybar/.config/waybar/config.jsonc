@@ -10,6 +10,7 @@
   "modules-center": ["custom/alarms", "clock", "custom/weather"],
   "modules-right": [
     "custom/media",
+    "custom/phone",
     "custom/updates",
     "custom/syncthing",
     "privacy",
@@ -125,6 +126,15 @@
     "on-click-right": "~/.config/hypr/scripts/media.sh toggle",
     "on-scroll-up": "~/.config/hypr/scripts/media.sh prev",
     "on-scroll-down": "~/.config/hypr/scripts/media.sh next"
+  },
+
+  // Phone via KDE Connect: battery when reachable (hidden otherwise); click: phone panel
+  "custom/phone": {
+    "exec": "~/.config/hypr/scripts/phone.sh status",
+    "return-type": "json",
+    "interval": 30,
+    "signal": 18,
+    "on-click": "~/.config/hypr/scripts/phone.sh"
   },
 
   // Syncthing: up to date / syncing % / offline / error; click: web UI

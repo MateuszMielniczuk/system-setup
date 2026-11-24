@@ -214,6 +214,10 @@ tooltip label {
   color: @yellow;
 }
 
+#custom-phone {
+  padding: 0 8px;
+}
+
 #custom-weather {
   padding: 0 8px;
 }

@@ -26,10 +26,10 @@ compute() {
   fi
   class=normal
   ((n >= 50)) && class=many
-  tip=$(head -20 <<<"$all")
+  tip="$n updates"$'\n'$(head -20 <<<"$all")
   ((n > 20)) && tip+=$'\n'"…and $((n - 20)) more"
   tip=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' <<<"$tip")
-  jq -cn --arg text "󰏗 $n" --arg tip "$tip" --arg class "$class" \
+  jq -cn --arg text "󰏗" --arg tip "$tip" --arg class "$class" \
     '{text: $text, tooltip: $tip, class: $class}'
 }
 

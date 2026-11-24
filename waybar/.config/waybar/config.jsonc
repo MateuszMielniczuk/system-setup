@@ -8,25 +8,37 @@
 
   "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "custom/present", "hyprland/window"],
   "modules-center": ["custom/alarms", "clock", "custom/weather"],
-  "modules-right": [
-    "custom/media",
-    "custom/phone",
-    "custom/updates",
-    "custom/syncthing",
-    "privacy",
-    "custom/recording",
-    "custom/awake",
-    "tray",
-    "custom/nightlight",
-    "pulseaudio",
-    "backlight",
-    "network",
-    "bluetooth",
-    "custom/notifications",
-    "power-profiles-daemon",
-    "battery",
-    "custom/power"
-  ],
+  // Right side in pills (style.css): alerts (only when active), activity, apps (updates + tray),
+  // controls, system
+  "modules-right": ["group/alerts", "group/activity", "group/apps", "group/controls", "group/system"],
+
+  "group/alerts": {
+    "orientation": "horizontal",
+    "modules": ["privacy", "custom/recording", "custom/awake"]
+  },
+  "group/activity": {
+    "orientation": "horizontal",
+    "modules": ["custom/media", "custom/phone", "custom/syncthing"]
+  },
+  "group/apps": {
+    "orientation": "horizontal",
+    "modules": ["custom/updates", "tray"]
+  },
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/nightlight",
+      "backlight",
+      "pulseaudio",
+      "bluetooth",
+      "network",
+      "custom/notifications"
+    ]
+  },
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": ["power-profiles-daemon", "battery", "custom/power"]
+  },
 
   // 2x2 desktop grid; refreshed by Hyprland events (workspaces.lua, signal 13)
   "custom/desktops": {
@@ -59,7 +71,7 @@
 
   "tray": {
     "icon-size": 16,
-    "spacing": 8
+    "spacing": 14
   },
 
   // Shown only while a submap is active (passthrough: Super+Alt+F1)

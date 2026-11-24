@@ -111,7 +111,19 @@ tooltip label {
   font-weight: bold;
 }
 
-#tray,
+/* Right-side pills. No padding on the pill itself, so a group whose modules are all
+   hidden (alerts, usually) collapses to nothing */
+#alerts,
+#activity,
+#apps,
+#controls,
+#system {
+  background: alpha(@surface1, 0.6);
+  border-radius: 6px;
+  margin: 4px 0;
+}
+
+#apps,
 #custom-nightlight,
 #pulseaudio,
 #backlight,
@@ -236,4 +248,25 @@ tooltip label {
 #custom-power {
   color: @red;
   margin-right: 4px;
+}
+
+/* Wider gaps inside the right-side pills (last, so it overrides the per-module padding) */
+#privacy,
+#custom-recording,
+#custom-awake,
+#custom-media,
+#custom-phone,
+#custom-syncthing,
+#custom-updates,
+#tray,
+#custom-nightlight,
+#backlight,
+#pulseaudio,
+#bluetooth,
+#network,
+#custom-notifications,
+#power-profiles-daemon,
+#battery,
+#custom-power {
+  padding: 0 11px;
 }

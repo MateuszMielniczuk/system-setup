@@ -1,0 +1,3 @@
+# Xiaomi wireless mouse receiver (Mi USB Receiver) woke the laptop from suspend at night,
+# even with the mouse switched off. Wake with the keyboard, lid or power button instead.
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2717", ATTR{idProduct}=="5094", ATTR{power/wakeup}="disabled"

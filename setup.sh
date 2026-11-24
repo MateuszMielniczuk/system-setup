@@ -23,6 +23,7 @@ read -p "Do you want to install terminal and coding tools? (y/n): " is_coding
 read -p "Do you want to install software? (y/n): " is_software
 read -p "Do you want to install Docker? (y/n): " is_docker
 read -p "Do you want to install Virt Manager? (y/n): " is_qemu
+read -p "Do you want to install Hyprland? (y/n): " is_hyprland
 
 if [[ -f install/base.sh ]]; then
   source install/base.sh
@@ -58,6 +59,15 @@ if [[ "$is_docker" =~ ^[Yy]$ ]]; then
     install_docker "$DISTRO"
   else
     echo "install/docker.sh not found."
+  fi
+fi
+
+if [[ "$is_hyprland" =~ ^[Yy]$ ]]; then
+  if [[ -f install/hyprland.sh ]]; then
+    source install/hyprland.sh
+    install_hyprland "$DISTRO"
+  else
+    echo "install/hyprland.sh not found."
   fi
 fi
 

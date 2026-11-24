@@ -8,7 +8,7 @@ set -euo pipefail
 
 cd "$(dirname "$(readlink -f "$0")")"
 
-PACKAGES=(bash fish kitty nvim starship zed)
+PACKAGES=(bash fish hyprland kitty mako nvim rofi starship waybar zed)
 BACKUP_DIR="$HOME/backups_stow/$(date +%Y%m%d-%H%M%S)"
 
 if ! command -v stow >/dev/null; then
@@ -30,3 +30,7 @@ for pkg in "${PACKAGES[@]}"; do
 done
 
 stow -v -t "$HOME" "${PACKAGES[@]}"
+
+# generate theme color files (gitignored)
+theme="$(cat "${XDG_STATE_HOME:-$HOME/.local/state}/theme/current" 2>/dev/null || echo gruvbox-dark)"
+"$HOME/.config/hypr/scripts/theme.sh" "$theme" || true

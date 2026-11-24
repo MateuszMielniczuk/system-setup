@@ -1,0 +1,276 @@
+{
+  "layer": "top",
+  "position": "top",
+  // 32px bar + 6px top margin; margins live in style.css so a single window
+  // (window#waybar.solo / .fullscreen) can make the bar flush
+  "height": 38,
+  "spacing": 6,
+
+  "modules-left": ["custom/hub", "custom/desktops", "hyprland/submap", "custom/present", "hyprland/window"],
+  "modules-center": ["custom/alarms", "clock", "custom/weather"],
+  // Right side in pills (style.css): alerts (only when active), activity, apps (updates + tray),
+  // controls, system
+  "modules-right": ["group/alerts", "group/activity", "group/apps", "group/controls", "group/system"],
+
+  "group/alerts": {
+    "orientation": "horizontal",
+    "modules": ["privacy", "custom/recording", "custom/awake"]
+  },
+  "group/activity": {
+    "orientation": "horizontal",
+    "modules": ["custom/media", "custom/phone", "custom/syncthing"]
+  },
+  "group/apps": {
+    "orientation": "horizontal",
+    "modules": ["custom/updates", "tray"]
+  },
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/nightlight",
+      "backlight",
+      "pulseaudio",
+      "bluetooth",
+      "network",
+      "custom/notifications"
+    ]
+  },
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": ["power-profiles-daemon", "battery", "custom/power"]
+  },
+
+  // 2x2 desktop grid; refreshed by Hyprland events (workspaces.lua, signal 13)
+  "custom/desktops": {
+    "exec": "~/.config/hypr/scripts/desktops.sh",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 13,
+    "on-scroll-up": "hyprctl eval 'local w = require(\"modules.workspaces\"); w.switch((w.current() - 2) % 4 + 1)'",
+    "on-scroll-down": "hyprctl eval 'local w = require(\"modules.workspaces\"); w.switch(w.current() % 4 + 1)'"
+  },
+
+  "hyprland/window": {
+    "max-length": 60,
+    "separate-outputs": true
+  },
+
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "on-click": "~/.config/hypr/scripts/calendar.sh open",
+    "on-click-right": "~/.config/hypr/scripts/calendar.sh",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "left",
+      "format": {
+        "today": "<b><u>{}</u></b>"
+      }
+    }
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 14
+  },
+
+  // Shown only while a submap is active (passthrough: Super+Alt+F1)
+  "hyprland/submap": {
+    "format": "󰌌 {}",
+    "tooltip-format": "All shortcuts off. Super+Alt+F1 to exit."
+  },
+
+  "custom/hub": {
+    "format": "󰣇",
+    "tooltip-format": "Settings (Super+A)",
+    "on-click": "~/.config/hypr/scripts/hub.sh",
+    "on-click-right": "~/.config/hypr/scripts/hub.sh keys"
+  },
+
+  // Notifications: bell, lighter grey when there are new ones, 󰂛 in do-not-disturb; click: history
+  "custom/notifications": {
+    "exec": "~/.config/hypr/scripts/notifications.sh status",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 12,
+    "on-click": "~/.config/hypr/scripts/notifications.sh",
+    "on-click-right": "~/.config/hypr/scripts/notifications.sh dnd"
+  },
+
+  "custom/awake": {
+    "exec": "pgrep -x hypridle >/dev/null && echo '' || echo '󰅶'",
+    "interval": "once",
+    "signal": 11,
+    "tooltip-format": "Keep awake: idle/lock paused",
+    "on-click": "setsid -f hypridle >/dev/null 2>&1; sleep 0.2; pkill -RTMIN+11 waybar"
+  },
+
+  // Pending repo + AUR updates; hidden when none. Click: upgrade (yay), right-click: re-check
+  "custom/updates": {
+    "exec": "~/.config/hypr/scripts/updates.sh",
+    "return-type": "json",
+    "interval": 1800,
+    "signal": 14,
+    "on-click": "~/.config/hypr/scripts/updates.sh upgrade",
+    "on-click-right": "pkill -RTMIN+14 waybar"
+  },
+
+  // Shown only while the mic is recording or the screen is shared (PipeWire)
+  "privacy": {
+    "icon-size": 14,
+    "icon-spacing": 6,
+    "transition-duration": 250,
+    "ignore-monitor": true,
+    "modules": [
+      { "type": "screenshare", "tooltip": true, "tooltip-icon-size": 22 },
+      { "type": "audio-in", "tooltip": true, "tooltip-icon-size": 22 }
+    ]
+  },
+
+  // Media player: play/pause icon (hidden without a player), details on hover;
+  // click: controls popup (cover, buttons), right click: play/pause, scroll: next/previous
+  "custom/media": {
+    "exec": "~/.config/hypr/scripts/media.sh status",
+    "return-type": "json",
+    "interval": 2,
+    "signal": 17,
+    "on-click": "~/.config/hypr/scripts/media.sh menu",
+    "on-click-right": "~/.config/hypr/scripts/media.sh toggle",
+    "on-scroll-up": "~/.config/hypr/scripts/media.sh prev",
+    "on-scroll-down": "~/.config/hypr/scripts/media.sh next"
+  },
+
+  // Phone via KDE Connect: battery when reachable (hidden otherwise); click: phone panel
+  "custom/phone": {
+    "exec": "~/.config/hypr/scripts/phone.sh status",
+    "return-type": "json",
+    "interval": 30,
+    "signal": 18,
+    "on-click": "~/.config/hypr/scripts/phone.sh"
+  },
+
+  // Syncthing: up to date / syncing % / offline / error; click: web UI
+  "custom/syncthing": {
+    "exec": "~/.config/hypr/scripts/syncthing.sh",
+    "return-type": "json",
+    "interval": 30,
+    "on-click": "~/.config/hypr/scripts/syncthing.sh open"
+  },
+
+  // Presentation mode (present.sh): shown only while active; click ends it
+  "custom/present": {
+    "exec": "~/.config/hypr/scripts/present.sh status",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 19,
+    "on-click": "~/.config/hypr/scripts/present.sh"
+  },
+
+  // Home weather; tooltip: every city's time + weather (Open-Meteo, cached 30 min)
+  "custom/weather": {
+    "exec": "~/.config/hypr/scripts/weather.sh status",
+    "return-type": "json",
+    "interval": 60,
+    "signal": 16,
+    "on-click": "~/.config/hypr/scripts/weather.sh",
+    "on-click-right": "~/.config/hypr/scripts/weather.sh refresh"
+  },
+
+  // Next pending alarm (hidden when none); click: alarms page
+  "custom/alarms": {
+    "exec": "~/.config/hypr/scripts/alarm.sh status",
+    "return-type": "json",
+    "interval": 60,
+    "signal": 15,
+    "on-click": "~/.config/hypr/scripts/alarm.sh"
+  },
+
+  "custom/recording": {
+    "exec": "pgrep -x wf-recorder >/dev/null && echo '󰑊 REC' || echo ''",
+    "interval": "once",
+    "signal": 9,
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/record.sh"
+  },
+
+  "custom/nightlight": {
+    // Night light: on 20:00-7:00 automatically (hypr/hyprsunset.conf); polled for the switch
+    "exec": "[ \"$(~/.config/hypr/scripts/nightlight.sh status)\" = on ] && echo '󰖔' || echo '󰖙'",
+    "interval": 60,
+    "signal": 8,
+    "tooltip-format": "Night light (automatic 20:00–7:00), click to toggle",
+    "on-click": "~/.config/hypr/scripts/nightlight.sh"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 muted",
+    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"], "headphone": "󰋋" },
+    "on-click": "~/.config/hypr/scripts/audio.sh",
+    "on-click-right": "kcmshell6 kcm_pulseaudio",
+    "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-scroll-up": "~/.config/hypr/scripts/osd.sh volume up",
+    "on-scroll-down": "~/.config/hypr/scripts/osd.sh volume down"
+  },
+
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "on-scroll-up": "brightnessctl -e4 -n2 set 5%+",
+    "on-scroll-down": "brightnessctl -e4 -n2 set 5%-"
+  },
+
+  "network": {
+    // Icon only (signal strength); the network name is in the tooltip
+    "format-wifi": "{icon}",
+    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+    "format-ethernet": "󰈀",
+    "format-linked": "󰤫",
+    "format-disconnected": "󰤭",
+    "format-disabled": "󰤮",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}",
+    "tooltip-format-ethernet": "Wired\n{ipaddr}",
+    "tooltip-format-disconnected": "Not connected (click for Wi-Fi)",
+    "on-click": "~/.config/hypr/scripts/wifi.sh",
+    "on-click-right": "nm-connection-editor"
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "tooltip-format-off": "Bluetooth off (click to turn on)",
+    "tooltip-format-disabled": "Bluetooth blocked (airplane mode)",
+    "format-connected": "󰂱 {device_alias}",
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "~/.config/hypr/scripts/bluetooth.sh",
+    "on-click-right": "kcmshell6 kcm_bluetooth"
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}",
+    "format-icons": {
+      "performance": "󰓅",
+      "balanced": "󰾅",
+      "power-saver": "󰾆"
+    }
+  },
+
+  "battery": {
+    "states": { "warning": 25, "critical": 10 },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
+    "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+    "tooltip-format": "{timeTo}, {power:.1f}W\nClick: battery panel",
+    "on-click": "~/.config/hypr/scripts/battery.sh"
+  },
+
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "~/.config/hypr/scripts/powermenu.sh"
+  }
+}

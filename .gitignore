@@ -7,3 +7,8 @@ hyprland/.config/hypr/hyprpaper.conf
 waybar/.config/waybar/colors.css
 rofi/.config/rofi/colors.rasi
 mako/.config/mako/colors
+
+# herdr keeps sockets, logs and sessions next to its config (if ~/.config/herdr is folded into the repo)
+herdr/.config/herdr/*
+!herdr/.config/herdr/config.toml
+!herdr/.config/herdr/agents.sh

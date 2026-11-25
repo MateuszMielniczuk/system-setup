@@ -1,0 +1,50 @@
+# herdr config (docs/HERDR.md). Apply: herdr config check && herdr server reload-config
+# Keys: Alt is herdr's layer (Super = Hyprland, Ctrl+Shift = Kitty). Rare actions stay on
+# the Ctrl+B prefix. Avoided: Alt+J/K (LazyVim move line), Alt+T/P (Claude Code).
+onboarding = false
+
+[ui]
+status_indicators = "symbols"
+# kitty.conf matches title:^herdr to pass Alt+1..9 and Ctrl+Alt+H/L through to herdr
+window_title = "herdr: {workspace}"
+
+[theme]
+name = "gruvbox"
+auto_switch = false
+
+[ui.sound]
+enabled = true
+
+# Through mako: shows in the notification history, respects Do-Not-Disturb
+[ui.toast]
+delivery = "system"
+
+[keys]
+switch_tab = "alt+1..9"
+switch_workspace = "ctrl+alt+1..9"
+previous_tab = "alt+h"
+next_tab = "alt+l"
+move_tab_previous = "alt+shift+h"
+move_tab_next = "alt+shift+l"
+focus_pane_left = "ctrl+alt+h"
+focus_pane_down = "ctrl+alt+j"
+focus_pane_up = "ctrl+alt+k"
+focus_pane_right = "ctrl+alt+l"
+new_tab = "alt+n"
+split_vertical = "alt+v"
+split_horizontal = "alt+minus"
+zoom = "alt+z"
+close_pane = "alt+x"
+goto = "alt+g"
+next_agent = "alt+shift+a"
+open_notification_target = "alt+o"
+workspace_picker = "alt+w"
+toggle_sidebar = "alt+b"
+
+# Agent picker (agents.sh): list of agents, Enter focuses one. Go-to search (agents + terminals): Alt+G
+[[keys.command]]
+key = "alt+a"
+type = "popup"
+command = "~/.config/herdr/agents.sh"
+width = "70%"
+height = "40%"

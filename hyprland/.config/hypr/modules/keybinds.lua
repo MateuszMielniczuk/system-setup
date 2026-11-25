@@ -176,7 +176,6 @@ bind("SHIFT + D",  hl.dsp.exec_cmd(scripts .. "present.sh"), "Presentation mode 
 
 section("Session")
 bind("Escape",        hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
-key("CTRL + ALT + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
 bind("SHIFT + E",     hl.dsp.exec_cmd(scripts .. "powermenu.sh"),    "Power menu")
 bind("SHIFT + B",     hl.dsp.exec_cmd("pkill waybar; waybar"),       "Restart bar")
 

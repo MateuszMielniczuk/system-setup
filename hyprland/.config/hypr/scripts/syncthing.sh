@@ -11,7 +11,8 @@ if [[ "$1" == open ]]; then
   exit 0
 fi
 
-api() { curl -fsS --max-time 3 -H "X-API-Key: $key" "${@/#/http://$addr/rest/}"; }
+# Key passed on stdin (-H @-) so it doesn't show in the process list
+api() { curl -fsS --max-time 3 -H @- "${@/#/http://$addr/rest/}" <<<"X-API-Key: $key"; }
 
 out() { jq -cn --arg text "$1" --arg tip "$2" --arg class "$3" '{text: $text, tooltip: $tip, class: $class}'; }
 

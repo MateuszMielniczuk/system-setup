@@ -49,4 +49,7 @@ install_hyprland_arch() {
   # The mouse receiver must not wake the laptop from suspend
   sudo install -m 644 "$(dirname "${BASH_SOURCE[0]}")/files/90-mouse-no-wakeup.rules" /etc/udev/rules.d/
   sudo udevadm control --reload-rules
+
+  # fprintd keeps a stale sensor claim after suspend; restart it on resume
+  sudo install -m 755 "$(dirname "${BASH_SOURCE[0]}")/files/fprintd-resume" /usr/lib/systemd/system-sleep/
 }

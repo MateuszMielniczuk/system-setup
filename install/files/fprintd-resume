@@ -1,0 +1,3 @@
+#!/bin/sh
+# Sensor drops off USB during suspend and fprintd keeps a stale claim
+[ "$1" = post ] && systemctl try-restart fprintd.service

@@ -20,8 +20,18 @@ for pkg in "${PACKAGES[@]}"; do
   while IFS= read -r -d '' file; do
     rel="${file#"$pkg"/}"
     target="$HOME/$rel"
+    # absolute symlink pointing at this repo file (not stow-style relative):
+    # stow treats it as foreign and aborts, so drop it and let stow relink
+    if [[ -L "$target" && "$(readlink "$target")" == /* &&
+      "$(readlink -f "$target")" == "$(readlink -f "$file")" ]]; then
+      rm "$target"
+      echo "Replaced absolute symlink $target"
     # skip missing targets and links (already stowed)
-    if [[ -e "$target" && ! -L "$target" ]]; then
+    # target already resolves to the repo file (e.g. via a symlinked parent dir):
+    # never move it, that would delete the repo file itself
+    elif [[ "$(readlink -f "$target")" == "$(readlink -f "$file")" ]]; then
+      :
+    elif [[ -e "$target" && ! -L "$target" ]]; then
       mkdir -p "$BACKUP_DIR/$(dirname "$rel")"
       mv "$target" "$BACKUP_DIR/$rel"
       echo "Backed up $target -> $BACKUP_DIR/$rel"

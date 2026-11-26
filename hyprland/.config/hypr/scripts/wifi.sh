@@ -8,6 +8,9 @@ menu() { # prompt lines [menu.sh args...]
 
 note() { notify-send -a wifi -i network-wireless "$@"; }
 
+# Pango-escape text (SSIDs are chosen by whoever runs the network)
+esc() { local t=${1//&/&amp;}; t=${t//</&lt;}; printf '%s' "${t//>/&gt;}"; }
+
 signal_icon() {
   if (($1 >= 75)); then echo 󰤨; elif (($1 >= 50)); then echo 󰤥; elif (($1 >= 25)); then echo 󰤢; else echo 󰤟; fi
 }
@@ -22,14 +25,21 @@ profile_for() {
 }
 
 connect() { # ssid security
-  local ssid=$1 profile pass out rc
+  local ssid=$1 profile pass out rc km
   profile=$(profile_for "$ssid")
   if [[ -n "$profile" ]]; then
     out=$(nmcli con up id "$profile" 2>&1)
     rc=$?
   elif [[ -n "$2" ]]; then
+    case "$2" in
+    *802.1X* | *WEP*) nm-connection-editor; return ;;
+    *WPA1* | *WPA2*) km=wpa-psk ;;
+    *) km=sae ;;
+    esac
     pass=$(menu "Password for $ssid" 0 --password) || return
-    out=$(nmcli dev wifi connect "$ssid" password "$pass" 2>&1)
+    # Password goes through a passwd-file (printf is a builtin), never on a command line
+    out=$(nmcli con add type wifi con-name "$ssid" ssid "$ssid" wifi-sec.key-mgmt "$km" 2>&1 &&
+      nmcli con up id "$ssid" passwd-file <(printf '802-11-wireless-security.psk:%s\n' "$pass") 2>&1)
     rc=$?
     # A failed attempt leaves a profile with the wrong password behind
     ((rc != 0)) && nmcli con delete id "$ssid" >/dev/null 2>&1
@@ -38,34 +48,34 @@ connect() { # ssid security
     rc=$?
   fi
   if ((rc == 0)); then
-    note "Connected" "$ssid"
+    note "Connected" "$(esc "$ssid")"
   else
-    note -u critical "Failed to connect to $ssid" "${out#Error: }"
+    note -u critical "Failed to connect" "$(esc "$ssid"): $(esc "${out#Error: }")"
   fi
 }
 
 # QR code a phone camera can join from; the password comes from NetworkManager (KWallet agent)
 share() { # ssid
-  local profile key pass type=WPA qr esc mon left nl=$' '
+  local profile key pass type=WPA qr mon left nl=$' '
   profile=$(profile_for "$1")
   key=$(nmcli -g 802-11-wireless-security.key-mgmt con show "$profile" 2>/dev/null)
   if [[ -z "$key" ]]; then
     type=nopass
   else
     pass=$(nmcli -s -g 802-11-wireless-security.psk con show "$profile" 2>/dev/null)
-    [[ -n "$pass" ]] || { note -u critical "No saved password for $1"; return 1; }
+    [[ -n "$pass" ]] || { note -u critical "No saved password" "$(esc "$1")"; return 1; }
     [[ "$key" == sae ]] && type=SAE
   fi
   wq() { local s=${1//\\/\\\\}; s=${s//;/\\;}; s=${s//,/\\,}; s=${s//:/\\:}; printf '%s' "${s//\"/\\\"}"; }
-  esc() { local t=${1//&/&amp;}; t=${t//</&lt;}; printf '%s' "${t//>/&gt;}"; }
-  qr="${XDG_RUNTIME_DIR:-/tmp}/wifi-qr.png"
-  qrencode -s 10 -m 2 -o "$qr" "WIFI:T:$type;S:$(wq "$1");${pass:+P:$(wq "$pass");};" || return 1
+  [[ -d "$XDG_RUNTIME_DIR" ]] || { note -u critical "XDG_RUNTIME_DIR not set"; return 1; }
+  qr=$(mktemp -p "$XDG_RUNTIME_DIR" --suffix .png wifi-qr.XXXXXX) || return 1
+  trap "rm -f '$qr'" EXIT # expand now: $qr is local
+  printf '%s' "WIFI:T:$type;S:$(wq "$1");${pass:+P:$(wq "$pass");};" | qrencode -s 10 -m 2 -o "$qr" || return 1
   read -r mon left < <("$(dirname "$0")/popup-pos.sh" 560)
   rofi -dmenu -no-custom -m "$mon" -theme ~/.config/rofi/qr.rasi \
     -mesg "<b>$(esc "$1")</b>$nl$nl<span alpha='60%'>Password</span>$nl<tt>$(esc "${pass:-none (open network)}")</tt>$nl$nl<span size='small' alpha='60%'>Scan with the phone camera to join</span>" \
     -theme-str "imagebox { background-image: url(\"$qr\", both); } window { location: north west; anchor: north west; x-offset: ${left}px; y-offset: 44px; }" \
     <<<"" >/dev/null # one hidden row: rofi exits at once with no rows
-  rm -f "$qr"
 }
 
 connected_menu() { # ssid
@@ -74,8 +84,8 @@ connected_menu() { # ssid
   profile=$(profile_for "$1")
   case "$choice" in
   *Share*) share "$1" ;;
-  *Disconnect) nmcli con down id "$profile" >/dev/null && note "Disconnected" "$1" ;;
-  *Forget) nmcli con delete id "$profile" >/dev/null && note "Forgot network" "$1" ;;
+  *Disconnect) nmcli con down id "$profile" >/dev/null && note "Disconnected" "$(esc "$1")" ;;
+  *Forget) nmcli con delete id "$profile" >/dev/null && note "Forgot network" "$(esc "$1")" ;;
   esac
 }
 

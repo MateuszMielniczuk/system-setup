@@ -35,7 +35,7 @@ install_arch() {
   chsh --shell /bin/bash
 
   # appimage support
-  sudo pacman -s fuse
+  sudo pacman -S fuse
 
   # set ufw rules for kde connect
   sudo ufw allow 1714:1764/udp
@@ -43,10 +43,17 @@ install_arch() {
   sudo ufw reload
 
   # install yey
-  sudo pacman -s --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+  sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 
-  # add udev rules for ledger
-  wget -q -o - https://raw.githubusercontent.com/ledgerhq/udev-rules/master/add_udev_rules.sh | sudo bash
+  # add udev rules for ledger: download, review, then run as root
+  local ledger
+  ledger=$(mktemp)
+  if curl -fsSL -o "$ledger" https://raw.githubusercontent.com/ledgerhq/udev-rules/master/add_udev_rules.sh; then
+    less "$ledger"
+    read -p "Run the Ledger udev script above as root? (y/n): " ok
+    [[ "$ok" =~ ^[Yy]$ ]] && sudo bash "$ledger"
+  fi
+  rm -f "$ledger"
 }
 
 install_debian() {

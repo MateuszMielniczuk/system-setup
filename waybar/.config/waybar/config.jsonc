@@ -32,6 +32,7 @@
       "pulseaudio",
       "bluetooth",
       "network",
+      "custom/clipboard",
       "custom/notifications"
     ]
   },
@@ -95,6 +96,16 @@
     "signal": 12,
     "on-click": "~/.config/hypr/scripts/notifications.sh",
     "on-click-right": "~/.config/hypr/scripts/notifications.sh dnd"
+  },
+
+  // Clipboard history (cliphist): grey when empty; click: history, right click: clear everything
+  "custom/clipboard": {
+    "exec": "~/.config/hypr/scripts/clipboard.sh status",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 20,
+    "on-click": "~/.config/hypr/scripts/clipboard.sh",
+    "on-click-right": "~/.config/hypr/scripts/clipboard.sh clear"
   },
 
   "custom/awake": {

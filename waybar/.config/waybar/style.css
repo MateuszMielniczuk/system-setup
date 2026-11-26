@@ -226,6 +226,14 @@ tooltip label {
   color: @yellow;
 }
 
+#custom-clipboard {
+  color: @subtext;
+}
+
+#custom-clipboard.empty {
+  color: @surface2;
+}
+
 #custom-phone {
   padding: 0 8px;
 }
@@ -264,6 +272,7 @@ tooltip label {
 #pulseaudio,
 #bluetooth,
 #network,
+#custom-clipboard,
 #custom-notifications,
 #power-profiles-daemon,
 #battery,

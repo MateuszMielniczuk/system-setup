@@ -35,7 +35,7 @@ Each program has its own modifier: **Super** = Hyprland, **Ctrl+Shift** = Kitty,
 | Alt+A | agent picker popup (`agents.sh`): pick from a list, Enter jumps there |
 | Alt+G | go to: search agents and terminals |
 | Alt+Shift+A | next agent |
-| Alt+O | jump to the agent that notified |
+| Alt+O | focus the agent of the currently visible herdr toast (no toast, no action) |
 | Alt+W | workspace picker |
 | Alt+B | toggle sidebar |
 
@@ -68,4 +68,5 @@ model picker). Plain printable keys must never be direct bindings (they eat typi
   keyboard protocol and Shift+Enter arrives as Enter. Kitty sends Alt+Enter (newline)
   instead in herdr windows: `map --when-focus-on "title:^herdr" shift+enter send_text all \x1b\r`.
 - Hyprland binds nothing on Alt or Ctrl+Alt (lock is Super+Escape only).
-- Notifications use `[ui.toast] delivery = "system"`, so they go through mako.
+- Notifications use `[ui.toast] delivery = "herdr"` (in-app toast, needed for Alt+O). They do not go
+  through mako; `"system"` would, but then Alt+O has no target.

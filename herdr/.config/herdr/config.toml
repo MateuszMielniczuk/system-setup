@@ -15,9 +15,9 @@ auto_switch = false
 [ui.sound]
 enabled = true
 
-# Through mako: shows in the notification history, respects Do-Not-Disturb
+# In-app toast (bottom-right): Alt+O focuses the agent it points at while it is visible
 [ui.toast]
-delivery = "system"
+delivery = "herdr"
 
 [keys]
 switch_tab = "alt+1..9"

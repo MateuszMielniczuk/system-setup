@@ -5,6 +5,18 @@ return {
             linters = {
                 ["markdownlint-cli2"] = {
                     args = { "--config", vim.fn.stdpath("config") .. "/.markdownlint.yaml" },
+                    -- markdownlint prefixes every message with "error" though they are warnings
+                    parser = function(output, bufnr, cwd)
+                        local parse = require("lint.parser").from_errorformat("%f:%l:%c %m,%f:%l %m", {
+                            source = "markdownlint",
+                            severity = vim.diagnostic.severity.WARN,
+                        })
+                        local diags = parse(output, bufnr, cwd)
+                        for _, d in ipairs(diags) do
+                            d.message = d.message:gsub("^error ", "")
+                        end
+                        return diags
+                    end,
                 },
             },
         },

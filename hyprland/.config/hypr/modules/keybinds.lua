@@ -175,7 +175,7 @@ bind("SHIFT + U", hl.dsp.exec_cmd(scripts .. "notifications.sh"), "Notification 
 bind("SHIFT + D",  hl.dsp.exec_cmd(scripts .. "present.sh"), "Presentation mode (also automatic while sharing the screen)")
 
 section("Session")
-bind("Escape",        hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), "Lock screen")
+bind("Escape",        hl.dsp.exec_cmd(scripts .. "lock.sh"),       "Lock screen")
 bind("SHIFT + E",     hl.dsp.exec_cmd(scripts .. "powermenu.sh"),    "Power menu")
 bind("SHIFT + B",     hl.dsp.exec_cmd("pkill waybar; waybar"),       "Restart bar")
 

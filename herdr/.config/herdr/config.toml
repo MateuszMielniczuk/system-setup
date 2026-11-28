@@ -38,8 +38,16 @@ close_pane = "alt+x"
 goto = "alt+g"
 next_agent = "alt+shift+a"
 open_notification_target = "alt+o"
-workspace_picker = "alt+w"
+workspace_picker = "prefix+w"
 toggle_sidebar = "alt+b"
+
+# Workspace picker (workspaces.sh): j/k move, Enter focuses. Built-in picker: Ctrl+B w
+[[keys.command]]
+key = "alt+w"
+type = "popup"
+command = "~/.config/herdr/workspaces.sh"
+width = "50%"
+height = "40%"
 
 # Agent picker (agents.sh): list of agents, Enter focuses one. Go-to search (agents + terminals): Alt+G
 [[keys.command]]

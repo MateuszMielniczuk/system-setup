@@ -36,7 +36,7 @@ Each program has its own modifier: **Super** = Hyprland, **Ctrl+Shift** = Kitty,
 | Alt+G | go to: search agents and terminals |
 | Alt+Shift+A | next agent |
 | Alt+O | focus the agent of the currently visible herdr toast (no toast, no action) |
-| Alt+W | workspace picker |
+| Alt+W | workspace picker popup (`workspaces.sh`): j/k move, Enter jumps, `/` search (built-in picker: Ctrl+B w) |
 | Alt+B | toggle sidebar |
 
 Everything else stays on the Ctrl+B prefix: `?` help, `s` settings, `q` detach,

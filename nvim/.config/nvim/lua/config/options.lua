@@ -35,7 +35,6 @@ opt.mouse = "v"
 opt.scrolloff = 8
 opt.sidescrolloff = 8
 
-opt.spell = true -- spell check
 opt.spelllang = { "en" }
 
 -- if a file is being edited by another program (or was written to file while

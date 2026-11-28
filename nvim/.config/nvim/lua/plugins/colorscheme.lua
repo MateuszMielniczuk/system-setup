@@ -87,6 +87,7 @@ return {
                     semantic_tokens = true,
                     treesitter = true,
                     treesitter_context = true,
+                    render_markdown = true,
                     vimwiki = true,
                     which_key = false,
                     aerial = true,

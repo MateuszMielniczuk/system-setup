@@ -6,3 +6,24 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown" },
+    callback = function()
+        vim.opt_local.linebreak = true
+        vim.opt_local.breakindent = true
+        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+            buffer = 0,
+            callback = function()
+                local ok, node = pcall(vim.treesitter.get_node)
+                while ok and node and node:type() ~= "pipe_table" do
+                    node = node:parent()
+                end
+                local wrap = not (ok and node)
+                if vim.wo.wrap ~= wrap then
+                    vim.wo.wrap = wrap
+                end
+            end,
+        })
+    end,
+})
